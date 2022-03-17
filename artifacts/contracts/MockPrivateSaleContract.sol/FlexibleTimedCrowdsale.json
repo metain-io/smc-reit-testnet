@@ -1,0 +1,84 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "FlexibleTimedCrowdsale",
+  "sourceName": "contracts/MockPrivateSaleContract.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_openingTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_closingTime",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_openingTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_closingTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "adjustSaleTime",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "closingTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "hasClosed",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "openingTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b5060405161021a38038061021a83398101604081905261002f916100e2565b600082116100845760405162461bcd60e51b815260206004820152601a60248201527f4f70656e696e672074696d65206d7573742062652076616c696400000000000060448201526064015b60405180910390fd5b600081116100d45760405162461bcd60e51b815260206004820152601a60248201527f436c6f73696e672074696d65206d7573742062652076616c6964000000000000604482015260640161007b565b600091909155600155610105565b600080604083850312156100f4578182fd5b505080516020909101519092909150565b610106806101146000396000f3fe6080604052348015600f57600080fd5b506004361060465760003560e01c80631515bc2b14604b57806316e1cc7a1460655780634b6753bc146076578063b7a8807c14608b575b600080fd5b600154421160405190151581526020015b60405180910390f35b6074607036600460b0565b6093565b005b607e60015481565b604051908152602001605c565b607e60005481565b42811015609f57600080fd5b811560aa5760008290555b60015550565b6000806040838503121560c1578182fd5b5050803592602090910135915056fea26469706673582212208c870d0347727aed670cf0c5736379c5e7e60032a6ed4874832a8c0d0d89420a64736f6c63430008040033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060465760003560e01c80631515bc2b14604b57806316e1cc7a1460655780634b6753bc146076578063b7a8807c14608b575b600080fd5b600154421160405190151581526020015b60405180910390f35b6074607036600460b0565b6093565b005b607e60015481565b604051908152602001605c565b607e60005481565b42811015609f57600080fd5b811560aa5760008290555b60015550565b6000806040838503121560c1578182fd5b5050803592602090910135915056fea26469706673582212208c870d0347727aed670cf0c5736379c5e7e60032a6ed4874832a8c0d0d89420a64736f6c63430008040033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
