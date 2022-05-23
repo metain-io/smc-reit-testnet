@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
@@ -17,14 +19,23 @@ contract ProxyRegistry {
  * ERC1155Tradable - ERC1155 contract that whitelists an operator address, has create and mint functionality, and supports useful standards from OpenZeppelin,
   like _exists(), name(), symbol(), and totalSupply()
  */
-contract ERC1155Tradable is ERC1155, Ownable {
+contract ERC1155Tradable is ERC1155Upgradeable {
     using SafeMath for uint256;
     using Strings for string;
+
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
 
     address proxyRegistryAddress;
     uint256 private _currentTokenID = 0;
     mapping(uint256 => address) public creators;
     mapping(uint256 => uint256) public tokenSupply;
+    mapping(uint256 => string) public tokenUri;
+
+    string private _contractURI;
+    address private _owner;
 
     // Contract name
     string public name;
@@ -53,14 +64,21 @@ contract ERC1155Tradable is ERC1155, Ownable {
         _;
     }
 
-    constructor(
+    function initialize(
         string memory _name,
         string memory _symbol,
+        string memory _uri,
         address _proxyRegistryAddress
-    ) ERC1155("") {
+    ) public virtual initializer {
+        __ERC1155_init("");
+
         name = _name;
         symbol = _symbol;
         proxyRegistryAddress = _proxyRegistryAddress;
+        
+        setContractURI(_uri);
+
+        _transferOwnership(_msgSender());
     }
 
     /**
@@ -84,6 +102,41 @@ contract ERC1155Tradable is ERC1155, Ownable {
     }
 
     /**
+     * @dev Will update the base URL of token's contract
+     * @param _uri New URL of token's contract
+     */
+    function setContractURI(string memory _uri) public onlyOwner {
+        _contractURI = _uri;
+    }
+
+    /**
+     * @dev Return the URL of token's contract
+     */
+    function contractURI() public view returns (string memory) {
+        return _contractURI;
+    }
+
+    /**
+     * @dev See {IERC1155MetadataURI-uri}.
+     *
+     * This implementation returns the same URI for *all* token types. It relies
+     * on the token type ID substitution mechanism
+     * https://eips.ethereum.org/EIPS/eip-1155#metadata[defined in the EIP].
+     *
+     * Clients calling this function must replace the `\{id\}` substring with the
+     * actual token type ID.
+     */
+    function uri(uint256 _id)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
+    {
+        return tokenUri[_id];
+    }
+
+    /**
      * @dev Creates a new token type and assigns _initialSupply to an address
      * NOTE: remove onlyOwner if you want third parties to create new tokens on your contract (which may change your IDs)
      * @param _initialOwner address of the first owner of the token
@@ -104,6 +157,7 @@ contract ERC1155Tradable is ERC1155, Ownable {
 
         if (bytes(_uri).length > 0) {
             emit URI(_uri, _id);
+            tokenUri[_id] = _uri;
         }
 
         _mint(_initialOwner, _id, _initialSupply, _data);
@@ -178,7 +232,7 @@ contract ERC1155Tradable is ERC1155, Ownable {
     /**
      * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable gas-free listings.
      */
-    function isApprovedForAll(address _owner, address _operator)
+    function isApprovedForAll(address account, address operator)
         public
         view
         override
@@ -186,11 +240,11 @@ contract ERC1155Tradable is ERC1155, Ownable {
     {
         // Whitelist OpenSea proxy contract for easy trading.
         ProxyRegistry proxyRegistry = ProxyRegistry(proxyRegistryAddress);
-        if (address(proxyRegistry.proxies(_owner)) == _operator) {
+        if (address(proxyRegistry.proxies(account)) == operator) {
             return true;
         }
 
-        return ERC1155.isApprovedForAll(_owner, _operator);
+        return ERC1155Upgradeable.isApprovedForAll(account, operator);
     }
 
     /**
@@ -224,5 +278,53 @@ contract ERC1155Tradable is ERC1155, Ownable {
      */
     function _incrementTokenTypeId() private {
         _currentTokenID++;
+    }
+
+    /**
+     * @dev Returns the address of the current owner.
+     */
+    function owner() public view virtual returns (address) {
+        return _owner;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        require(owner() == _msgSender(), "Ownable: caller is not the owner");
+        _;
+    }
+
+    /**
+     * @dev Leaves the contract without owner. It will not be possible to call
+     * `onlyOwner` functions anymore. Can only be called by the current owner.
+     *
+     * NOTE: Renouncing ownership will leave the contract without an owner,
+     * thereby removing any functionality that is only available to the owner.
+     */
+    function renounceOwnership() public virtual onlyOwner {
+        _transferOwnership(address(0));
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Can only be called by the current owner.
+     */
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        require(
+            newOwner != address(0),
+            "Ownable: new owner is the zero address"
+        );
+        _transferOwnership(newOwner);
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Internal function without access restriction.
+     */
+    function _transferOwnership(address newOwner) internal virtual {
+        address oldOwner = _owner;
+        _owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
     }
 }

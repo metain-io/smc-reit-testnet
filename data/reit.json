@@ -1,0 +1,22 @@
+{
+    "name": "123 Tran Dinh Xu",
+    "description": "123 Tran Dinh Xu, Ward 1, District 3, Hochiminh City, Vietnam.",
+    "image": "ipfs://Qmai1onNQU7jbsGj5h8nWZpt6KWvCebyhiyoDreYjyzSfP",
+    "attributes": [
+        {
+            "trait_type": "Address",
+            "value": "123 Tran Dinh Xu, Ward 1, District 3, Hochiminh City, Vietnam."
+        },
+        {
+            "display_type":"number",
+            "trait_type": "Launch Valuation",
+            "value": "2000000"
+        },
+        {
+            "display_type": "date", 
+            "trait_type": "Launch Date", 
+            "value": 1608490000
+        }
+    ]
+  }
+  
