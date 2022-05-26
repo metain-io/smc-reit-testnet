@@ -1,0 +1,214 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x9252D3C1A1Df3e25e472C44f3F8A9d87d39F796C",
+    "txHash": "0xae42b9f8e98ff644a8e9a50d9a4bed21cd672cbfaa74236b863a9895e9bc251f"
+  },
+  "proxies": [
+    {
+      "address": "0xe590c081c18297699d0A3a300Ee3A72f137EeeBA",
+      "txHash": "0x3c4cb462ab789dfcde7ab270931e5a7d60bfbf587db9dd0a103fed1a38ff1f1e",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "5081b8ac48f84ed4428f8ecaec9dbea33171414b3fd70e451b675213c60271eb": {
+      "address": "0x3067F9089545bCDB3Ae00D654c3376Dd2eCe349c",
+      "txHash": "0x2e6686e6170f15fdc95255d55a2263aa8cdf525c7a1cdcc4b85544b9d44e1bab",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\ERC1155Tradable.sol:437"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\ERC1155Tradable.sol:442"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\ERC1155Tradable.sol:490"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\ERC1155Tradable.sol:522"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\ERC1155Tradable.sol:538"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\ERC1155Tradable.sol:541"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\ERC1155Tradable.sol:544"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\ERC1155Tradable.sol:984"
+          },
+          {
+            "label": "proxyRegistryAddress",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1391"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1392"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1393"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1394"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1395"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1397"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_address",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1398"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1401"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\ERC1155Tradable.sol:1403"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    }
+  }
+}

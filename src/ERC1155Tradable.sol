@@ -29,7 +29,7 @@ contract ERC1155Tradable is ERC1155Upgradeable {
     );
 
     address proxyRegistryAddress;
-    uint256 private _currentTokenID = 0;
+    uint256 private currentTokenID;
     mapping(uint256 => address) public creators;
     mapping(uint256 => uint256) public tokenSupply;
     mapping(uint256 => string) public tokenUri;
@@ -75,8 +75,9 @@ contract ERC1155Tradable is ERC1155Upgradeable {
         name = _name;
         symbol = _symbol;
         proxyRegistryAddress = _proxyRegistryAddress;
+        currentTokenID = 0;
         
-        setContractURI(_uri);
+        _contractURI = _uri;
 
         _transferOwnership(_msgSender());
     }
@@ -266,18 +267,18 @@ contract ERC1155Tradable is ERC1155Upgradeable {
     }
 
     /**
-     * @dev calculates the next token ID based on value of _currentTokenID
+     * @dev calculates the next token ID based on value of currentTokenID
      * @return uint256 for the next token ID
      */
     function _getNextTokenID() private view returns (uint256) {
-        return _currentTokenID.add(1);
+        return currentTokenID.add(1);
     }
 
     /**
      * @dev increments the value of _currentTokenID
      */
     function _incrementTokenTypeId() private {
-        _currentTokenID++;
+        currentTokenID++;
     }
 
     /**

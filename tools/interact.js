@@ -1,44 +1,55 @@
-const moment = require('moment');
-const env = require('../env.json')['dev'];
+const os = require("os");
+const moment = require("moment");
+const path = require("path");
+const fs = require("fs");
 
 const readline = require("readline");
+
+const PROXY_CONTRACT_ADDRESS = "0xe590c081c18297699d0A3a300Ee3A72f137EeeBA";
+
 const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+  input: process.stdin,
+  output: process.stdout
 });
 
-function prompt (message) {
+function prompt(message) {
   return new Promise((resolve, reject) => {
-    rl.question(message, function(result) {
+    rl.question(message, function (result) {
       resolve(result);
     });
-  })
+  });
 }
 
-async function showWalletInfo(address){
- 
+async function runMethod(contract, command) {
+  try {
+    const res = await eval(`contract.${command}`);
+    console.log(res);
+  } catch (ex) {
+    console.error(ex);
+  }
 }
 
-async function addPermission(admin, addressArr){
-  await hardhatContract.connect(admin).addToWhitelisted(addressArr)
-}
+async function main() {
+  const [owner] = await ethers.getSigners();
+  console.log("Signer", owner.address);
 
-async function main () {
-  await showWalletInfo(usdmBuyer.address);
+  const Token = await ethers.getContractFactory('ERC1155Tradable');    
+  const contract = Token.attach(PROXY_CONTRACT_ADDRESS);
+
+  console.log("Enter JS command");
 
   while (true) {
-    const command = await prompt('??? What do you want? (Choose number in below list) \n 1.Show my wallet assests \n 2.Buy MEI \n 3.Exit \n Your choice: ');
+    const command = await prompt("> ");
     switch (command) {
-      case '3':{
+      case "q": {
         process.exit();
-        break;
       }
       default: {
+        await runMethod(contract, command);
         break;
       }
     }
-  }  
+  }
 }
 
 main();
-

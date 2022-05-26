@@ -10,9 +10,9 @@
     "flatten": "gulp flatten",
     "compile": "hardhat compile",
     "test": "hardhat test --network dev",
-    "test:interact": "hardhat run test/interact.js",
+    "test:interact": "hardhat run tools/interact.js --network testnet",
     "deploy:dev": "hardhat deploy --verbose --network dev",
-    "deploy:testnet": "hardhat deploy --verbose --network testnet",
+    "deploy:testnet": "hardhat deploy --verbose --network testnet --show-stack-traces",
     "deploy:mainnet": "hardhat deploy --verbose --network mainnet"
   },
   "dependencies": {

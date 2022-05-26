@@ -17,7 +17,7 @@ task("deploy", "Deploy REIT NFT Contract")
     console.log("Deploying contracts with the account:", deployer.address);
     console.log("Account balance:", (await deployer.getBalance()).toString());
 
-    const contractFileName = "contracts/ERC1155Tradable.sol";
+    const contractFileName = "ERC1155Tradable";
 
     console.log(`Deploying ${contractFileName}...`);
 
@@ -60,6 +60,12 @@ module.exports = {
     },
 
     // Reserved
+    bscTest: {
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      accounts: [secret.testnet],
+      chainId: 97
+    },
+    
     rinkeby: {
       url: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
       accounts: [secret.testnet],
