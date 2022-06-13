@@ -6,31 +6,96 @@ const argv = require("minimist")(process.argv.slice(2));
 const env = require("./env.json")[argv.network];
 const secret = JSON.parse(fs.readFileSync(".secret"));
 
+const interact = require("./tools/interact");
+
+task("interact", "Interact with REIT NFT Contract").setAction(interact);
+
 /**
  * Contract deployment task
  */
-task("deploy", "Deploy REIT NFT Contract")
-  .addOptionalParam("token", "Token address (without 0x)")
-  .setAction(async () => {
+task("deployNFT", "Deploy REIT NFT Contract").setAction(async () => {
+  const [deployer] = await ethers.getSigners();
+
+  console.log("Deploying contracts with the account:", deployer.address);
+  console.log("Account balance:", (await deployer.getBalance()).toString());
+
+  const contractFileName = "REITNFT";
+
+  console.log(`Deploying ${contractFileName}...`);
+
+  const Token = await ethers.getContractFactory(contractFileName);
+  const nft = await upgrades.deployProxy(Token, [
+    "Metain REIT",
+    "MREIT",
+    "ipfs://Qme41Gw4qAttT7ZB2o6KVjYxu5LFMihG9aiZvMQLkhPjB3",
+    "0xf57b2c51ded3a29e6891aba85459d600256cf317"
+  ]);
+  await nft.deployed();
+  console.log("NFT deployed to:", nft.address);
+
+  fs.writeFileSync(`test/deployed-nft-${argv.network}.json`, JSON.stringify({ proxy: nft.address }));
+});
+
+/**
+ * Contract deployment task
+ */
+task("deployIPO", "Deploy REIT IPO Contract")
+  .addParam("nft", "Deployed NFT contract address")
+  .addParam("id", "NFT ID to IPO")
+  .setAction(async (taskArgs) => {
     const [deployer] = await ethers.getSigners();
 
     console.log("Deploying contracts with the account:", deployer.address);
     console.log("Account balance:", (await deployer.getBalance()).toString());
 
-    const contractFileName = "ERC1155Tradable";
+    const contractFileName = "REITIPO";
 
     console.log(`Deploying ${contractFileName}...`);
 
+    console.log([
+      taskArgs.nft,
+      taskArgs.id
+    ])
+
     const Token = await ethers.getContractFactory(contractFileName);
-    const nft = await upgrades.deployProxy(Token, [
-      "Metain REIT",
-      "MREIT",
-      "ipfs://Qme41Gw4qAttT7ZB2o6KVjYxu5LFMihG9aiZvMQLkhPjB3",
-      "0xf57b2c51ded3a29e6891aba85459d600256cf317"
+    const ipo = await upgrades.deployProxy(Token, [
+      taskArgs.nft,
+      taskArgs.id
     ]);
-    await nft.deployed();
-    console.log("NFT deployed to:", nft.address);
+    await ipo.deployed();
+    console.log("IPO deployed to:", ipo.address);
+
+    fs.writeFileSync(`test/deployed-ipo-${argv.network}.json`, JSON.stringify({ proxy: ipo.address }));
   });
+
+/**
+ * Mocks deployment task
+ */
+task('deployMocks', 'Deploy Mock tokens')
+ .setAction(async () => {
+   const [deployer] = await ethers.getSigners();
+
+   console.log('Deploying contracts with the account:', deployer.address);
+   console.log('Account balance:', (await deployer.getBalance()).toString());
+
+   const MockContract = await ethers.getContractFactory('USDMToken');
+
+   const mockList = [
+     { ticker: 'MUSDT', description: 'Mock USDT' },
+     { ticker: 'MUSDC', description: 'Mock USDC' },
+     { ticker: 'MBUSD', description: 'Mock BUSD' }
+   ];
+
+   let deployedData = {};
+   for (let mock of mockList) {
+     const token = await MockContract.deploy(mock.ticker, mock.description);
+     console.log(`${mock.ticker} address:`, token.address);
+
+     deployedData[mock.ticker] = token.address;
+   }
+
+   fs.writeFileSync(`test/deployed-usd-${argv.network}.json`, JSON.stringify(deployedData));
+ });
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -49,7 +114,7 @@ module.exports = {
       ]
     },
     testnet: {
-      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      url: "https://data-seed-prebsc-1-s3.binance.org:8545",
       accounts: [secret.testnet],
       chainId: 97
     },
@@ -61,11 +126,11 @@ module.exports = {
 
     // Reserved
     bscTest: {
-      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      url: "https://data-seed-prebsc-1-s3.binance.org:8545",
       accounts: [secret.testnet],
       chainId: 97
     },
-    
+
     rinkeby: {
       url: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
       accounts: [secret.testnet],
@@ -79,7 +144,7 @@ module.exports = {
     }
   },
   solidity: {
-    version: "0.8.4",
+    version: "0.8.9",
     settings: {
       optimizer: {
         enabled: true,

@@ -6,34 +6,37 @@
   "author": "ntchung <nguyentruongchung@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ganache-cli -d --networkId 1337 -m \"myth like bonus scare over problem client lizard pioneer submit female collect\"",
+    "dev": "ganache-cli --db .ganache -d --networkId 1337 -m \"myth like bonus scare over problem client lizard pioneer submit female collect\"",
     "flatten": "gulp flatten",
     "compile": "hardhat compile",
     "test": "hardhat test --network dev",
-    "test:interact": "hardhat run tools/interact.js --network testnet",
-    "deploy:dev": "hardhat deploy --verbose --network dev",
-    "deploy:testnet": "hardhat deploy --verbose --network testnet --show-stack-traces",
-    "deploy:mainnet": "hardhat deploy --verbose --network mainnet"
+    "test:interact:dev": "hardhat interact --network dev",
+    "test:interact:testnet": "hardhat interact --network testnet",    
+    "deploy:nft:dev": "hardhat deployNFT --verbose --network dev",
+    "deploy:nft:testnet": "hardhat deployNFT --verbose --network testnet --show-stack-traces",
+    "deploy:nft:mainnet": "hardhat deployNFT --verbose --network mainnet",
+    "deploy:ipo:dev": "hardhat deployIPO --verbose --network dev",
+    "deploy:ipo:testnet": "hardhat deployIPO --verbose --network testnet --show-stack-traces",
+    "deploy:ipo:mainnet": "hardhat deployIPO --verbose --network mainnet",
+    "deploy:usd:dev": "npx hardhat deployMocks --network dev"
   },
   "dependencies": {
-    "@chainlink/contracts": "^0.3.0",
-    "@openzeppelin/contracts": "^4.4.0",
-    "@openzeppelin/contracts-upgradeable": "^4.4.0",
-    "@uniswap/v2-core": "^1.0.1",
-    "@uniswap/v2-periphery": "^1.1.0-beta.0"
+    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/contracts-upgradeable": "^4.6.0"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.3",
-    "@openzeppelin/hardhat-upgrades": "^1.17.0",
-    "chai": "^4.3.4",
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@openzeppelin/hardhat-upgrades": "^1.18.1",
+    "chai": "^4.3.6",
     "cross-env": "^7.0.3",
-    "ethereum-waffle": "^3.4.0",
-    "ethers": "^5.5.2",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.8",
+    "ganache-cli": "^6.12.2",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.3.0",
-    "hardhat": "^2.8.0",
-    "minimist": "^1.2.5",
-    "moment": "^2.29.1",
-    "sol-merger": "^3.1.0"
+    "hardhat": "^2.9.7",
+    "minimist": "^1.2.6",
+    "moment": "^2.29.3",
+    "sol-merger": "^4.1.1"
   }
 }

@@ -2,6 +2,7 @@
 /build/
 
 .secret
+.ganache
 
 .openzeppelin\.session
 /cache/

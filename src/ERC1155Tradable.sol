@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -7,6 +7,8 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+
+import "./IREITTradable.sol";
 
 contract OwnableDelegateProxy {}
 
@@ -64,13 +66,20 @@ contract ERC1155Tradable is ERC1155Upgradeable {
         _;
     }
 
+    /**
+     * @dev Initialization
+     * @param _name string Name of the NFT
+     * @param _symbol string Symbol of the NFT
+     * @param _uri string URI to JSON data of the smart contract
+     * @param _proxyRegistryAddress address OpenSea's proxy registry address for gasless transaction
+     */
     function initialize(
         string memory _name,
         string memory _symbol,
         string memory _uri,
         address _proxyRegistryAddress
     ) public virtual initializer {
-        __ERC1155_init("");
+        __ERC1155_init(_uri);
 
         name = _name;
         symbol = _symbol;
@@ -136,36 +145,7 @@ contract ERC1155Tradable is ERC1155Upgradeable {
     {
         return tokenUri[_id];
     }
-
-    /**
-     * @dev Creates a new token type and assigns _initialSupply to an address
-     * NOTE: remove onlyOwner if you want third parties to create new tokens on your contract (which may change your IDs)
-     * @param _initialOwner address of the first owner of the token
-     * @param _initialSupply amount to supply the first owner
-     * @param _uri Optional URI for this token type
-     * @param _data Data to pass if receiver is contract
-     * @return The newly created token ID
-     */
-    function create(
-        address _initialOwner,
-        uint256 _initialSupply,
-        string calldata _uri,
-        bytes calldata _data
-    ) external onlyOwner returns (uint256) {
-        uint256 _id = _getNextTokenID();
-        _incrementTokenTypeId();
-        creators[_id] = msg.sender;
-
-        if (bytes(_uri).length > 0) {
-            emit URI(_uri, _id);
-            tokenUri[_id] = _uri;
-        }
-
-        _mint(_initialOwner, _id, _initialSupply, _data);
-        tokenSupply[_id] = _initialSupply;
-        return _id;
-    }
-
+    
     /**
      * @dev Mints some amount of tokens to an address
      * @param _to          Address of the future owner of the token
@@ -270,14 +250,14 @@ contract ERC1155Tradable is ERC1155Upgradeable {
      * @dev calculates the next token ID based on value of currentTokenID
      * @return uint256 for the next token ID
      */
-    function _getNextTokenID() private view returns (uint256) {
+    function _getNextTokenID() internal view returns (uint256) {
         return currentTokenID.add(1);
     }
 
     /**
      * @dev increments the value of _currentTokenID
      */
-    function _incrementTokenTypeId() private {
+    function _incrementTokenTypeId() internal {
         currentTokenID++;
     }
 
@@ -327,5 +307,5 @@ contract ERC1155Tradable is ERC1155Upgradeable {
         address oldOwner = _owner;
         _owner = newOwner;
         emit OwnershipTransferred(oldOwner, newOwner);
-    }
+    }    
 }
