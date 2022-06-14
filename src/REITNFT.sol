@@ -1,24 +1,39 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+
 import "./ERC1155Tradable.sol";
 import "./IREITTradable.sol";
 
 contract REITNFT is ERC1155Tradable, IREITTradable {
+    using SafeMath for uint256;
+
     event Create(uint256 id);
 
     struct REITMetadata {
         uint256 ipoTime;
         uint256 ipoUnitPrice;
-        uint256 yieldPeriod;
-        uint256 yieldDividend;
         uint256 liquidationTime;
+    }
+
+    struct REITYield {
+        uint256 yieldDividend;
         uint256 liquidationExtension;
-        uint256[] annualAUM;
-        uint256[] purchaseQuota;
+    }
+
+    struct YieldVesting {
+        bool initialized;
+        // beneficiary of yield after they are released
+        address beneficiary;        
+        // amount of tokens vested
+        uint256 released;
     }
 
     mapping(uint256 => REITMetadata) public tokenMetadata;
+    mapping(uint256 => REITYield) public tokenYieldData;
+    mapping(uint256 => uint256) public reitAllowance;
+    mapping(address => YieldVesting) public yieldVesting;
 
     /**
      * @dev Creates a new token type and assigns _initialSupply to an address
@@ -47,19 +62,40 @@ contract REITNFT is ERC1155Tradable, IREITTradable {
         tokenMetadata[_id] = REITMetadata(
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            new uint256[](0),
-            new uint256[](0)
+            0
         );
+
+        tokenYieldData[_id] = REITYield(0, 0);
 
         _mint(_initialOwner, _id, _initialSupply, _data);
         tokenSupply[_id] = _initialSupply;
 
         emit Create(_id);
         return _id;
+    }
+
+    function initiate(uint256 _id, uint256 ipoTime, uint256 ipoUnitPrice, uint liquidationTime) external creatorOnly(_id) {
+        tokenMetadata[_id] = REITMetadata(
+            ipoTime,
+            ipoUnitPrice,
+            liquidationTime
+        );
+    }
+
+    function setYield(uint256 _id, uint256 yieldDividend, uint256 liquidationExtension) external creatorOnly(_id) {
+        uint256 totalSupply = tokenSupply[_id];
+        uint256 totalSupplyValue = totalSupply.mul(yieldDividend);
+        uint256 allowance = reitAllowance[_id];
+        require(totalSupplyValue <= allowance, "");
+        tokenYieldData[_id] = REITYield(yieldDividend, liquidationExtension);
+    }
+
+    function claimYield(uint256 _id) external ownersOnly(_id) {
+
+    }
+
+    function allowYieldFund(uint256 _id, uint256 amount) external onlyOwner {
+        reitAllowance[_id] = amount;
     }
 
     function safeTransferREITFrom(
