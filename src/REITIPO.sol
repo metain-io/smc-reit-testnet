@@ -28,6 +28,7 @@ contract REITIPO is
 
         _nft = IREITTradable(_nftAddress);
         _nftId = id;
+        _whitelistPaused = false;
     }
 
     receive() external payable {}

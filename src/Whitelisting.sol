@@ -6,13 +6,24 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 contract Whitelisting is OwnableUpgradeable {
     // white-list mapping
     mapping(address => bool) private whitelisteds;
+    bool private _whitelistPaused;    
 
     /**
      * @dev Throws if called by any account that's not whitelisted.
      */
     modifier onlyWhitelisted() {
-        require(whitelisteds[msg.sender], "Not whitelisted");
+        require(whitelisteds[msg.sender] || _whitelistPaused, "Not whitelisted");
         _;
+    }
+
+    function pauseWhiteList () external onlyOwner {
+        require(!_whitelistPaused, "Whitelisting already resumed");
+        _whitelistPaused = true;
+    }
+
+    function resumeWhiteList () external onlyOwner {
+        require(_whitelistPaused, "Whitelisting already paused");
+        _whitelistPaused = false;
     }
 
     /**
