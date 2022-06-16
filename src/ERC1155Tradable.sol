@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
@@ -10,18 +11,12 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import "./IREITTradable.sol";
 
-contract OwnableDelegateProxy {}
-
-contract ProxyRegistry {
-    mapping(address => OwnableDelegateProxy) public proxies;
-}
-
 /**
  * @title ERC1155Tradable
  * ERC1155Tradable - ERC1155 contract that whitelists an operator address, has create and mint functionality, and supports useful standards from OpenZeppelin,
   like _exists(), name(), symbol(), and totalSupply()
  */
-contract ERC1155Tradable is ERC1155Upgradeable {
+contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
     using SafeMath for uint256;
     using Strings for string;
 
@@ -30,7 +25,6 @@ contract ERC1155Tradable is ERC1155Upgradeable {
         address indexed newOwner
     );
 
-    address proxyRegistryAddress;
     uint256 private currentTokenID;
     mapping(uint256 => address) public creators;
     mapping(uint256 => uint256) public tokenSupply;
@@ -58,10 +52,10 @@ contract ERC1155Tradable is ERC1155Upgradeable {
     /**
      * @dev Require msg.sender to own more than 0 of the token id
      */
-    modifier ownersOnly(uint256 _id) {
+    modifier holdersOnly(uint256 _id) {
         require(
             balanceOf(msg.sender, _id) > 0,
-            "ERC1155Tradable#ownersOnly: ONLY_OWNERS_ALLOWED"
+            "ERC1155Tradable#holdersOnly: ONLY_OWNERS_ALLOWED"
         );
         _;
     }
@@ -71,24 +65,21 @@ contract ERC1155Tradable is ERC1155Upgradeable {
      * @param _name string Name of the NFT
      * @param _symbol string Symbol of the NFT
      * @param _uri string URI to JSON data of the smart contract
-     * @param _proxyRegistryAddress address OpenSea's proxy registry address for gasless transaction
      */
     function initialize(
         string memory _name,
         string memory _symbol,
-        string memory _uri,
-        address _proxyRegistryAddress
+        string memory _uri
     ) public virtual initializer {
         __ERC1155_init(_uri);
+        __ReentrancyGuard_init();
+        _transferOwnership(_msgSender());        
 
         name = _name;
         symbol = _symbol;
-        proxyRegistryAddress = _proxyRegistryAddress;
         currentTokenID = 0;
         
-        _contractURI = _uri;
-
-        _transferOwnership(_msgSender());
+        _contractURI = _uri;        
     }
 
     /**
@@ -208,24 +199,6 @@ contract ERC1155Tradable is ERC1155Upgradeable {
             uint256 id = _ids[i];
             _setCreator(_to, id);
         }
-    }
-
-    /**
-     * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable gas-free listings.
-     */
-    function isApprovedForAll(address account, address operator)
-        public
-        view
-        override
-        returns (bool isOperator)
-    {
-        // Whitelist OpenSea proxy contract for easy trading.
-        ProxyRegistry proxyRegistry = ProxyRegistry(proxyRegistryAddress);
-        if (address(proxyRegistry.proxies(account)) == operator) {
-            return true;
-        }
-
-        return ERC1155Upgradeable.isApprovedForAll(account, operator);
     }
 
     /**

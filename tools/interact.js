@@ -117,7 +117,7 @@ async function interactNFT () {
     const command = await prompt("> ");
     switch (command) {
       case "c": {
-        await runMethod(contract, `create("${creator.address}",250000,"${TEST_REIT_DATA_URL}",[])`);
+        await runMethod(contract, `create("${creator.address}",250000,"${TEST_REIT_DATA_URL}","0x9ce4cd6D7f5e8b14c7a3e8e6A257A86Bd5a6EeA0",[])`);
         break;
       }
 

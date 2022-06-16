@@ -27,8 +27,7 @@ task("deployNFT", "Deploy REIT NFT Contract").setAction(async () => {
   const nft = await upgrades.deployProxy(Token, [
     "Metain REIT",
     "MREIT",
-    "ipfs://Qme41Gw4qAttT7ZB2o6KVjYxu5LFMihG9aiZvMQLkhPjB3",
-    "0xf57b2c51ded3a29e6891aba85459d600256cf317"
+    "ipfs://Qme41Gw4qAttT7ZB2o6KVjYxu5LFMihG9aiZvMQLkhPjB3"
   ]);
   await nft.deployed();
   console.log("NFT deployed to:", nft.address);

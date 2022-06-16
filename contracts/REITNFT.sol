@@ -307,67 +307,6 @@ library SafeMath {
 }
 
 // 
-// OpenZeppelin Contracts v4.4.1 (security/ReentrancyGuard.sol)
-/**
- * @dev Contract module that helps prevent reentrant calls to a function.
- *
- * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier
- * available, which can be applied to functions to make sure there are no nested
- * (reentrant) calls to them.
- *
- * Note that because there is a single `nonReentrant` guard, functions marked as
- * `nonReentrant` may not call one another. This can be worked around by making
- * those functions `private`, and then adding `external` `nonReentrant` entry
- * points to them.
- *
- * TIP: If you would like to learn more about reentrancy and alternative ways
- * to protect against it, check out our blog post
- * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].
- */
-abstract contract ReentrancyGuard {
-    // Booleans are more expensive than uint256 or any type that takes up a full
-    // word because each write operation emits an extra SLOAD to first read the
-    // slot's contents, replace the bits taken up by the boolean, and then write
-    // back. This is the compiler's defense against contract upgrades and
-    // pointer aliasing, and it cannot be disabled.
-
-    // The values being non-zero value makes deployment a bit more expensive,
-    // but in exchange the refund on every call to nonReentrant will be lower in
-    // amount. Since refunds are capped to a percentage of the total
-    // transaction's gas, it is best to keep them low in cases like this one, to
-    // increase the likelihood of the full refund coming into effect.
-    uint256 private constant _NOT_ENTERED = 1;
-    uint256 private constant _ENTERED = 2;
-
-    uint256 private _status;
-
-    constructor() {
-        _status = _NOT_ENTERED;
-    }
-
-    /**
-     * @dev Prevents a contract from calling itself, directly or indirectly.
-     * Calling a `nonReentrant` function from another `nonReentrant`
-     * function is not supported. It is possible to prevent this from happening
-     * by making the `nonReentrant` function external, and making it call a
-     * `private` function that does the actual work.
-     */
-    modifier nonReentrant() {
-        // On the first call to nonReentrant, _notEntered will be true
-        require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
-
-        // Any calls to nonReentrant after this point will fail
-        _status = _ENTERED;
-
-        _;
-
-        // By storing the original value once again, a refund is triggered (see
-        // https://eips.ethereum.org/EIPS/eip-2200)
-        _status = _NOT_ENTERED;
-    }
-}
-
-// 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -1506,6 +1445,78 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
 }
 
 // 
+// OpenZeppelin Contracts v4.4.1 (security/ReentrancyGuard.sol)
+/**
+ * @dev Contract module that helps prevent reentrant calls to a function.
+ *
+ * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier
+ * available, which can be applied to functions to make sure there are no nested
+ * (reentrant) calls to them.
+ *
+ * Note that because there is a single `nonReentrant` guard, functions marked as
+ * `nonReentrant` may not call one another. This can be worked around by making
+ * those functions `private`, and then adding `external` `nonReentrant` entry
+ * points to them.
+ *
+ * TIP: If you would like to learn more about reentrancy and alternative ways
+ * to protect against it, check out our blog post
+ * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].
+ */
+abstract contract ReentrancyGuardUpgradeable is Initializable {
+    // Booleans are more expensive than uint256 or any type that takes up a full
+    // word because each write operation emits an extra SLOAD to first read the
+    // slot's contents, replace the bits taken up by the boolean, and then write
+    // back. This is the compiler's defense against contract upgrades and
+    // pointer aliasing, and it cannot be disabled.
+
+    // The values being non-zero value makes deployment a bit more expensive,
+    // but in exchange the refund on every call to nonReentrant will be lower in
+    // amount. Since refunds are capped to a percentage of the total
+    // transaction's gas, it is best to keep them low in cases like this one, to
+    // increase the likelihood of the full refund coming into effect.
+    uint256 private constant _NOT_ENTERED = 1;
+    uint256 private constant _ENTERED = 2;
+
+    uint256 private _status;
+
+    function __ReentrancyGuard_init() internal onlyInitializing {
+        __ReentrancyGuard_init_unchained();
+    }
+
+    function __ReentrancyGuard_init_unchained() internal onlyInitializing {
+        _status = _NOT_ENTERED;
+    }
+
+    /**
+     * @dev Prevents a contract from calling itself, directly or indirectly.
+     * Calling a `nonReentrant` function from another `nonReentrant`
+     * function is not supported. It is possible to prevent this from happening
+     * by making the `nonReentrant` function external, and making it call a
+     * `private` function that does the actual work.
+     */
+    modifier nonReentrant() {
+        // On the first call to nonReentrant, _notEntered will be true
+        require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
+
+        // Any calls to nonReentrant after this point will fail
+        _status = _ENTERED;
+
+        _;
+
+        // By storing the original value once again, a refund is triggered (see
+        // https://eips.ethereum.org/EIPS/eip-2200)
+        _status = _NOT_ENTERED;
+    }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting down storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[49] private __gap;
+}
+
+// 
 // OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
 /**
  * @dev Provides information about the current execution context, including the
@@ -1826,18 +1837,12 @@ interface IREITTradable {
 }
 
 // 
-contract OwnableDelegateProxy {}
-
-contract ProxyRegistry {
-    mapping(address => OwnableDelegateProxy) public proxies;
-}
-
 /**
  * @title ERC1155Tradable
  * ERC1155Tradable - ERC1155 contract that whitelists an operator address, has create and mint functionality, and supports useful standards from OpenZeppelin,
   like _exists(), name(), symbol(), and totalSupply()
  */
-contract ERC1155Tradable is ERC1155Upgradeable {
+contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
     using SafeMath for uint256;
     using Strings for string;
 
@@ -1846,7 +1851,6 @@ contract ERC1155Tradable is ERC1155Upgradeable {
         address indexed newOwner
     );
 
-    address proxyRegistryAddress;
     uint256 private currentTokenID;
     mapping(uint256 => address) public creators;
     mapping(uint256 => uint256) public tokenSupply;
@@ -1874,10 +1878,10 @@ contract ERC1155Tradable is ERC1155Upgradeable {
     /**
      * @dev Require msg.sender to own more than 0 of the token id
      */
-    modifier ownersOnly(uint256 _id) {
+    modifier holdersOnly(uint256 _id) {
         require(
             balanceOf(msg.sender, _id) > 0,
-            "ERC1155Tradable#ownersOnly: ONLY_OWNERS_ALLOWED"
+            "ERC1155Tradable#holdersOnly: ONLY_OWNERS_ALLOWED"
         );
         _;
     }
@@ -1887,24 +1891,21 @@ contract ERC1155Tradable is ERC1155Upgradeable {
      * @param _name string Name of the NFT
      * @param _symbol string Symbol of the NFT
      * @param _uri string URI to JSON data of the smart contract
-     * @param _proxyRegistryAddress address OpenSea's proxy registry address for gasless transaction
      */
     function initialize(
         string memory _name,
         string memory _symbol,
-        string memory _uri,
-        address _proxyRegistryAddress
+        string memory _uri
     ) public virtual initializer {
         __ERC1155_init(_uri);
+        __ReentrancyGuard_init();
+        _transferOwnership(_msgSender());        
 
         name = _name;
         symbol = _symbol;
-        proxyRegistryAddress = _proxyRegistryAddress;
         currentTokenID = 0;
         
-        _contractURI = _uri;
-
-        _transferOwnership(_msgSender());
+        _contractURI = _uri;        
     }
 
     /**
@@ -2024,24 +2025,6 @@ contract ERC1155Tradable is ERC1155Upgradeable {
             uint256 id = _ids[i];
             _setCreator(_to, id);
         }
-    }
-
-    /**
-     * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable gas-free listings.
-     */
-    function isApprovedForAll(address account, address operator)
-        public
-        view
-        override
-        returns (bool isOperator)
-    {
-        // Whitelist OpenSea proxy contract for easy trading.
-        ProxyRegistry proxyRegistry = ProxyRegistry(proxyRegistryAddress);
-        if (address(proxyRegistry.proxies(account)) == operator) {
-            return true;
-        }
-
-        return ERC1155Upgradeable.isApprovedForAll(account, operator);
     }
 
     /**
@@ -2215,7 +2198,7 @@ interface IERC20Extented is IERC20 {
     function decimals() external view returns (uint8);
 }
 
-contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
+contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     using SafeMath for uint256;
 
     event Create(uint256 id);
@@ -2303,7 +2286,7 @@ contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
         );
     }
 
-    function affirmOwnership(uint256 _id) external onlyKYC ownersOnly(_id) {
+    function affirmOwnership(uint256 _id) external onlyKYC holdersOnly(_id) {
         REITMetadata memory metadata = tokenMetadata[_id];
         YieldVesting memory yieldVesting = tokenYieldVesting[_id][msg.sender];        
 
@@ -2335,8 +2318,8 @@ contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
         tokenYieldData[_id] = REITYield(yieldDividend, liquidationExtension);
     }
 
-    function claimYield(uint256 _id) external onlyKYC ownersOnly(_id) nonReentrant {        
-        uint256 balance = balanceOf(msg.sender, _id);        
+    function claimYield(uint256 _id) external onlyKYC holdersOnly(_id) nonReentrant {
+        uint256 balance = balanceOf(msg.sender, _id);
         REITYield memory yieldData = tokenYieldData[_id];
 
         if (!tokenYieldVesting[_id][msg.sender].initialized) {
@@ -2387,6 +2370,8 @@ contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
         uint256 id,
         uint256 amount
     ) external override {
+        // TODO: only affirmed quantity is tradeable
+
         bytes memory empty;
         return safeTransferFrom(from, to, id, amount, empty);
     }

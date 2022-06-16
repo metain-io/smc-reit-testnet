@@ -3,7 +3,6 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import "./ERC1155Tradable.sol";
 import "./IREITTradable.sol";
@@ -13,7 +12,7 @@ interface IERC20Extented is IERC20 {
     function decimals() external view returns (uint8);
 }
 
-contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
+contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     using SafeMath for uint256;
 
     event Create(uint256 id);
@@ -101,7 +100,7 @@ contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
         );
     }
 
-    function affirmOwnership(uint256 _id) external onlyKYC ownersOnly(_id) {
+    function affirmOwnership(uint256 _id) external onlyKYC holdersOnly(_id) {
         REITMetadata memory metadata = tokenMetadata[_id];
         YieldVesting memory yieldVesting = tokenYieldVesting[_id][msg.sender];        
 
@@ -133,8 +132,8 @@ contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
         tokenYieldData[_id] = REITYield(yieldDividend, liquidationExtension);
     }
 
-    function claimYield(uint256 _id) external onlyKYC ownersOnly(_id) nonReentrant {        
-        uint256 balance = balanceOf(msg.sender, _id);        
+    function claimYield(uint256 _id) external onlyKYC holdersOnly(_id) nonReentrant {
+        uint256 balance = balanceOf(msg.sender, _id);
         REITYield memory yieldData = tokenYieldData[_id];
 
         if (!tokenYieldVesting[_id][msg.sender].initialized) {
@@ -185,6 +184,8 @@ contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
         uint256 id,
         uint256 amount
     ) external override {
+        // TODO: only affirmed quantity is tradeable
+
         bytes memory empty;
         return safeTransferFrom(from, to, id, amount, empty);
     }
