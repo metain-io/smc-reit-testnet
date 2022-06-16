@@ -3,6 +3,371 @@ pragma solidity ^0.8.9;
 
 
 // 
+// OpenZeppelin Contracts (last updated v4.6.0) (token/ERC20/IERC20.sol)
+/**
+ * @dev Interface of the ERC20 standard as defined in the EIP.
+ */
+interface IERC20 {
+    /**
+     * @dev Emitted when `value` tokens are moved from one account (`from`) to
+     * another (`to`).
+     *
+     * Note that `value` may be zero.
+     */
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    /**
+     * @dev Emitted when the allowance of a `spender` for an `owner` is set by
+     * a call to {approve}. `value` is the new allowance.
+     */
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+
+    /**
+     * @dev Returns the amount of tokens in existence.
+     */
+    function totalSupply() external view returns (uint256);
+
+    /**
+     * @dev Returns the amount of tokens owned by `account`.
+     */
+    function balanceOf(address account) external view returns (uint256);
+
+    /**
+     * @dev Moves `amount` tokens from the caller's account to `to`.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transfer(address to, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Returns the remaining number of tokens that `spender` will be
+     * allowed to spend on behalf of `owner` through {transferFrom}. This is
+     * zero by default.
+     *
+     * This value changes when {approve} or {transferFrom} are called.
+     */
+    function allowance(address owner, address spender) external view returns (uint256);
+
+    /**
+     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * IMPORTANT: Beware that changing an allowance with this method brings the risk
+     * that someone may use both the old and the new allowance by unfortunate
+     * transaction ordering. One possible solution to mitigate this race
+     * condition is to first reduce the spender's allowance to 0 and set the
+     * desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     *
+     * Emits an {Approval} event.
+     */
+    function approve(address spender, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Moves `amount` tokens from `from` to `to` using the
+     * allowance mechanism. `amount` is then deducted from the caller's
+     * allowance.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transferFrom(
+        address from,
+        address to,
+        uint256 amount
+    ) external returns (bool);
+}
+
+// 
+// OpenZeppelin Contracts (last updated v4.6.0) (utils/math/SafeMath.sol)
+// CAUTION
+// This version of SafeMath should only be used with Solidity 0.8 or later,
+// because it relies on the compiler's built in overflow checks.
+/**
+ * @dev Wrappers over Solidity's arithmetic operations.
+ *
+ * NOTE: `SafeMath` is generally not needed starting with Solidity 0.8, since the compiler
+ * now has built in overflow checking.
+ */
+library SafeMath {
+    /**
+     * @dev Returns the addition of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            uint256 c = a + b;
+            if (c < a) return (false, 0);
+            return (true, c);
+        }
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b > a) return (false, 0);
+            return (true, a - b);
+        }
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+            // benefit is lost if 'b' is also tested.
+            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
+            if (a == 0) return (true, 0);
+            uint256 c = a * b;
+            if (c / a != b) return (false, 0);
+            return (true, c);
+        }
+    }
+
+    /**
+     * @dev Returns the division of two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a / b);
+        }
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a % b);
+        }
+    }
+
+    /**
+     * @dev Returns the addition of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `+` operator.
+     *
+     * Requirements:
+     *
+     * - Addition cannot overflow.
+     */
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a + b;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting on
+     * overflow (when the result is negative).
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a - b;
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `*` operator.
+     *
+     * Requirements:
+     *
+     * - Multiplication cannot overflow.
+     */
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a * b;
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers, reverting on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator.
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a / b;
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * reverting when dividing by zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a % b;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
+     * overflow (when the result is negative).
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {trySub}.
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b <= a, errorMessage);
+            return a - b;
+        }
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers, reverting with custom message on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a / b;
+        }
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * reverting with custom message when dividing by zero.
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {tryMod}.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a % b;
+        }
+    }
+}
+
+// 
+// OpenZeppelin Contracts v4.4.1 (security/ReentrancyGuard.sol)
+/**
+ * @dev Contract module that helps prevent reentrant calls to a function.
+ *
+ * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier
+ * available, which can be applied to functions to make sure there are no nested
+ * (reentrant) calls to them.
+ *
+ * Note that because there is a single `nonReentrant` guard, functions marked as
+ * `nonReentrant` may not call one another. This can be worked around by making
+ * those functions `private`, and then adding `external` `nonReentrant` entry
+ * points to them.
+ *
+ * TIP: If you would like to learn more about reentrancy and alternative ways
+ * to protect against it, check out our blog post
+ * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].
+ */
+abstract contract ReentrancyGuard {
+    // Booleans are more expensive than uint256 or any type that takes up a full
+    // word because each write operation emits an extra SLOAD to first read the
+    // slot's contents, replace the bits taken up by the boolean, and then write
+    // back. This is the compiler's defense against contract upgrades and
+    // pointer aliasing, and it cannot be disabled.
+
+    // The values being non-zero value makes deployment a bit more expensive,
+    // but in exchange the refund on every call to nonReentrant will be lower in
+    // amount. Since refunds are capped to a percentage of the total
+    // transaction's gas, it is best to keep them low in cases like this one, to
+    // increase the likelihood of the full refund coming into effect.
+    uint256 private constant _NOT_ENTERED = 1;
+    uint256 private constant _ENTERED = 2;
+
+    uint256 private _status;
+
+    constructor() {
+        _status = _NOT_ENTERED;
+    }
+
+    /**
+     * @dev Prevents a contract from calling itself, directly or indirectly.
+     * Calling a `nonReentrant` function from another `nonReentrant`
+     * function is not supported. It is possible to prevent this from happening
+     * by making the `nonReentrant` function external, and making it call a
+     * `private` function that does the actual work.
+     */
+    modifier nonReentrant() {
+        // On the first call to nonReentrant, _notEntered will be true
+        require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
+
+        // Any calls to nonReentrant after this point will fail
+        _status = _ENTERED;
+
+        _;
+
+        // By storing the original value once again, a refund is triggered (see
+        // https://eips.ethereum.org/EIPS/eip-2200)
+        _status = _NOT_ENTERED;
+    }
+}
+
+// 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -1300,230 +1665,6 @@ library Strings {
 }
 
 // 
-// OpenZeppelin Contracts (last updated v4.6.0) (utils/math/SafeMath.sol)
-// CAUTION
-// This version of SafeMath should only be used with Solidity 0.8 or later,
-// because it relies on the compiler's built in overflow checks.
-/**
- * @dev Wrappers over Solidity's arithmetic operations.
- *
- * NOTE: `SafeMath` is generally not needed starting with Solidity 0.8, since the compiler
- * now has built in overflow checking.
- */
-library SafeMath {
-    /**
-     * @dev Returns the addition of two unsigned integers, with an overflow flag.
-     *
-     * _Available since v3.4._
-     */
-    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        unchecked {
-            uint256 c = a + b;
-            if (c < a) return (false, 0);
-            return (true, c);
-        }
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.
-     *
-     * _Available since v3.4._
-     */
-    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        unchecked {
-            if (b > a) return (false, 0);
-            return (true, a - b);
-        }
-    }
-
-    /**
-     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
-     *
-     * _Available since v3.4._
-     */
-    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        unchecked {
-            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
-            // benefit is lost if 'b' is also tested.
-            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
-            if (a == 0) return (true, 0);
-            uint256 c = a * b;
-            if (c / a != b) return (false, 0);
-            return (true, c);
-        }
-    }
-
-    /**
-     * @dev Returns the division of two unsigned integers, with a division by zero flag.
-     *
-     * _Available since v3.4._
-     */
-    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        unchecked {
-            if (b == 0) return (false, 0);
-            return (true, a / b);
-        }
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.
-     *
-     * _Available since v3.4._
-     */
-    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        unchecked {
-            if (b == 0) return (false, 0);
-            return (true, a % b);
-        }
-    }
-
-    /**
-     * @dev Returns the addition of two unsigned integers, reverting on
-     * overflow.
-     *
-     * Counterpart to Solidity's `+` operator.
-     *
-     * Requirements:
-     *
-     * - Addition cannot overflow.
-     */
-    function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a + b;
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting on
-     * overflow (when the result is negative).
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     *
-     * - Subtraction cannot overflow.
-     */
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a - b;
-    }
-
-    /**
-     * @dev Returns the multiplication of two unsigned integers, reverting on
-     * overflow.
-     *
-     * Counterpart to Solidity's `*` operator.
-     *
-     * Requirements:
-     *
-     * - Multiplication cannot overflow.
-     */
-    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a * b;
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers, reverting on
-     * division by zero. The result is rounded towards zero.
-     *
-     * Counterpart to Solidity's `/` operator.
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a / b;
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * reverting when dividing by zero.
-     *
-     * Counterpart to Solidity's `%` operator. This function uses a `revert`
-     * opcode (which leaves remaining gas untouched) while Solidity uses an
-     * invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a % b;
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
-     * overflow (when the result is negative).
-     *
-     * CAUTION: This function is deprecated because it requires allocating memory for the error
-     * message unnecessarily. For custom revert reasons use {trySub}.
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     *
-     * - Subtraction cannot overflow.
-     */
-    function sub(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
-        unchecked {
-            require(b <= a, errorMessage);
-            return a - b;
-        }
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers, reverting with custom message on
-     * division by zero. The result is rounded towards zero.
-     *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function div(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
-        unchecked {
-            require(b > 0, errorMessage);
-            return a / b;
-        }
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * reverting with custom message when dividing by zero.
-     *
-     * CAUTION: This function is deprecated because it requires allocating memory for the error
-     * message unnecessarily. For custom revert reasons use {tryMod}.
-     *
-     * Counterpart to Solidity's `%` operator. This function uses a `revert`
-     * opcode (which leaves remaining gas untouched) while Solidity uses an
-     * invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function mod(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
-        unchecked {
-            require(b > 0, errorMessage);
-            return a % b;
-        }
-    }
-}
-
-// 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -1986,21 +2127,128 @@ contract ERC1155Tradable is ERC1155Upgradeable {
 }
 
 // 
-contract REITNFT is ERC1155Tradable, IREITTradable {
+contract KYCAccess is ContextUpgradeable {
+  // kyc list mapping
+    mapping(address => bool) private kycAccounts;
+
+    address private _kycAdmin;
+
+    function __KYCAccess_init() internal onlyInitializing {
+        __KYCAccess_init_unchained();
+    }
+
+    function __KYCAccess_init_unchained() internal onlyInitializing {
+        _setKYCAdmin(_msgSender());
+    }
+
+    modifier onlyKYCAdmin() {
+        require(_kycAdmin == msg.sender, "KYCAccess: caller is not the admin");
+        _;
+    }
+
+    /**
+     * @dev Throws if called by any account that's not KYC.
+     */
+    modifier onlyKYC() {
+        require(kycAccounts[msg.sender], "Not yet KYC");
+        _;
+    }
+
+    function _setKYCAdmin(address account) internal {
+        _kycAdmin = account;
+    }
+
+    /**
+     * @dev give an account access to KYC
+     * @param account Account to grant access
+     */
+    function addToKYC(address account) external onlyKYCAdmin {
+        kycAccounts[account] = true;
+    }
+
+    /**
+     * @dev remove an account's access from KYC
+     * @param account Account to remove
+     */
+    function removeKYC(address account) external onlyKYCAdmin {
+        kycAccounts[account] = false;
+    }
+
+    /**
+     * @dev give many accounts access to KYC
+     * @param accounts Accounts to grant access
+     */
+    function addManyToKYC(address[] calldata accounts)
+        external
+        onlyKYCAdmin
+    {
+        for (uint256 i = 0; i < accounts.length; i++) {
+            kycAccounts[accounts[i]] = true;
+        }
+    }
+
+    /**
+     * @dev remove many accounts' access from KYC
+     * @param accounts Accounts to remove access
+     */
+    function removeManyKYC(address[] calldata accounts)
+        external
+        onlyKYCAdmin
+    {
+        for (uint256 i = 0; i < accounts.length; i++) {
+            kycAccounts[accounts[i]] = false;
+        }
+    }
+
+    /**
+     * @dev check if an account is KYC
+     * @return bool
+     */
+    function isKYC(address account) public view returns (bool) {
+        require(account != address(0));
+        return kycAccounts[account];
+    }
+}
+
+// 
+interface IERC20Extented is IERC20 {
+    function decimals() external view returns (uint8);
+}
+
+contract REITNFT is ERC1155Tradable, ReentrancyGuard, KYCAccess, IREITTradable {
+    using SafeMath for uint256;
+
     event Create(uint256 id);
 
     struct REITMetadata {
         uint256 ipoTime;
         uint256 ipoUnitPrice;
-        uint256 yieldPeriod;
-        uint256 yieldDividend;
         uint256 liquidationTime;
-        uint256 liquidationExtension;
-        uint256[] annualAUM;
-        uint256[] purchaseQuota;
+        uint256 ownershipFee;
+    }
+
+    struct REITYield {
+        uint256 yieldDividend;
+        uint256 liquidationExtension;        
+    }
+
+    struct YieldVesting {
+        bool initialized;
+        // beneficiary of yield after they are released
+        address beneficiary;      
+        // amount of tokens affirmed
+        uint256 affirmed;  
+        // amount of tokens vested
+        uint256 released;
     }
 
     mapping(uint256 => REITMetadata) public tokenMetadata;
+    mapping(uint256 => REITYield) public tokenYieldData;
+    mapping(uint256 => mapping(address => YieldVesting)) private tokenYieldVesting;
+    mapping(uint256 => uint256) public reitFunding;    
+
+    // address of the payable tokens to fund and claim
+    mapping(uint256 => IERC20Extented) private fundingToken;
 
     /**
      * @dev Creates a new token type and assigns _initialSupply to an address
@@ -2008,6 +2256,7 @@ contract REITNFT is ERC1155Tradable, IREITTradable {
      * @param _initialOwner address of the first owner of the token
      * @param _initialSupply amount to supply the first owner
      * @param _uri URI for this token type
+     * @param _fundingToken Token as stable-coin to pay investors
      * @param _data Data to pass if receiver is contract
      * @return The newly created token ID
      */
@@ -2015,6 +2264,7 @@ contract REITNFT is ERC1155Tradable, IREITTradable {
         address _initialOwner,
         uint256 _initialSupply,
         string calldata _uri,
+        address _fundingToken,
         bytes calldata _data
     ) external onlyOwner returns (uint256) {
         uint256 _id = super._getNextTokenID();
@@ -2026,22 +2276,109 @@ contract REITNFT is ERC1155Tradable, IREITTradable {
             tokenUri[_id] = _uri;
         }
 
+        fundingToken[_id] = IERC20Extented(_fundingToken);
+
         tokenMetadata[_id] = REITMetadata(
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            new uint256[](0),
-            new uint256[](0)
+            0
         );
+
+        tokenYieldData[_id] = REITYield(0, 0);
 
         _mint(_initialOwner, _id, _initialSupply, _data);
         tokenSupply[_id] = _initialSupply;
 
         emit Create(_id);
         return _id;
+    }
+
+    function initiate(uint256 _id, uint256 ipoTime, uint256 ipoUnitPrice, uint liquidationTime, uint256 ownershipFee) external creatorOnly(_id) {
+        tokenMetadata[_id] = REITMetadata(
+            ipoTime,
+            ipoUnitPrice,
+            liquidationTime,
+            ownershipFee
+        );
+    }
+
+    function affirmOwnership(uint256 _id) external onlyKYC ownersOnly(_id) {
+        REITMetadata memory metadata = tokenMetadata[_id];
+        YieldVesting memory yieldVesting = tokenYieldVesting[_id][msg.sender];        
+
+        uint256 balance = balanceOf(msg.sender, _id);
+        uint256 quantity = balance.sub(yieldVesting.affirmed);
+
+        require(quantity > 0, "REITNFT: Already affirmed");
+
+        IERC20Extented payableToken = fundingToken[_id];
+        uint256 fee = quantity.mul(metadata.ipoUnitPrice).mul(metadata.ownershipFee).div(10 ** payableToken.decimals());
+        
+        require(
+            payableToken.transferFrom(
+                msg.sender,
+                address(this),
+                fee
+            ),
+            "REITNFT: Could not transfer fund"
+        );        
+
+        tokenYieldVesting[_id][msg.sender].affirmed = balance;
+    }
+
+    function setYield(uint256 _id, uint256 yieldDividend, uint256 liquidationExtension) external creatorOnly(_id) {
+        uint256 totalSupply = tokenSupply[_id];
+        uint256 totalSupplyValue = totalSupply.mul(yieldDividend);
+        uint256 totalFunding = reitFunding[_id];
+        require(totalSupplyValue <= totalFunding, "");
+        tokenYieldData[_id] = REITYield(yieldDividend, liquidationExtension);
+    }
+
+    function claimYield(uint256 _id) external onlyKYC ownersOnly(_id) nonReentrant {        
+        uint256 balance = balanceOf(msg.sender, _id);        
+        REITYield memory yieldData = tokenYieldData[_id];
+
+        if (!tokenYieldVesting[_id][msg.sender].initialized) {
+            tokenYieldVesting[_id][msg.sender].initialized = true;
+            tokenYieldVesting[_id][msg.sender].beneficiary = msg.sender;
+            tokenYieldVesting[_id][msg.sender].affirmed = balance;
+        }        
+        
+        YieldVesting memory yieldVesting = tokenYieldVesting[_id][msg.sender];
+
+        uint256 claimableYield = yieldVesting.affirmed.mul(yieldData.yieldDividend).sub(yieldVesting.released);
+        require(claimableYield > 0, "REITNFT: no more claimable yield");
+
+        uint256 availableFund = reitFunding[_id];
+        require(availableFund >= claimableYield, "REITNFT: need more fund from issuer");
+
+        reitFunding[_id] = reitFunding[_id].sub(claimableYield);
+        tokenYieldVesting[_id][msg.sender].released = yieldVesting.released.add(claimableYield);
+
+        IERC20Extented payableToken = fundingToken[_id];
+        require(
+            payableToken.transfer(
+                msg.sender,
+                claimableYield
+            ),
+            "REITNFT: Could not transfer fund"
+        );        
+    }
+
+    function fundREIT(uint256 _id, uint256 amount) external {
+        IERC20Extented payableToken = fundingToken[_id];
+
+        require(
+            payableToken.transferFrom(
+                msg.sender,
+                address(this),
+                amount
+            ),
+            "REITNFT: Could not transfer fund"
+        );
+
+        reitFunding[_id] = reitFunding[_id].add(amount);
     }
 
     function safeTransferREITFrom(

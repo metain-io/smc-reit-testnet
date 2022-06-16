@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 import "./IREITTradable.sol";
 import "./Whitelisting.sol";
@@ -13,6 +14,7 @@ contract REITIPO is
     IERC1155ReceiverUpgradeable,
     Initializable,
     Whitelisting,
+    OwnableUpgradeable,
     ReentrancyGuardUpgradeable
 {
     // address of the REIT NFT
@@ -25,10 +27,11 @@ contract REITIPO is
     function initialize(address _nftAddress, uint256 id) external initializer {
         require(_nftAddress != address(0x0));
         __Ownable_init();
+        __Whitelisting_init();
 
         _nft = IREITTradable(_nftAddress);
         _nftId = id;
-        _whitelistPaused = false;
+        _whitelistFree = false;
     }
 
     receive() external payable {}
@@ -122,6 +125,7 @@ contract REITIPO is
             "REITIPO: not enough funds to buy"
         );
 
+        // TODO: Must KYC before transfer NFT
         _nft.safeTransferREITFrom(address(this), msg.sender, _nftId, quantity);
     }
 

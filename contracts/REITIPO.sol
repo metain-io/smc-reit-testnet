@@ -570,6 +570,123 @@ abstract contract ReentrancyGuardUpgradeable is Initializable {
 }
 
 // 
+// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+/**
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract ContextUpgradeable is Initializable {
+    function __Context_init() internal onlyInitializing {
+    }
+
+    function __Context_init_unchained() internal onlyInitializing {
+    }
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        return msg.data;
+    }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting down storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[50] private __gap;
+}
+
+// 
+// OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an owner) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the owner account will be the one that deploys the contract. This
+ * can later be changed with {transferOwnership}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyOwner`, which can be applied to your functions to restrict their use to
+ * the owner.
+ */
+abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {
+    address private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial owner.
+     */
+    function __Ownable_init() internal onlyInitializing {
+        __Ownable_init_unchained();
+    }
+
+    function __Ownable_init_unchained() internal onlyInitializing {
+        _transferOwnership(_msgSender());
+    }
+
+    /**
+     * @dev Returns the address of the current owner.
+     */
+    function owner() public view virtual returns (address) {
+        return _owner;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        require(owner() == _msgSender(), "Ownable: caller is not the owner");
+        _;
+    }
+
+    /**
+     * @dev Leaves the contract without owner. It will not be possible to call
+     * `onlyOwner` functions anymore. Can only be called by the current owner.
+     *
+     * NOTE: Renouncing ownership will leave the contract without an owner,
+     * thereby removing any functionality that is only available to the owner.
+     */
+    function renounceOwnership() public virtual onlyOwner {
+        _transferOwnership(address(0));
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Can only be called by the current owner.
+     */
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        _transferOwnership(newOwner);
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Internal function without access restriction.
+     */
+    function _transferOwnership(address newOwner) internal virtual {
+        address oldOwner = _owner;
+        _owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting down storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[49] private __gap;
+}
+
+// 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -731,140 +848,53 @@ interface IREITTradable {
 }
 
 // 
-// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
-/**
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
-abstract contract ContextUpgradeable is Initializable {
-    function __Context_init() internal onlyInitializing {
-    }
-
-    function __Context_init_unchained() internal onlyInitializing {
-    }
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-
-    /**
-     * @dev This empty reserved space is put in place to allow future versions to add new
-     * variables without shifting down storage in the inheritance chain.
-     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
-     */
-    uint256[50] private __gap;
-}
-
-// 
-// OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
-/**
- * @dev Contract module which provides a basic access control mechanism, where
- * there is an account (an owner) that can be granted exclusive access to
- * specific functions.
- *
- * By default, the owner account will be the one that deploys the contract. This
- * can later be changed with {transferOwnership}.
- *
- * This module is used through inheritance. It will make available the modifier
- * `onlyOwner`, which can be applied to your functions to restrict their use to
- * the owner.
- */
-abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {
-    address private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    /**
-     * @dev Initializes the contract setting the deployer as the initial owner.
-     */
-    function __Ownable_init() internal onlyInitializing {
-        __Ownable_init_unchained();
-    }
-
-    function __Ownable_init_unchained() internal onlyInitializing {
-        _transferOwnership(_msgSender());
-    }
-
-    /**
-     * @dev Returns the address of the current owner.
-     */
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    /**
-     * @dev Throws if called by any account other than the owner.
-     */
-    modifier onlyOwner() {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
-
-    /**
-     * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
-     *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
-     */
-    function renounceOwnership() public virtual onlyOwner {
-        _transferOwnership(address(0));
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
-     */
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
-        _transferOwnership(newOwner);
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Internal function without access restriction.
-     */
-    function _transferOwnership(address newOwner) internal virtual {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }
-
-    /**
-     * @dev This empty reserved space is put in place to allow future versions to add new
-     * variables without shifting down storage in the inheritance chain.
-     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
-     */
-    uint256[49] private __gap;
-}
-
-// 
-contract Whitelisting is OwnableUpgradeable {
+contract Whitelisting is ContextUpgradeable {
     // white-list mapping
     mapping(address => bool) private whitelisteds;
+
+    address private _whiteListAdmin;
+    bool _whitelistFree;    
+
+    function __Whitelisting_init() internal onlyInitializing {
+        __Whitelisting_init_unchained();
+    }
+
+    function __Whitelisting_init_unchained() internal onlyInitializing {
+        _setWhitelistAdmin(_msgSender());
+    }
+
+    modifier onlyWhiteListAdmin() {
+        require(_whiteListAdmin == msg.sender, "Whitelisting: caller is not the admin");
+        _;
+    }
 
     /**
      * @dev Throws if called by any account that's not whitelisted.
      */
     modifier onlyWhitelisted() {
-        require(whitelisteds[msg.sender], "Not whitelisted");
+        require(whitelisteds[msg.sender] || _whitelistFree, "Not whitelisted");
         _;
+    }
+
+    function _setWhitelistAdmin(address account) internal {
+        _whiteListAdmin = account;
+    }
+
+    function freeWhiteList () external onlyWhiteListAdmin {
+        require(!_whitelistFree, "Whitelisting already resumed");
+        _whitelistFree = true;
+    }
+
+    function resumeWhiteList () external onlyWhiteListAdmin {
+        require(_whitelistFree, "Whitelisting already paused");
+        _whitelistFree = false;
     }
 
     /**
      * @dev give an account access to whitelisted
      * @param account Account to grant access
      */
-    function addToWhitelisted(address account) external onlyOwner {
+    function addToWhitelisted(address account) external onlyWhiteListAdmin {
         whitelisteds[account] = true;
     }
 
@@ -872,7 +902,7 @@ contract Whitelisting is OwnableUpgradeable {
      * @dev remove an account's access from whitelisted
      * @param account Account to remove
      */
-    function removeWhitelisted(address account) external onlyOwner {
+    function removeWhitelisted(address account) external onlyWhiteListAdmin {
         whitelisteds[account] = false;
     }
 
@@ -882,7 +912,7 @@ contract Whitelisting is OwnableUpgradeable {
      */
     function addManyToWhitelisted(address[] calldata accounts)
         external
-        onlyOwner
+        onlyWhiteListAdmin
     {
         for (uint256 i = 0; i < accounts.length; i++) {
             whitelisteds[accounts[i]] = true;
@@ -895,7 +925,7 @@ contract Whitelisting is OwnableUpgradeable {
      */
     function removeManyWhitelisted(address[] calldata accounts)
         external
-        onlyOwner
+        onlyWhiteListAdmin
     {
         for (uint256 i = 0; i < accounts.length; i++) {
             whitelisteds[accounts[i]] = false;
@@ -917,6 +947,7 @@ contract REITIPO is
     IERC1155ReceiverUpgradeable,
     Initializable,
     Whitelisting,
+    OwnableUpgradeable,
     ReentrancyGuardUpgradeable{
     // address of the REIT NFT
     IREITTradable private _nft;
@@ -928,9 +959,11 @@ contract REITIPO is
     function initialize(address _nftAddress, uint256 id) external initializer {
         require(_nftAddress != address(0x0));
         __Ownable_init();
+        __Whitelisting_init();
 
         _nft = IREITTradable(_nftAddress);
         _nftId = id;
+        _whitelistFree = false;
     }
 
     receive() external payable {}
@@ -1024,6 +1057,7 @@ contract REITIPO is
             "REITIPO: not enough funds to buy"
         );
 
+        // TODO: Must KYC before transfer NFT
         _nft.safeTransferREITFrom(address(this), msg.sender, _nftId, quantity);
     }
 

@@ -1,36 +1,55 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
 
-contract Whitelisting is OwnableUpgradeable {
+contract Whitelisting is ContextUpgradeable {
     // white-list mapping
     mapping(address => bool) private whitelisteds;
-    bool private _whitelistPaused;    
+
+    address private _whiteListAdmin;
+    bool _whitelistFree;    
+
+    function __Whitelisting_init() internal onlyInitializing {
+        __Whitelisting_init_unchained();
+    }
+
+    function __Whitelisting_init_unchained() internal onlyInitializing {
+        _setWhitelistAdmin(_msgSender());
+    }
+
+    modifier onlyWhiteListAdmin() {
+        require(_whiteListAdmin == msg.sender, "Whitelisting: caller is not the admin");
+        _;
+    }
 
     /**
      * @dev Throws if called by any account that's not whitelisted.
      */
     modifier onlyWhitelisted() {
-        require(whitelisteds[msg.sender] || _whitelistPaused, "Not whitelisted");
+        require(whitelisteds[msg.sender] || _whitelistFree, "Not whitelisted");
         _;
     }
 
-    function pauseWhiteList () external onlyOwner {
-        require(!_whitelistPaused, "Whitelisting already resumed");
-        _whitelistPaused = true;
+    function _setWhitelistAdmin(address account) internal {
+        _whiteListAdmin = account;
     }
 
-    function resumeWhiteList () external onlyOwner {
-        require(_whitelistPaused, "Whitelisting already paused");
-        _whitelistPaused = false;
+    function freeWhiteList () external onlyWhiteListAdmin {
+        require(!_whitelistFree, "Whitelisting already resumed");
+        _whitelistFree = true;
+    }
+
+    function resumeWhiteList () external onlyWhiteListAdmin {
+        require(_whitelistFree, "Whitelisting already paused");
+        _whitelistFree = false;
     }
 
     /**
      * @dev give an account access to whitelisted
      * @param account Account to grant access
      */
-    function addToWhitelisted(address account) external onlyOwner {
+    function addToWhitelisted(address account) external onlyWhiteListAdmin {
         whitelisteds[account] = true;
     }
 
@@ -38,7 +57,7 @@ contract Whitelisting is OwnableUpgradeable {
      * @dev remove an account's access from whitelisted
      * @param account Account to remove
      */
-    function removeWhitelisted(address account) external onlyOwner {
+    function removeWhitelisted(address account) external onlyWhiteListAdmin {
         whitelisteds[account] = false;
     }
 
@@ -48,7 +67,7 @@ contract Whitelisting is OwnableUpgradeable {
      */
     function addManyToWhitelisted(address[] calldata accounts)
         external
-        onlyOwner
+        onlyWhiteListAdmin
     {
         for (uint256 i = 0; i < accounts.length; i++) {
             whitelisteds[accounts[i]] = true;
@@ -61,7 +80,7 @@ contract Whitelisting is OwnableUpgradeable {
      */
     function removeManyWhitelisted(address[] calldata accounts)
         external
-        onlyOwner
+        onlyWhiteListAdmin
     {
         for (uint256 i = 0; i < accounts.length; i++) {
             whitelisteds[accounts[i]] = false;
