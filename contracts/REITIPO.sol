@@ -835,14 +835,51 @@ interface IERC1155 is IERC165 {
  * @title IREITTradable
  */
 interface IREITTradable {
-    function getREITBalanceOf(address account, uint256 id) external view returns (uint256);
+    function balanceOf(address account, uint256 id) external view returns (uint256);
 
-    function safeTransferREITFrom(
+    /**
+     * @dev Transfers `amount` tokens of token type `id` from `from` to `to`.
+     *
+     * Emits a {TransferSingle} event.
+     *
+     * Requirements:
+     *
+     * - `to` cannot be the zero address.
+     * - If the caller is not `from`, it must be have been approved to spend ``from``'s tokens via {setApprovalForAll}.
+     * - `from` must have a balance of tokens of type `id` of at least `amount`.
+     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the
+     * acceptance magic value.
+     */
+    function safeTransferFrom(
         address from,
         address to,
         uint256 id,
-        uint256 amount
+        uint256 amount,
+        bytes calldata data
     ) external;
+
+    /**
+     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {safeTransferFrom}.
+     *
+     * Emits a {TransferBatch} event.
+     *
+     * Requirements:
+     *
+     * - `ids` and `amounts` must have the same length.
+     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the
+     * acceptance magic value.
+     */
+    function safeBatchTransferFrom(
+        address from,
+        address to,
+        uint256[] calldata ids,
+        uint256[] calldata amounts,
+        bytes calldata data
+    ) external;
+
+    function registeredBalanceOf(address account, uint256 id) external view returns (uint256);
+
+    function isKYC(address account) external view returns (bool);
 
     function getIPOUnitPrice(uint256 _id) external view returns (uint256);
 }
@@ -1028,8 +1065,10 @@ contract REITIPO is
      * - Only the owner can withdraw.
      */
     function withdrawNFT() external nonReentrant onlyOwner {
-        uint256 balance = _nft.getREITBalanceOf(address(this), _nftId);
-        _nft.safeTransferREITFrom(address(this), owner(), _nftId, balance);
+        uint256 balance = _nft.balanceOf(address(this), _nftId);
+
+        bytes memory empty;
+        _nft.safeTransferFrom(address(this), owner(), _nftId, balance, empty);
     }
 
     /**
@@ -1041,7 +1080,7 @@ contract REITIPO is
         external
         onlyWhitelisted
     {
-        uint256 stock = _nft.getREITBalanceOf(address(this), _nftId);
+        uint256 stock = _nft.balanceOf(address(this), _nftId);
         require(stock >= quantity, "REITIPO: not enough units to sell");
 
         uint256 price = _nft.getIPOUnitPrice(_nftId);
@@ -1057,8 +1096,13 @@ contract REITIPO is
             "REITIPO: not enough funds to buy"
         );
 
-        // TODO: Must KYC before transfer NFT
-        _nft.safeTransferREITFrom(address(this), msg.sender, _nftId, quantity);
+        if (_nft.isKYC(msg.sender)) {        
+            bytes memory empty;
+            _nft.safeTransferFrom(address(this), msg.sender, _nftId, quantity, empty);
+            // TODO: allow IPO to register the balance without fee
+        } else {
+            // Pending this purchase
+        }
     }
 
     function onERC1155Received(

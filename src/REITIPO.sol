@@ -96,8 +96,10 @@ contract REITIPO is
      * - Only the owner can withdraw.
      */
     function withdrawNFT() external nonReentrant onlyOwner {
-        uint256 balance = _nft.getREITBalanceOf(address(this), _nftId);
-        _nft.safeTransferREITFrom(address(this), owner(), _nftId, balance);
+        uint256 balance = _nft.balanceOf(address(this), _nftId);
+
+        bytes memory empty;
+        _nft.safeTransferFrom(address(this), owner(), _nftId, balance, empty);
     }
 
     /**
@@ -109,7 +111,7 @@ contract REITIPO is
         external
         onlyWhitelisted
     {
-        uint256 stock = _nft.getREITBalanceOf(address(this), _nftId);
+        uint256 stock = _nft.balanceOf(address(this), _nftId);
         require(stock >= quantity, "REITIPO: not enough units to sell");
 
         uint256 price = _nft.getIPOUnitPrice(_nftId);
@@ -125,8 +127,13 @@ contract REITIPO is
             "REITIPO: not enough funds to buy"
         );
 
-        // TODO: Must KYC before transfer NFT
-        _nft.safeTransferREITFrom(address(this), msg.sender, _nftId, quantity);
+        if (_nft.isKYC(msg.sender)) {        
+            bytes memory empty;
+            _nft.safeTransferFrom(address(this), msg.sender, _nftId, quantity, empty);
+            // TODO: allow IPO to register the balance without fee
+        } else {
+            // Pending this purchase
+        }
     }
 
     function onERC1155Received(

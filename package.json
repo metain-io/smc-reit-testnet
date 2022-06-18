@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "ganache-cli --db .ganache -d --networkId 1337 -m \"myth like bonus scare over problem client lizard pioneer submit female collect\"",
     "flatten": "gulp flatten",
-    "compile": "hardhat compile",
+    "compile": "gulp flatten && hardhat compile",
     "test": "hardhat test --network dev",
     "test:interact:dev": "hardhat interact --network dev",
     "test:interact:testnet": "hardhat interact --network testnet",    

@@ -119,13 +119,6 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
 
     /**
      * @dev See {IERC1155MetadataURI-uri}.
-     *
-     * This implementation returns the same URI for *all* token types. It relies
-     * on the token type ID substitution mechanism
-     * https://eips.ethereum.org/EIPS/eip-1155#metadata[defined in the EIP].
-     *
-     * Clients calling this function must replace the `\{id\}` substring with the
-     * actual token type ID.
      */
     function uri(uint256 _id)
         public

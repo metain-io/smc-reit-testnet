@@ -5,7 +5,7 @@ import "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
 
 contract KYCAccess is ContextUpgradeable {
   // kyc list mapping
-    mapping(address => bool) private kycAccounts;
+    mapping(address => bool) internal kycAccounts;
 
     address private _kycAdmin;
 
@@ -74,14 +74,5 @@ contract KYCAccess is ContextUpgradeable {
         for (uint256 i = 0; i < accounts.length; i++) {
             kycAccounts[accounts[i]] = false;
         }
-    }
-
-    /**
-     * @dev check if an account is KYC
-     * @return bool
-     */
-    function isKYC(address account) public view returns (bool) {
-        require(account != address(0));
-        return kycAccounts[account];
-    }
+    }    
 }
