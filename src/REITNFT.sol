@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 
 import "./ERC1155Tradable.sol";
 import "./IREITTradable.sol";
@@ -14,6 +15,7 @@ interface IERC20Extented is IERC20 {
 
 contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     using SafeMath for uint256;
+    using AddressUpgradeable for address;
 
     event Create(uint256 id);
 
@@ -41,10 +43,11 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     mapping(uint256 => REITYield) public tokenYieldData;
     mapping(uint256 => mapping(address => YieldVesting))
         private tokenYieldVesting;
-    mapping(uint256 => uint256) public dividendFunds;    
+    mapping(uint256 => uint256) public dividendFunds;
 
     // address of the payable tokens to fund and claim
     mapping(uint256 => IERC20Extented) private fundingToken;
+    mapping(uint256 => address) private ipoContracts;
 
     mapping(uint256 => mapping(address => uint256)) private _registeredBalances;
 
@@ -56,7 +59,7 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         require(account != address(0));
         return kycAccounts[account];
     }
-    
+
     /**
      * @dev Creates a new token type and assigns _initialSupply to an address
      * NOTE: remove onlyOwner if you want third parties to create new tokens on your contract (which may change your IDs)
@@ -111,12 +114,24 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         );
     }
 
-    function registeredBalanceOf(address account, uint256 id) public view virtual returns (uint256) {
-        require(account != address(0), "ERC1155: balance query for the zero address");
+    function registeredBalanceOf(address account, uint256 id)
+        public
+        view
+        virtual
+        returns (uint256)
+    {
+        require(
+            account != address(0),
+            "ERC1155: balance query for the zero address"
+        );
         return _registeredBalances[id][account];
     }
 
-    function registerBalanceOwnership(uint256 _id) external onlyKYC holdersOnly(_id) {
+    function registerBalanceOwnership(uint256 _id)
+        external
+        onlyKYC
+        holdersOnly(_id)
+    {
         REITMetadata memory metadata = tokenMetadata[_id];
 
         uint256 balance = balanceOf(msg.sender, _id);
@@ -188,15 +203,18 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         dividendFunds[_id] = dividendFunds[_id].add(amount);
     }
 
-    function unlockDividends(
-        uint256 _id,
-        uint256 dividend
-    ) external creatorOnly(_id) {
+    function unlockDividends(uint256 _id, uint256 dividend)
+        external
+        creatorOnly(_id)
+    {
         uint256 nextDividend = tokenYieldData[_id].yieldDividend.add(dividend);
         uint256 totalSupply = tokenSupply[_id];
         uint256 totalSupplyValue = totalSupply.mul(nextDividend);
         uint256 totalFunding = dividendFunds[_id];
-        require(totalSupplyValue <= totalFunding, "Not enough funding to pay all dividends");
+        require(
+            totalSupplyValue <= totalFunding,
+            "Not enough funding to pay all dividends"
+        );
         tokenYieldData[_id].yieldDividend = nextDividend;
     }
 
@@ -215,6 +233,12 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
             "ERC1155: caller is not owner nor approved"
         );
         _safeTransferFrom(from, to, id, amount, data);
+
+        if (isKYC(to) && isIPOContract(id, from)) {
+            _registeredBalances[id][to] = _registeredBalances[id][to].add(
+                amount
+            );
+        }
     }
 
     /**
@@ -232,6 +256,18 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
             "ERC1155: transfer caller is not owner nor approved"
         );
         _safeBatchTransferFrom(from, to, ids, amounts, data);
+
+        if (isKYC(to)) {
+            for (uint256 i = 0; i < ids.length; ++i) {
+                uint256 id = ids[i];
+
+                if (isIPOContract(id, from)) {
+                    uint256 amount = amounts[i];
+                    _registeredBalances[id][to] = _registeredBalances[id][to]
+                        .add(amount);
+                }
+            }
+        }
     }
 
     function balanceOf(address account, uint256 id)
@@ -250,5 +286,24 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         returns (uint256)
     {
         return tokenMetadata[_id].ipoUnitPrice;
+    }
+
+    function setIPOContract(uint256 _id, address account)
+        external
+        creatorOnly(_id)
+    {
+        ipoContracts[_id] = account;
+    }
+
+    function getIPOContract(uint256 _id) external view returns (address) {
+        return ipoContracts[_id];
+    }
+
+    function isIPOContract(uint256 _id, address account)
+        public
+        view
+        returns (bool)
+    {
+        return ipoContracts[_id] == account;
     }
 }

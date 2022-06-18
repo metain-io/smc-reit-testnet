@@ -6,6 +6,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgrad
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import "./IREITTradable.sol";
 import "./Whitelisting.sol";
@@ -17,9 +18,13 @@ contract REITIPO is
     OwnableUpgradeable,
     ReentrancyGuardUpgradeable
 {
+    using SafeMath for uint256;
+
     // address of the REIT NFT
     IREITTradable private _nft;
     uint256 private _nftId;
+
+    mapping(address => uint256) _pendingBalances;
 
     // address of the stable token
     mapping(string => IERC20) private _payableToken;
@@ -111,6 +116,8 @@ contract REITIPO is
         external
         onlyWhitelisted
     {
+        require(_nft.isIPOContract(_nftId, address(this)), "REITIPO: Must set this as REIT IPO contract");
+
         uint256 stock = _nft.balanceOf(address(this), _nftId);
         require(stock >= quantity, "REITIPO: not enough units to sell");
 
@@ -129,11 +136,29 @@ contract REITIPO is
 
         if (_nft.isKYC(msg.sender)) {        
             bytes memory empty;
-            _nft.safeTransferFrom(address(this), msg.sender, _nftId, quantity, empty);
-            // TODO: allow IPO to register the balance without fee
+
+            // IPO contract will register the balance without fee
+            _nft.safeTransferFrom(address(this), msg.sender, _nftId, quantity, empty);            
         } else {
-            // Pending this purchase
+            // Pending this purchase until buyer is KYC
+            _pendingBalances[msg.sender] = _pendingBalances[msg.sender].add(quantity);
         }
+    }
+
+    function claimPendingBalances()
+        external
+        onlyWhitelisted
+    {
+        require(_nft.isKYC(msg.sender), "KYC required");
+        require(_pendingBalances[msg.sender] > 0, "No more pending balances");
+
+        uint256 quantity = _pendingBalances[msg.sender];
+        uint256 stock = _nft.balanceOf(address(this), _nftId);
+        require(stock >= quantity, "REITIPO: not enough units to claim");
+
+        bytes memory empty;        
+        _nft.safeTransferFrom(address(this), msg.sender, _nftId, quantity, empty);
+        _pendingBalances[msg.sender] = 0;
     }
 
     function onERC1155Received(
