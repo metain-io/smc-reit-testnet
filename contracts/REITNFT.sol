@@ -307,222 +307,6 @@ library SafeMath {
 }
 
 // 
-// OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
-/**
- * @dev Interface of the ERC165 standard, as defined in the
- * https://eips.ethereum.org/EIPS/eip-165[EIP].
- *
- * Implementers can declare support of contract interfaces, which can then be
- * queried by others ({ERC165Checker}).
- *
- * For an implementation, see {ERC165}.
- */
-interface IERC165Upgradeable {
-    /**
-     * @dev Returns true if this contract implements the interface defined by
-     * `interfaceId`. See the corresponding
-     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
-     * to learn more about how these ids are created.
-     *
-     * This function call must use less than 30 000 gas.
-     */
-    function supportsInterface(bytes4 interfaceId) external view returns (bool);
-}
-
-// 
-// OpenZeppelin Contracts v4.4.1 (token/ERC1155/IERC1155.sol)
-/**
- * @dev Required interface of an ERC1155 compliant contract, as defined in the
- * https://eips.ethereum.org/EIPS/eip-1155[EIP].
- *
- * _Available since v3.1._
- */
-interface IERC1155Upgradeable is IERC165Upgradeable {
-    /**
-     * @dev Emitted when `value` tokens of token type `id` are transferred from `from` to `to` by `operator`.
-     */
-    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
-
-    /**
-     * @dev Equivalent to multiple {TransferSingle} events, where `operator`, `from` and `to` are the same for all
-     * transfers.
-     */
-    event TransferBatch(
-        address indexed operator,
-        address indexed from,
-        address indexed to,
-        uint256[] ids,
-        uint256[] values
-    );
-
-    /**
-     * @dev Emitted when `account` grants or revokes permission to `operator` to transfer their tokens, according to
-     * `approved`.
-     */
-    event ApprovalForAll(address indexed account, address indexed operator, bool approved);
-
-    /**
-     * @dev Emitted when the URI for token type `id` changes to `value`, if it is a non-programmatic URI.
-     *
-     * If an {URI} event was emitted for `id`, the standard
-     * https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[guarantees] that `value` will equal the value
-     * returned by {IERC1155MetadataURI-uri}.
-     */
-    event URI(string value, uint256 indexed id);
-
-    /**
-     * @dev Returns the amount of tokens of token type `id` owned by `account`.
-     *
-     * Requirements:
-     *
-     * - `account` cannot be the zero address.
-     */
-    function balanceOf(address account, uint256 id) external view returns (uint256);
-
-    /**
-     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {balanceOf}.
-     *
-     * Requirements:
-     *
-     * - `accounts` and `ids` must have the same length.
-     */
-    function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids)
-        external
-        view
-        returns (uint256[] memory);
-
-    /**
-     * @dev Grants or revokes permission to `operator` to transfer the caller's tokens, according to `approved`,
-     *
-     * Emits an {ApprovalForAll} event.
-     *
-     * Requirements:
-     *
-     * - `operator` cannot be the caller.
-     */
-    function setApprovalForAll(address operator, bool approved) external;
-
-    /**
-     * @dev Returns true if `operator` is approved to transfer ``account``'s tokens.
-     *
-     * See {setApprovalForAll}.
-     */
-    function isApprovedForAll(address account, address operator) external view returns (bool);
-
-    /**
-     * @dev Transfers `amount` tokens of token type `id` from `from` to `to`.
-     *
-     * Emits a {TransferSingle} event.
-     *
-     * Requirements:
-     *
-     * - `to` cannot be the zero address.
-     * - If the caller is not `from`, it must be have been approved to spend ``from``'s tokens via {setApprovalForAll}.
-     * - `from` must have a balance of tokens of type `id` of at least `amount`.
-     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the
-     * acceptance magic value.
-     */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 id,
-        uint256 amount,
-        bytes calldata data
-    ) external;
-
-    /**
-     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {safeTransferFrom}.
-     *
-     * Emits a {TransferBatch} event.
-     *
-     * Requirements:
-     *
-     * - `ids` and `amounts` must have the same length.
-     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the
-     * acceptance magic value.
-     */
-    function safeBatchTransferFrom(
-        address from,
-        address to,
-        uint256[] calldata ids,
-        uint256[] calldata amounts,
-        bytes calldata data
-    ) external;
-}
-
-// 
-// OpenZeppelin Contracts (last updated v4.5.0) (token/ERC1155/IERC1155Receiver.sol)
-/**
- * @dev _Available since v3.1._
- */
-interface IERC1155ReceiverUpgradeable is IERC165Upgradeable {
-    /**
-     * @dev Handles the receipt of a single ERC1155 token type. This function is
-     * called at the end of a `safeTransferFrom` after the balance has been updated.
-     *
-     * NOTE: To accept the transfer, this must return
-     * `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`
-     * (i.e. 0xf23a6e61, or its own function selector).
-     *
-     * @param operator The address which initiated the transfer (i.e. msg.sender)
-     * @param from The address which previously owned the token
-     * @param id The ID of the token being transferred
-     * @param value The amount of tokens being transferred
-     * @param data Additional data with no specified format
-     * @return `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))` if transfer is allowed
-     */
-    function onERC1155Received(
-        address operator,
-        address from,
-        uint256 id,
-        uint256 value,
-        bytes calldata data
-    ) external returns (bytes4);
-
-    /**
-     * @dev Handles the receipt of a multiple ERC1155 token types. This function
-     * is called at the end of a `safeBatchTransferFrom` after the balances have
-     * been updated.
-     *
-     * NOTE: To accept the transfer(s), this must return
-     * `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`
-     * (i.e. 0xbc197c81, or its own function selector).
-     *
-     * @param operator The address which initiated the batch transfer (i.e. msg.sender)
-     * @param from The address which previously owned the token
-     * @param ids An array containing ids of each token being transferred (order and length must match values array)
-     * @param values An array containing amounts of each token being transferred (order and length must match ids array)
-     * @param data Additional data with no specified format
-     * @return `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))` if transfer is allowed
-     */
-    function onERC1155BatchReceived(
-        address operator,
-        address from,
-        uint256[] calldata ids,
-        uint256[] calldata values,
-        bytes calldata data
-    ) external returns (bytes4);
-}
-
-// 
-// OpenZeppelin Contracts v4.4.1 (token/ERC1155/extensions/IERC1155MetadataURI.sol)
-/**
- * @dev Interface of the optional ERC1155MetadataExtension interface, as defined
- * in the https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[EIP].
- *
- * _Available since v3.1._
- */
-interface IERC1155MetadataURIUpgradeable is IERC1155Upgradeable {
-    /**
-     * @dev Returns the URI for token type `id`.
-     *
-     * If the `\{id\}` substring is present in the URI, it must be replaced by
-     * clients with the actual token type ID.
-     */
-    function uri(uint256 id) external view returns (string memory);
-}
-
-// 
 // OpenZeppelin Contracts (last updated v4.5.0) (utils/Address.sol)
 /**
  * @dev Collection of functions related to the address type
@@ -892,6 +676,298 @@ abstract contract ContextUpgradeable is Initializable {
      * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
      */
     uint256[50] private __gap;
+}
+
+// 
+contract KYCAccessUpgradeable is Initializable, ContextUpgradeable {
+    // kyc list mapping
+    mapping(address => bool) internal kycAccounts;
+
+    address private _kycAdmin;
+
+    function __KYCAccess_init() internal onlyInitializing {
+        __KYCAccess_init_unchained();
+    }
+
+    function __KYCAccess_init_unchained() internal onlyInitializing {
+        _setKYCAdmin(_msgSender());
+    }
+
+    modifier onlyKYCAdmin() {
+        require(_kycAdmin == msg.sender, "KYCAccess: caller is not the admin");
+        _;
+    }
+
+    /**
+     * @dev Throws if called by any account that's not KYC.
+     */
+    modifier onlyKYC() {
+        require(kycAccounts[msg.sender], "Not yet KYC");
+        _;
+    }
+
+    function _setKYCAdmin(address account) internal {
+        _kycAdmin = account;
+    }
+
+    /**
+     * @dev give an account access to KYC
+     * @param account Account to grant access
+     */
+    function addToKYC(address account) external onlyKYCAdmin {
+        kycAccounts[account] = true;
+    }
+
+    /**
+     * @dev remove an account's access from KYC
+     * @param account Account to remove
+     */
+    function removeKYC(address account) external onlyKYCAdmin {
+        kycAccounts[account] = false;
+    }
+
+    /**
+     * @dev give many accounts access to KYC
+     * @param accounts Accounts to grant access
+     */
+    function addManyToKYC(address[] calldata accounts) external onlyKYCAdmin {
+        for (uint256 i = 0; i < accounts.length; i++) {
+            kycAccounts[accounts[i]] = true;
+        }
+    }
+
+    /**
+     * @dev remove many accounts' access from KYC
+     * @param accounts Accounts to remove access
+     */
+    function removeManyKYC(address[] calldata accounts) external onlyKYCAdmin {
+        for (uint256 i = 0; i < accounts.length; i++) {
+            kycAccounts[accounts[i]] = false;
+        }
+    }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting dgovern storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[49] private __gap;
+}
+
+// 
+// OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
+/**
+ * @dev Interface of the ERC165 standard, as defined in the
+ * https://eips.ethereum.org/EIPS/eip-165[EIP].
+ *
+ * Implementers can declare support of contract interfaces, which can then be
+ * queried by others ({ERC165Checker}).
+ *
+ * For an implementation, see {ERC165}.
+ */
+interface IERC165Upgradeable {
+    /**
+     * @dev Returns true if this contract implements the interface defined by
+     * `interfaceId`. See the corresponding
+     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
+     * to learn more about how these ids are created.
+     *
+     * This function call must use less than 30 000 gas.
+     */
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+}
+
+// 
+// OpenZeppelin Contracts v4.4.1 (token/ERC1155/IERC1155.sol)
+/**
+ * @dev Required interface of an ERC1155 compliant contract, as defined in the
+ * https://eips.ethereum.org/EIPS/eip-1155[EIP].
+ *
+ * _Available since v3.1._
+ */
+interface IERC1155Upgradeable is IERC165Upgradeable {
+    /**
+     * @dev Emitted when `value` tokens of token type `id` are transferred from `from` to `to` by `operator`.
+     */
+    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
+
+    /**
+     * @dev Equivalent to multiple {TransferSingle} events, where `operator`, `from` and `to` are the same for all
+     * transfers.
+     */
+    event TransferBatch(
+        address indexed operator,
+        address indexed from,
+        address indexed to,
+        uint256[] ids,
+        uint256[] values
+    );
+
+    /**
+     * @dev Emitted when `account` grants or revokes permission to `operator` to transfer their tokens, according to
+     * `approved`.
+     */
+    event ApprovalForAll(address indexed account, address indexed operator, bool approved);
+
+    /**
+     * @dev Emitted when the URI for token type `id` changes to `value`, if it is a non-programmatic URI.
+     *
+     * If an {URI} event was emitted for `id`, the standard
+     * https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[guarantees] that `value` will equal the value
+     * returned by {IERC1155MetadataURI-uri}.
+     */
+    event URI(string value, uint256 indexed id);
+
+    /**
+     * @dev Returns the amount of tokens of token type `id` owned by `account`.
+     *
+     * Requirements:
+     *
+     * - `account` cannot be the zero address.
+     */
+    function balanceOf(address account, uint256 id) external view returns (uint256);
+
+    /**
+     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {balanceOf}.
+     *
+     * Requirements:
+     *
+     * - `accounts` and `ids` must have the same length.
+     */
+    function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids)
+        external
+        view
+        returns (uint256[] memory);
+
+    /**
+     * @dev Grants or revokes permission to `operator` to transfer the caller's tokens, according to `approved`,
+     *
+     * Emits an {ApprovalForAll} event.
+     *
+     * Requirements:
+     *
+     * - `operator` cannot be the caller.
+     */
+    function setApprovalForAll(address operator, bool approved) external;
+
+    /**
+     * @dev Returns true if `operator` is approved to transfer ``account``'s tokens.
+     *
+     * See {setApprovalForAll}.
+     */
+    function isApprovedForAll(address account, address operator) external view returns (bool);
+
+    /**
+     * @dev Transfers `amount` tokens of token type `id` from `from` to `to`.
+     *
+     * Emits a {TransferSingle} event.
+     *
+     * Requirements:
+     *
+     * - `to` cannot be the zero address.
+     * - If the caller is not `from`, it must be have been approved to spend ``from``'s tokens via {setApprovalForAll}.
+     * - `from` must have a balance of tokens of type `id` of at least `amount`.
+     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the
+     * acceptance magic value.
+     */
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount,
+        bytes calldata data
+    ) external;
+
+    /**
+     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {safeTransferFrom}.
+     *
+     * Emits a {TransferBatch} event.
+     *
+     * Requirements:
+     *
+     * - `ids` and `amounts` must have the same length.
+     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the
+     * acceptance magic value.
+     */
+    function safeBatchTransferFrom(
+        address from,
+        address to,
+        uint256[] calldata ids,
+        uint256[] calldata amounts,
+        bytes calldata data
+    ) external;
+}
+
+// 
+// OpenZeppelin Contracts (last updated v4.5.0) (token/ERC1155/IERC1155Receiver.sol)
+/**
+ * @dev _Available since v3.1._
+ */
+interface IERC1155ReceiverUpgradeable is IERC165Upgradeable {
+    /**
+     * @dev Handles the receipt of a single ERC1155 token type. This function is
+     * called at the end of a `safeTransferFrom` after the balance has been updated.
+     *
+     * NOTE: To accept the transfer, this must return
+     * `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`
+     * (i.e. 0xf23a6e61, or its own function selector).
+     *
+     * @param operator The address which initiated the transfer (i.e. msg.sender)
+     * @param from The address which previously owned the token
+     * @param id The ID of the token being transferred
+     * @param value The amount of tokens being transferred
+     * @param data Additional data with no specified format
+     * @return `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))` if transfer is allowed
+     */
+    function onERC1155Received(
+        address operator,
+        address from,
+        uint256 id,
+        uint256 value,
+        bytes calldata data
+    ) external returns (bytes4);
+
+    /**
+     * @dev Handles the receipt of a multiple ERC1155 token types. This function
+     * is called at the end of a `safeBatchTransferFrom` after the balances have
+     * been updated.
+     *
+     * NOTE: To accept the transfer(s), this must return
+     * `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`
+     * (i.e. 0xbc197c81, or its own function selector).
+     *
+     * @param operator The address which initiated the batch transfer (i.e. msg.sender)
+     * @param from The address which previously owned the token
+     * @param ids An array containing ids of each token being transferred (order and length must match values array)
+     * @param values An array containing amounts of each token being transferred (order and length must match ids array)
+     * @param data Additional data with no specified format
+     * @return `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))` if transfer is allowed
+     */
+    function onERC1155BatchReceived(
+        address operator,
+        address from,
+        uint256[] calldata ids,
+        uint256[] calldata values,
+        bytes calldata data
+    ) external returns (bytes4);
+}
+
+// 
+// OpenZeppelin Contracts v4.4.1 (token/ERC1155/extensions/IERC1155MetadataURI.sol)
+/**
+ * @dev Interface of the optional ERC1155MetadataExtension interface, as defined
+ * in the https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[EIP].
+ *
+ * _Available since v3.1._
+ */
+interface IERC1155MetadataURIUpgradeable is IERC1155Upgradeable {
+    /**
+     * @dev Returns the URI for token type `id`.
+     *
+     * If the `\{id\}` substring is present in the URI, it must be replaced by
+     * clients with the actual token type ID.
+     */
+    function uri(uint256 id) external view returns (string memory);
 }
 
 // 
@@ -1676,6 +1752,88 @@ library Strings {
 }
 
 // 
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an governor) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the governor account will be the one that deploys the contract. This
+ * can later be changed with {transferGovernorship}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyGovernor`, which can be applied to your functions to restrict their use to
+ * the governor.
+ */
+abstract contract GovernableUpgradeable is Initializable, ContextUpgradeable {
+    address private _governor;
+
+    event GovernorshipTransferred(address indexed previousGovernor, address indexed newGovernor);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial governor.
+     */
+    function __Governable_init() internal onlyInitializing {
+        __Governable_init_unchained();
+    }
+
+    function __Governable_init_unchained() internal onlyInitializing {
+        _transferGovernorship(_msgSender());
+    }
+
+    /**
+     * @dev Returns the address of the current governor.
+     */
+    function governor() public view virtual returns (address) {
+        return _governor;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the governor.
+     */
+    modifier onlyGovernor() {
+        require(governor() == _msgSender(), "Governable: caller is not the governor");
+        _;
+    }
+
+    /**
+     * @dev Leaves the contract without governor. It will not be possible to call
+     * `onlyGovernor` functions anymore. Can only be called by the current governor.
+     *
+     * NOTE: Renouncing governorship will leave the contract without an governor,
+     * thereby removing any functionality that is only available to the governor.
+     */
+    function renounceGovernorship() public virtual onlyGovernor {
+        _transferGovernorship(address(0));
+    }
+
+    /**
+     * @dev Transfers governorship of the contract to a new account (`newGovernor`).
+     * Can only be called by the current governor.
+     */
+    function transferGovernorship(address newGovernor) public virtual onlyGovernor {
+        require(newGovernor != address(0), "Governable: new governor is the zero address");
+        _transferGovernorship(newGovernor);
+    }
+
+    /**
+     * @dev Transfers governorship of the contract to a new account (`newGovernor`).
+     * Internal function without access restriction.
+     */
+    function _transferGovernorship(address newGovernor) internal virtual {
+        address oldGovernor = _governor;
+        _governor = newGovernor;
+        emit GovernorshipTransferred(oldGovernor, newGovernor);
+    }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting dgovern storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[49] private __gap;
+}
+
+// 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -1871,6 +2029,11 @@ interface IREITTradable {
     function isKYC(address account) external view returns (bool);
 
     function getIPOUnitPrice(uint256 _id) external view returns (uint256);
+
+    function isIPOContract(uint256 _id, address account)
+        external
+        view
+        returns (bool);
 }
 
 // 
@@ -1879,22 +2042,16 @@ interface IREITTradable {
  * ERC1155Tradable - ERC1155 contract that whitelists an operator address, has create and mint functionality, and supports useful standards from OpenZeppelin,
   like _exists(), name(), symbol(), and totalSupply()
  */
-contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
+contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, ReentrancyGuardUpgradeable {
     using SafeMath for uint256;
     using Strings for string;
-
-    event OwnershipTransferred(
-        address indexed previousOwner,
-        address indexed newOwner
-    );
-
+    
     uint256 private currentTokenID;
     mapping(uint256 => address) public creators;
     mapping(uint256 => uint256) public tokenSupply;
     mapping(uint256 => string) public tokenUri;
 
     string private _contractURI;
-    address private _owner;
 
     // Contract name
     string public name;
@@ -1913,17 +2070,6 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
     }
 
     /**
-     * @dev Require msg.sender to own more than 0 of the token id
-     */
-    modifier holdersOnly(uint256 _id) {
-        require(
-            balanceOf(msg.sender, _id) > 0,
-            "ERC1155Tradable#holdersOnly: ONLY_OWNERS_ALLOWED"
-        );
-        _;
-    }
-
-    /**
      * @dev Initialization
      * @param _name string Name of the NFT
      * @param _symbol string Symbol of the NFT
@@ -1935,8 +2081,8 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
         string memory _uri
     ) public virtual initializer {
         __ERC1155_init(_uri);
-        __ReentrancyGuard_init();
-        _transferOwnership(_msgSender());        
+        __Governable_init();
+        __ReentrancyGuard_init();        
 
         name = _name;
         symbol = _symbol;
@@ -1960,7 +2106,7 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
      */
     function setBaseMetadataURI(string memory _newBaseMetadataURI)
         public
-        onlyOwner
+        onlyGovernor
     {
         _setURI(_newBaseMetadataURI);
     }
@@ -1969,7 +2115,7 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
      * @dev Will update the base URL of token's contract
      * @param _uri New URL of token's contract
      */
-    function setContractURI(string memory _uri) public onlyOwner {
+    function setContractURI(string memory _uri) public onlyGovernor {
         _contractURI = _uri;
     }
 
@@ -2089,129 +2235,6 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
     function _incrementTokenTypeId() internal {
         currentTokenID++;
     }
-
-    /**
-     * @dev Returns the address of the current owner.
-     */
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    /**
-     * @dev Throws if called by any account other than the owner.
-     */
-    modifier onlyOwner() {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
-
-    /**
-     * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
-     *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
-     */
-    function renounceOwnership() public virtual onlyOwner {
-        _transferOwnership(address(0));
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
-     */
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(
-            newOwner != address(0),
-            "Ownable: new owner is the zero address"
-        );
-        _transferOwnership(newOwner);
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Internal function without access restriction.
-     */
-    function _transferOwnership(address newOwner) internal virtual {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }    
-}
-
-// 
-contract KYCAccess is ContextUpgradeable {
-  // kyc list mapping
-    mapping(address => bool) internal kycAccounts;
-
-    address private _kycAdmin;
-
-    function __KYCAccess_init() internal onlyInitializing {
-        __KYCAccess_init_unchained();
-    }
-
-    function __KYCAccess_init_unchained() internal onlyInitializing {
-        _setKYCAdmin(_msgSender());
-    }
-
-    modifier onlyKYCAdmin() {
-        require(_kycAdmin == msg.sender, "KYCAccess: caller is not the admin");
-        _;
-    }
-
-    /**
-     * @dev Throws if called by any account that's not KYC.
-     */
-    modifier onlyKYC() {
-        require(kycAccounts[msg.sender], "Not yet KYC");
-        _;
-    }
-
-    function _setKYCAdmin(address account) internal {
-        _kycAdmin = account;
-    }
-
-    /**
-     * @dev give an account access to KYC
-     * @param account Account to grant access
-     */
-    function addToKYC(address account) external onlyKYCAdmin {
-        kycAccounts[account] = true;
-    }
-
-    /**
-     * @dev remove an account's access from KYC
-     * @param account Account to remove
-     */
-    function removeKYC(address account) external onlyKYCAdmin {
-        kycAccounts[account] = false;
-    }
-
-    /**
-     * @dev give many accounts access to KYC
-     * @param accounts Accounts to grant access
-     */
-    function addManyToKYC(address[] calldata accounts)
-        external
-        onlyKYCAdmin
-    {
-        for (uint256 i = 0; i < accounts.length; i++) {
-            kycAccounts[accounts[i]] = true;
-        }
-    }
-
-    /**
-     * @dev remove many accounts' access from KYC
-     * @param accounts Accounts to remove access
-     */
-    function removeManyKYC(address[] calldata accounts)
-        external
-        onlyKYCAdmin
-    {
-        for (uint256 i = 0; i < accounts.length; i++) {
-            kycAccounts[accounts[i]] = false;
-        }
-    }    
 }
 
 // 
@@ -2219,8 +2242,9 @@ interface IERC20Extented is IERC20 {
     function decimals() external view returns (uint8);
 }
 
-contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
+contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     using SafeMath for uint256;
+    using AddressUpgradeable for address;
 
     event Create(uint256 id);
 
@@ -2248,12 +2272,24 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     mapping(uint256 => REITYield) public tokenYieldData;
     mapping(uint256 => mapping(address => YieldVesting))
         private tokenYieldVesting;
-    mapping(uint256 => uint256) public dividendFunds;    
+    mapping(uint256 => uint256) public dividendFunds;
 
     // address of the payable tokens to fund and claim
     mapping(uint256 => IERC20Extented) private fundingToken;
+    mapping(uint256 => address) private ipoContracts;
 
     mapping(uint256 => mapping(address => uint256)) private _registeredBalances;
+
+    /**
+     * @dev Require msg.sender to own more than 0 of the token id
+     */
+    modifier shareHoldersOnly(uint256 _id) {
+        require(
+            balanceOf(_msgSender(), _id) > 0,
+            "ERC1155Tradable#shareHoldersOnly: ONLY_OWNERS_ALLOWED"
+        );
+        _;
+    }
 
     /**
      * @dev check if an account is KYC
@@ -2263,10 +2299,9 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         require(account != address(0));
         return kycAccounts[account];
     }
-    
+
     /**
      * @dev Creates a new token type and assigns _initialSupply to an address
-     * NOTE: remove onlyOwner if you want third parties to create new tokens on your contract (which may change your IDs)
      * @param _initialOwner address of the first owner of the token
      * @param _initialSupply amount to supply the first owner
      * @param _uri URI for this token type
@@ -2274,16 +2309,16 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
      * @param _data Data to pass if receiver is contract
      * @return The newly created token ID
      */
-    function create(
+    function createREIT(
         address _initialOwner,
         uint256 _initialSupply,
         string calldata _uri,
         address _fundingToken,
         bytes calldata _data
-    ) external onlyOwner returns (uint256) {
+    ) external onlyGovernor returns (uint256) {
         uint256 _id = super._getNextTokenID();
         super._incrementTokenTypeId();
-        creators[_id] = msg.sender;
+        _setCreator(_msgSender(), _id);
 
         if (bytes(_uri).length > 0) {
             emit URI(_uri, _id);
@@ -2291,12 +2326,12 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         }
 
         fundingToken[_id] = IERC20Extented(_fundingToken);
-
         tokenMetadata[_id] = REITMetadata(0, 0, 0, 0);
-
         tokenYieldData[_id] = REITYield(0, 0);
 
         mint(_initialOwner, _id, _initialSupply, _data);
+        _registeredBalances[_id][_initialOwner] = _initialSupply;
+
         tokenSupply[_id] = _initialSupply;
 
         emit Create(_id);
@@ -2318,15 +2353,27 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         );
     }
 
-    function registeredBalanceOf(address account, uint256 id) public view virtual returns (uint256) {
-        require(account != address(0), "ERC1155: balance query for the zero address");
+    function registeredBalanceOf(address account, uint256 id)
+        public
+        view
+        virtual
+        returns (uint256)
+    {
+        require(
+            account != address(0),
+            "ERC1155: balance query for the zero address"
+        );
         return _registeredBalances[id][account];
     }
 
-    function registerBalanceOwnership(uint256 _id) external onlyKYC holdersOnly(_id) {
+    function registerBalanceOwnership(uint256 _id)
+        external
+        onlyKYC
+        shareHoldersOnly(_id)
+    {
         REITMetadata memory metadata = tokenMetadata[_id];
 
-        uint256 balance = balanceOf(msg.sender, _id);
+        uint256 balance = balanceOf(_msgSender(), _id);
         uint256 quantity = balance.sub(_registeredBalances[_id][_msgSender()]);
 
         require(quantity > 0, "REITNFT: Nothing to register");
@@ -2338,7 +2385,7 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
             .div(10**payableToken.decimals());
 
         require(
-            payableToken.transferFrom(msg.sender, address(this), fee),
+            payableToken.transferFrom(_msgSender(), address(this), fee),
             "REITNFT: Could not transfer fund"
         );
 
@@ -2348,18 +2395,18 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     function claimBenefit(uint256 _id)
         external
         onlyKYC
-        holdersOnly(_id)
+        shareHoldersOnly(_id)
         nonReentrant
     {
         REITYield memory yieldData = tokenYieldData[_id];
 
-        if (!tokenYieldVesting[_id][msg.sender].initialized) {
-            tokenYieldVesting[_id][msg.sender].initialized = true;
-            tokenYieldVesting[_id][msg.sender].beneficiary = msg.sender;
-            tokenYieldVesting[_id][msg.sender].released = 0;
+        if (!tokenYieldVesting[_id][_msgSender()].initialized) {
+            tokenYieldVesting[_id][_msgSender()].initialized = true;
+            tokenYieldVesting[_id][_msgSender()].beneficiary = _msgSender();
+            tokenYieldVesting[_id][_msgSender()].released = 0;
         }
 
-        YieldVesting memory yieldVesting = tokenYieldVesting[_id][msg.sender];
+        YieldVesting memory yieldVesting = tokenYieldVesting[_id][_msgSender()];
 
         uint256 claimableYield = _registeredBalances[_id][_msgSender()]
             .mul(yieldData.yieldDividend)
@@ -2373,13 +2420,13 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         );
 
         dividendFunds[_id] = dividendFunds[_id].sub(claimableYield);
-        tokenYieldVesting[_id][msg.sender].released = yieldVesting.released.add(
+        tokenYieldVesting[_id][_msgSender()].released = yieldVesting.released.add(
             claimableYield
         );
 
         IERC20Extented payableToken = fundingToken[_id];
         require(
-            payableToken.transfer(msg.sender, claimableYield),
+            payableToken.transfer(_msgSender(), claimableYield),
             "REITNFT: Could not transfer fund"
         );
     }
@@ -2388,22 +2435,25 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         IERC20Extented payableToken = fundingToken[_id];
 
         require(
-            payableToken.transferFrom(msg.sender, address(this), amount),
+            payableToken.transferFrom(_msgSender(), address(this), amount),
             "REITNFT: Could not transfer fund"
         );
 
         dividendFunds[_id] = dividendFunds[_id].add(amount);
     }
 
-    function unlockDividends(
-        uint256 _id,
-        uint256 dividend
-    ) external creatorOnly(_id) {
+    function unlockDividends(uint256 _id, uint256 dividend)
+        external
+        creatorOnly(_id)
+    {
         uint256 nextDividend = tokenYieldData[_id].yieldDividend.add(dividend);
         uint256 totalSupply = tokenSupply[_id];
         uint256 totalSupplyValue = totalSupply.mul(nextDividend);
         uint256 totalFunding = dividendFunds[_id];
-        require(totalSupplyValue <= totalFunding, "Not enough funding to pay all dividends");
+        require(
+            totalSupplyValue <= totalFunding,
+            "Not enough funding to pay all dividends"
+        );
         tokenYieldData[_id].yieldDividend = nextDividend;
     }
 
@@ -2421,7 +2471,21 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: caller is not owner nor approved"
         );
+
+        uint256 fromRegisteredBalance = _registeredBalances[id][from];
+        require(fromRegisteredBalance >= amount, "Insufficient registered balance for transfer");
+
         _safeTransferFrom(from, to, id, amount, data);
+
+        unchecked {
+            _registeredBalances[id][from] = fromRegisteredBalance - amount;
+        }
+
+        if (isIPOContract(id, to) || (isKYC(to) && isIPOContract(id, from))) {
+            _registeredBalances[id][to] = _registeredBalances[id][to].add(
+                amount
+            );
+        }
     }
 
     /**
@@ -2438,7 +2502,57 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: transfer caller is not owner nor approved"
         );
+
+        for (uint256 i = 0; i < ids.length; ++i) {
+            uint256 id = ids[i];
+            uint256 amount = amounts[i];
+
+            uint256 fromBalance = _registeredBalances[id][from];
+            require(fromBalance >= amount, "Insufficient registered balance for transfer");            
+        }
+
         _safeBatchTransferFrom(from, to, ids, amounts, data);
+
+        for (uint256 i = 0; i < ids.length; ++i) {
+            uint256 id = ids[i];
+            uint256 amount = amounts[i];
+            
+            uint256 fromBalance = _registeredBalances[id][from];
+            unchecked {
+                _registeredBalances[id][from] = fromBalance - amount;
+            }
+        }
+
+        if (isKYC(to)) {
+            for (uint256 i = 0; i < ids.length; ++i) {
+                uint256 id = ids[i];
+
+                if (isIPOContract(id, from)) {
+                    uint256 amount = amounts[i];
+                    _registeredBalances[id][to] = _registeredBalances[id][to]
+                        .add(amount);
+                }
+            }
+        } else {
+            for (uint256 i = 0; i < ids.length; ++i) {
+                uint256 id = ids[i];
+
+                if (isIPOContract(id, to)) {
+                    uint256 amount = amounts[i];
+                    _registeredBalances[id][to] = _registeredBalances[id][to]
+                        .add(amount);
+                }
+            }
+        }
+    }
+    
+    function setKYCAdmin(address account) external onlyGovernor {
+        require(account != address(0), "KYC Admin cannot be zero address");
+        _setKYCAdmin(account);
+    }
+
+    function revokeKYCAdmin() external onlyGovernor {
+        _setKYCAdmin(address(0));
     }
 
     function balanceOf(address account, uint256 id)
@@ -2457,5 +2571,24 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         returns (uint256)
     {
         return tokenMetadata[_id].ipoUnitPrice;
+    }
+
+    function setIPOContract(uint256 _id, address account)
+        external
+        creatorOnly(_id)
+    {
+        ipoContracts[_id] = account;
+    }
+
+    function getIPOContract(uint256 _id) external view returns (address) {
+        return ipoContracts[_id];
+    }
+
+    function isIPOContract(uint256 _id, address account)
+        public
+        view
+        returns (bool)
+    {
+        return ipoContracts[_id] == account;
     }
 }

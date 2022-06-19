@@ -5,15 +5,15 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 
+import "./KYCAccessUpgradeable.sol";
 import "./ERC1155Tradable.sol";
 import "./IREITTradable.sol";
-import "./KYCAccess.sol";
 
 interface IERC20Extented is IERC20 {
     function decimals() external view returns (uint8);
 }
 
-contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
+contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     using SafeMath for uint256;
     using AddressUpgradeable for address;
 
@@ -52,6 +52,17 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     mapping(uint256 => mapping(address => uint256)) private _registeredBalances;
 
     /**
+     * @dev Require msg.sender to own more than 0 of the token id
+     */
+    modifier shareHoldersOnly(uint256 _id) {
+        require(
+            balanceOf(_msgSender(), _id) > 0,
+            "ERC1155Tradable#shareHoldersOnly: ONLY_OWNERS_ALLOWED"
+        );
+        _;
+    }
+
+    /**
      * @dev check if an account is KYC
      * @return bool
      */
@@ -62,7 +73,6 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
 
     /**
      * @dev Creates a new token type and assigns _initialSupply to an address
-     * NOTE: remove onlyOwner if you want third parties to create new tokens on your contract (which may change your IDs)
      * @param _initialOwner address of the first owner of the token
      * @param _initialSupply amount to supply the first owner
      * @param _uri URI for this token type
@@ -70,16 +80,16 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
      * @param _data Data to pass if receiver is contract
      * @return The newly created token ID
      */
-    function create(
+    function createREIT(
         address _initialOwner,
         uint256 _initialSupply,
         string calldata _uri,
         address _fundingToken,
         bytes calldata _data
-    ) external onlyOwner returns (uint256) {
+    ) external onlyGovernor returns (uint256) {
         uint256 _id = super._getNextTokenID();
         super._incrementTokenTypeId();
-        creators[_id] = msg.sender;
+        _setCreator(_msgSender(), _id);
 
         if (bytes(_uri).length > 0) {
             emit URI(_uri, _id);
@@ -87,12 +97,12 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         }
 
         fundingToken[_id] = IERC20Extented(_fundingToken);
-
         tokenMetadata[_id] = REITMetadata(0, 0, 0, 0);
-
         tokenYieldData[_id] = REITYield(0, 0);
 
         mint(_initialOwner, _id, _initialSupply, _data);
+        _registeredBalances[_id][_initialOwner] = _initialSupply;
+
         tokenSupply[_id] = _initialSupply;
 
         emit Create(_id);
@@ -130,11 +140,11 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     function registerBalanceOwnership(uint256 _id)
         external
         onlyKYC
-        holdersOnly(_id)
+        shareHoldersOnly(_id)
     {
         REITMetadata memory metadata = tokenMetadata[_id];
 
-        uint256 balance = balanceOf(msg.sender, _id);
+        uint256 balance = balanceOf(_msgSender(), _id);
         uint256 quantity = balance.sub(_registeredBalances[_id][_msgSender()]);
 
         require(quantity > 0, "REITNFT: Nothing to register");
@@ -146,7 +156,7 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
             .div(10**payableToken.decimals());
 
         require(
-            payableToken.transferFrom(msg.sender, address(this), fee),
+            payableToken.transferFrom(_msgSender(), address(this), fee),
             "REITNFT: Could not transfer fund"
         );
 
@@ -156,18 +166,18 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
     function claimBenefit(uint256 _id)
         external
         onlyKYC
-        holdersOnly(_id)
+        shareHoldersOnly(_id)
         nonReentrant
     {
         REITYield memory yieldData = tokenYieldData[_id];
 
-        if (!tokenYieldVesting[_id][msg.sender].initialized) {
-            tokenYieldVesting[_id][msg.sender].initialized = true;
-            tokenYieldVesting[_id][msg.sender].beneficiary = msg.sender;
-            tokenYieldVesting[_id][msg.sender].released = 0;
+        if (!tokenYieldVesting[_id][_msgSender()].initialized) {
+            tokenYieldVesting[_id][_msgSender()].initialized = true;
+            tokenYieldVesting[_id][_msgSender()].beneficiary = _msgSender();
+            tokenYieldVesting[_id][_msgSender()].released = 0;
         }
 
-        YieldVesting memory yieldVesting = tokenYieldVesting[_id][msg.sender];
+        YieldVesting memory yieldVesting = tokenYieldVesting[_id][_msgSender()];
 
         uint256 claimableYield = _registeredBalances[_id][_msgSender()]
             .mul(yieldData.yieldDividend)
@@ -181,13 +191,13 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         );
 
         dividendFunds[_id] = dividendFunds[_id].sub(claimableYield);
-        tokenYieldVesting[_id][msg.sender].released = yieldVesting.released.add(
+        tokenYieldVesting[_id][_msgSender()].released = yieldVesting.released.add(
             claimableYield
         );
 
         IERC20Extented payableToken = fundingToken[_id];
         require(
-            payableToken.transfer(msg.sender, claimableYield),
+            payableToken.transfer(_msgSender(), claimableYield),
             "REITNFT: Could not transfer fund"
         );
     }
@@ -196,7 +206,7 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
         IERC20Extented payableToken = fundingToken[_id];
 
         require(
-            payableToken.transferFrom(msg.sender, address(this), amount),
+            payableToken.transferFrom(_msgSender(), address(this), amount),
             "REITNFT: Could not transfer fund"
         );
 
@@ -232,9 +242,17 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: caller is not owner nor approved"
         );
+
+        uint256 fromRegisteredBalance = _registeredBalances[id][from];
+        require(fromRegisteredBalance >= amount, "Insufficient registered balance for transfer");
+
         _safeTransferFrom(from, to, id, amount, data);
 
-        if (isKYC(to) && isIPOContract(id, from)) {
+        unchecked {
+            _registeredBalances[id][from] = fromRegisteredBalance - amount;
+        }
+
+        if (isIPOContract(id, to) || (isKYC(to) && isIPOContract(id, from))) {
             _registeredBalances[id][to] = _registeredBalances[id][to].add(
                 amount
             );
@@ -255,7 +273,26 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: transfer caller is not owner nor approved"
         );
+
+        for (uint256 i = 0; i < ids.length; ++i) {
+            uint256 id = ids[i];
+            uint256 amount = amounts[i];
+
+            uint256 fromBalance = _registeredBalances[id][from];
+            require(fromBalance >= amount, "Insufficient registered balance for transfer");            
+        }
+
         _safeBatchTransferFrom(from, to, ids, amounts, data);
+
+        for (uint256 i = 0; i < ids.length; ++i) {
+            uint256 id = ids[i];
+            uint256 amount = amounts[i];
+            
+            uint256 fromBalance = _registeredBalances[id][from];
+            unchecked {
+                _registeredBalances[id][from] = fromBalance - amount;
+            }
+        }
 
         if (isKYC(to)) {
             for (uint256 i = 0; i < ids.length; ++i) {
@@ -267,7 +304,26 @@ contract REITNFT is ERC1155Tradable, KYCAccess, IREITTradable {
                         .add(amount);
                 }
             }
+        } else {
+            for (uint256 i = 0; i < ids.length; ++i) {
+                uint256 id = ids[i];
+
+                if (isIPOContract(id, to)) {
+                    uint256 amount = amounts[i];
+                    _registeredBalances[id][to] = _registeredBalances[id][to]
+                        .add(amount);
+                }
+            }
         }
+    }
+    
+    function setKYCAdmin(address account) external onlyGovernor {
+        require(account != address(0), "KYC Admin cannot be zero address");
+        _setKYCAdmin(account);
+    }
+
+    function revokeKYCAdmin() external onlyGovernor {
+        _setKYCAdmin(address(0));
     }
 
     function balanceOf(address account, uint256 id)

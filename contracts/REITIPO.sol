@@ -570,120 +570,227 @@ abstract contract ReentrancyGuardUpgradeable is Initializable {
 }
 
 // 
-// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+// OpenZeppelin Contracts (last updated v4.6.0) (utils/math/SafeMath.sol)
+// CAUTION
+// This version of SafeMath should only be used with Solidity 0.8 or later,
+// because it relies on the compiler's built in overflow checks.
 /**
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
+ * @dev Wrappers over Solidity's arithmetic operations.
  *
- * This contract is only required for intermediate, library-like contracts.
+ * NOTE: `SafeMath` is generally not needed starting with Solidity 0.8, since the compiler
+ * now has built in overflow checking.
  */
-abstract contract ContextUpgradeable is Initializable {
-    function __Context_init() internal onlyInitializing {
-    }
-
-    function __Context_init_unchained() internal onlyInitializing {
-    }
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-
+library SafeMath {
     /**
-     * @dev This empty reserved space is put in place to allow future versions to add new
-     * variables without shifting down storage in the inheritance chain.
-     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
-     */
-    uint256[50] private __gap;
-}
-
-// 
-// OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
-/**
- * @dev Contract module which provides a basic access control mechanism, where
- * there is an account (an owner) that can be granted exclusive access to
- * specific functions.
- *
- * By default, the owner account will be the one that deploys the contract. This
- * can later be changed with {transferOwnership}.
- *
- * This module is used through inheritance. It will make available the modifier
- * `onlyOwner`, which can be applied to your functions to restrict their use to
- * the owner.
- */
-abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {
-    address private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    /**
-     * @dev Initializes the contract setting the deployer as the initial owner.
-     */
-    function __Ownable_init() internal onlyInitializing {
-        __Ownable_init_unchained();
-    }
-
-    function __Ownable_init_unchained() internal onlyInitializing {
-        _transferOwnership(_msgSender());
-    }
-
-    /**
-     * @dev Returns the address of the current owner.
-     */
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    /**
-     * @dev Throws if called by any account other than the owner.
-     */
-    modifier onlyOwner() {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
-
-    /**
-     * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
+     * @dev Returns the addition of two unsigned integers, with an overflow flag.
      *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
+     * _Available since v3.4._
      */
-    function renounceOwnership() public virtual onlyOwner {
-        _transferOwnership(address(0));
+    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            uint256 c = a + b;
+            if (c < a) return (false, 0);
+            return (true, c);
+        }
     }
 
     /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
+     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
      */
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
-        _transferOwnership(newOwner);
+    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b > a) return (false, 0);
+            return (true, a - b);
+        }
     }
 
     /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Internal function without access restriction.
+     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
      */
-    function _transferOwnership(address newOwner) internal virtual {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
+    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+            // benefit is lost if 'b' is also tested.
+            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
+            if (a == 0) return (true, 0);
+            uint256 c = a * b;
+            if (c / a != b) return (false, 0);
+            return (true, c);
+        }
     }
 
     /**
-     * @dev This empty reserved space is put in place to allow future versions to add new
-     * variables without shifting down storage in the inheritance chain.
-     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     * @dev Returns the division of two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
      */
-    uint256[49] private __gap;
+    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a / b);
+        }
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a % b);
+        }
+    }
+
+    /**
+     * @dev Returns the addition of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `+` operator.
+     *
+     * Requirements:
+     *
+     * - Addition cannot overflow.
+     */
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a + b;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting on
+     * overflow (when the result is negative).
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a - b;
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `*` operator.
+     *
+     * Requirements:
+     *
+     * - Multiplication cannot overflow.
+     */
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a * b;
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers, reverting on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator.
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a / b;
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * reverting when dividing by zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a % b;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
+     * overflow (when the result is negative).
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {trySub}.
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b <= a, errorMessage);
+            return a - b;
+        }
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers, reverting with custom message on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a / b;
+        }
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * reverting with custom message when dividing by zero.
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {tryMod}.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a % b;
+        }
+    }
 }
 
 // 
@@ -882,10 +989,49 @@ interface IREITTradable {
     function isKYC(address account) external view returns (bool);
 
     function getIPOUnitPrice(uint256 _id) external view returns (uint256);
+
+    function isIPOContract(uint256 _id, address account)
+        external
+        view
+        returns (bool);
 }
 
 // 
-contract Whitelisting is ContextUpgradeable {
+// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+/**
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract ContextUpgradeable is Initializable {
+    function __Context_init() internal onlyInitializing {
+    }
+
+    function __Context_init_unchained() internal onlyInitializing {
+    }
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        return msg.data;
+    }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting down storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[50] private __gap;
+}
+
+// 
+contract WhitelistingUpgradeable is ContextUpgradeable {
     // white-list mapping
     mapping(address => bool) private whitelisteds;
 
@@ -977,29 +1123,120 @@ contract Whitelisting is ContextUpgradeable {
         require(account != address(0));
         return whitelisteds[account];
     }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting dgovern storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[49] private __gap;
+}
+
+// 
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an governor) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the governor account will be the one that deploys the contract. This
+ * can later be changed with {transferGovernorship}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyGovernor`, which can be applied to your functions to restrict their use to
+ * the governor.
+ */
+abstract contract GovernableUpgradeable is Initializable, ContextUpgradeable {
+    address private _governor;
+
+    event GovernorshipTransferred(address indexed previousGovernor, address indexed newGovernor);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial governor.
+     */
+    function __Governable_init() internal onlyInitializing {
+        __Governable_init_unchained();
+    }
+
+    function __Governable_init_unchained() internal onlyInitializing {
+        _transferGovernorship(_msgSender());
+    }
+
+    /**
+     * @dev Returns the address of the current governor.
+     */
+    function governor() public view virtual returns (address) {
+        return _governor;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the governor.
+     */
+    modifier onlyGovernor() {
+        require(governor() == _msgSender(), "Governable: caller is not the governor");
+        _;
+    }
+
+    /**
+     * @dev Leaves the contract without governor. It will not be possible to call
+     * `onlyGovernor` functions anymore. Can only be called by the current governor.
+     *
+     * NOTE: Renouncing governorship will leave the contract without an governor,
+     * thereby removing any functionality that is only available to the governor.
+     */
+    function renounceGovernorship() public virtual onlyGovernor {
+        _transferGovernorship(address(0));
+    }
+
+    /**
+     * @dev Transfers governorship of the contract to a new account (`newGovernor`).
+     * Can only be called by the current governor.
+     */
+    function transferGovernorship(address newGovernor) public virtual onlyGovernor {
+        require(newGovernor != address(0), "Governable: new governor is the zero address");
+        _transferGovernorship(newGovernor);
+    }
+
+    /**
+     * @dev Transfers governorship of the contract to a new account (`newGovernor`).
+     * Internal function without access restriction.
+     */
+    function _transferGovernorship(address newGovernor) internal virtual {
+        address oldGovernor = _governor;
+        _governor = newGovernor;
+        emit GovernorshipTransferred(oldGovernor, newGovernor);
+    }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting dgovern storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[49] private __gap;
 }
 
 // 
 contract REITIPO is
     IERC1155ReceiverUpgradeable,
     Initializable,
-    Whitelisting,
-    OwnableUpgradeable,
+    WhitelistingUpgradeable,
+    GovernableUpgradeable,
     ReentrancyGuardUpgradeable{
+    using SafeMath for uint256;
+
     // address of the REIT NFT
     IREITTradable private _nft;
-    uint256 private _nftId;
+
+    mapping(uint256 => mapping(address => uint256)) _pendingBalances;
 
     // address of the stable token
     mapping(string => IERC20) private _payableToken;
 
-    function initialize(address _nftAddress, uint256 id) external initializer {
-        require(_nftAddress != address(0x0));
-        __Ownable_init();
+    function initialize(address _nftAddress) external initializer {
+        require(_nftAddress != address(0x0), "NFT contract cannot be zero address");
+        __Governable_init();
         __Whitelisting_init();
 
         _nft = IREITTradable(_nftAddress);
-        _nftId = id;
         _whitelistFree = false;
     }
 
@@ -1010,8 +1247,12 @@ contract REITIPO is
     /**
      * @dev Returns the address of the IERC1155 contract
      */
-    function getNFT() external view returns (address) {
+    function getNFTContract() external view returns (address) {
         return address(_nft);
+    }
+
+    function getPendingBalances(uint256 id, address account) external view returns(uint256) {
+        return _pendingBalances[id][account];
     }
 
     /**
@@ -1021,7 +1262,7 @@ contract REITIPO is
      */
     function allowPayableToken(string calldata name, address token)
         public
-        onlyOwner
+        onlyGovernor
     {
         _payableToken[name] = IERC20(token);
     }
@@ -1033,13 +1274,13 @@ contract REITIPO is
      * - Only the owner can withdraw
      * - The contract must have ether left.
      */
-    function withdrawFunds() external nonReentrant onlyOwner {
+    function withdrawFunds() external nonReentrant onlyGovernor {
         require(
             address(this).balance > 0,
             "REIT IPO: Contract's balance is empty"
         );
 
-        payable(owner()).transfer(address(this).balance);
+        payable(governor()).transfer(address(this).balance);
     }
 
     /**
@@ -1051,11 +1292,11 @@ contract REITIPO is
     function withdrawPayableToken(string calldata name)
         external
         nonReentrant
-        onlyOwner
+        onlyGovernor
     {
         IERC20 token = _payableToken[name];
         uint256 balance = token.balanceOf(address(this));
-        token.transfer(owner(), balance);
+        token.transfer(governor(), balance);
     }
 
     /**
@@ -1064,45 +1305,66 @@ contract REITIPO is
      * Requirements:
      * - Only the owner can withdraw.
      */
-    function withdrawNFT() external nonReentrant onlyOwner {
-        uint256 balance = _nft.balanceOf(address(this), _nftId);
+    function withdrawNFT(uint256 id) external nonReentrant onlyGovernor {
+        uint256 balance = _nft.balanceOf(address(this), id);
 
         bytes memory empty;
-        _nft.safeTransferFrom(address(this), owner(), _nftId, balance, empty);
+        _nft.safeTransferFrom(address(this), governor(), id, balance, empty);
     }
 
     /**
      * @notice Buy Token with stable coin under vesting conditions.
      * @param token Name of token to use
+     * @param id ID of NFT
      * @param quantity Amount of REIT NFT to buy
      */
-    function purchaseWithToken(string calldata token, uint256 quantity)
+    function purchaseWithToken(string calldata token, uint256 id, uint256 quantity)
         external
         onlyWhitelisted
     {
-        uint256 stock = _nft.balanceOf(address(this), _nftId);
+        require(_nft.isIPOContract(id, address(this)), "REITIPO: Must set this as REIT IPO contract");
+
+        uint256 stock = _nft.registeredBalanceOf(address(this), id);
         require(stock >= quantity, "REITIPO: not enough units to sell");
 
-        uint256 price = _nft.getIPOUnitPrice(_nftId);
+        uint256 price = _nft.getIPOUnitPrice(id);
         require(price > 0, "REITIPO: price not set");
 
         uint256 amount = price * quantity;
         require(
             _payableToken[token].transferFrom(
-                msg.sender,
+                _msgSender(),
                 address(this),
                 amount
             ),
             "REITIPO: not enough funds to buy"
         );
 
-        if (_nft.isKYC(msg.sender)) {        
+        if (_nft.isKYC(_msgSender())) {        
             bytes memory empty;
-            _nft.safeTransferFrom(address(this), msg.sender, _nftId, quantity, empty);
-            // TODO: allow IPO to register the balance without fee
+
+            // IPO contract will register the balance without fee
+            _nft.safeTransferFrom(address(this), _msgSender(), id, quantity, empty);            
         } else {
-            // Pending this purchase
+            // Pending this purchase until buyer is KYC
+            _pendingBalances[id][_msgSender()] = _pendingBalances[id][_msgSender()].add(quantity);
         }
+    }
+
+    function claimPendingBalances(uint256 id)
+        external
+        onlyWhitelisted
+    {
+        require(_nft.isKYC(_msgSender()), "KYC required");
+        require(_pendingBalances[id][_msgSender()] > 0, "No more pending balances");
+
+        uint256 quantity = _pendingBalances[id][_msgSender()];
+        uint256 stock = _nft.balanceOf(address(this), id);
+        require(stock >= quantity, "REITIPO: not enough units to claim");
+
+        bytes memory empty;        
+        _nft.safeTransferFrom(address(this), _msgSender(), id, quantity, empty);
+        _pendingBalances[id][_msgSender()] = 0;
     }
 
     function onERC1155Received(

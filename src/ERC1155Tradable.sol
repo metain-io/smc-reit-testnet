@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
+import "./GovernableUpgradeable.sol";
 import "./IREITTradable.sol";
 
 /**
@@ -16,22 +17,16 @@ import "./IREITTradable.sol";
  * ERC1155Tradable - ERC1155 contract that whitelists an operator address, has create and mint functionality, and supports useful standards from OpenZeppelin,
   like _exists(), name(), symbol(), and totalSupply()
  */
-contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
+contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, ReentrancyGuardUpgradeable {
     using SafeMath for uint256;
     using Strings for string;
-
-    event OwnershipTransferred(
-        address indexed previousOwner,
-        address indexed newOwner
-    );
-
+    
     uint256 private currentTokenID;
     mapping(uint256 => address) public creators;
     mapping(uint256 => uint256) public tokenSupply;
     mapping(uint256 => string) public tokenUri;
 
     string private _contractURI;
-    address private _owner;
 
     // Contract name
     string public name;
@@ -50,17 +45,6 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
     }
 
     /**
-     * @dev Require msg.sender to own more than 0 of the token id
-     */
-    modifier holdersOnly(uint256 _id) {
-        require(
-            balanceOf(msg.sender, _id) > 0,
-            "ERC1155Tradable#holdersOnly: ONLY_OWNERS_ALLOWED"
-        );
-        _;
-    }
-
-    /**
      * @dev Initialization
      * @param _name string Name of the NFT
      * @param _symbol string Symbol of the NFT
@@ -72,8 +56,8 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
         string memory _uri
     ) public virtual initializer {
         __ERC1155_init(_uri);
-        __ReentrancyGuard_init();
-        _transferOwnership(_msgSender());        
+        __Governable_init();
+        __ReentrancyGuard_init();        
 
         name = _name;
         symbol = _symbol;
@@ -97,7 +81,7 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
      */
     function setBaseMetadataURI(string memory _newBaseMetadataURI)
         public
-        onlyOwner
+        onlyGovernor
     {
         _setURI(_newBaseMetadataURI);
     }
@@ -106,7 +90,7 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
      * @dev Will update the base URL of token's contract
      * @param _uri New URL of token's contract
      */
-    function setContractURI(string memory _uri) public onlyOwner {
+    function setContractURI(string memory _uri) public onlyGovernor {
         _contractURI = _uri;
     }
 
@@ -226,52 +210,4 @@ contract ERC1155Tradable is ReentrancyGuardUpgradeable, ERC1155Upgradeable {
     function _incrementTokenTypeId() internal {
         currentTokenID++;
     }
-
-    /**
-     * @dev Returns the address of the current owner.
-     */
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    /**
-     * @dev Throws if called by any account other than the owner.
-     */
-    modifier onlyOwner() {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
-
-    /**
-     * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
-     *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
-     */
-    function renounceOwnership() public virtual onlyOwner {
-        _transferOwnership(address(0));
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
-     */
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(
-            newOwner != address(0),
-            "Ownable: new owner is the zero address"
-        );
-        _transferOwnership(newOwner);
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Internal function without access restriction.
-     */
-    function _transferOwnership(address newOwner) internal virtual {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }    
 }

@@ -5,37 +5,35 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import "./IREITTradable.sol";
-import "./Whitelisting.sol";
+import "./WhitelistingUpgradeable.sol";
+import "./GovernableUpgradeable.sol";
 
 contract REITIPO is
     IERC1155ReceiverUpgradeable,
     Initializable,
-    Whitelisting,
-    OwnableUpgradeable,
+    WhitelistingUpgradeable,
+    GovernableUpgradeable,
     ReentrancyGuardUpgradeable
 {
     using SafeMath for uint256;
 
     // address of the REIT NFT
     IREITTradable private _nft;
-    uint256 private _nftId;
 
-    mapping(address => uint256) _pendingBalances;
+    mapping(uint256 => mapping(address => uint256)) _pendingBalances;
 
     // address of the stable token
     mapping(string => IERC20) private _payableToken;
 
-    function initialize(address _nftAddress, uint256 id) external initializer {
-        require(_nftAddress != address(0x0));
-        __Ownable_init();
+    function initialize(address _nftAddress) external initializer {
+        require(_nftAddress != address(0x0), "NFT contract cannot be zero address");
+        __Governable_init();
         __Whitelisting_init();
 
         _nft = IREITTradable(_nftAddress);
-        _nftId = id;
         _whitelistFree = false;
     }
 
@@ -46,8 +44,12 @@ contract REITIPO is
     /**
      * @dev Returns the address of the IERC1155 contract
      */
-    function getNFT() external view returns (address) {
+    function getNFTContract() external view returns (address) {
         return address(_nft);
+    }
+
+    function getPendingBalances(uint256 id, address account) external view returns(uint256) {
+        return _pendingBalances[id][account];
     }
 
     /**
@@ -57,7 +59,7 @@ contract REITIPO is
      */
     function allowPayableToken(string calldata name, address token)
         public
-        onlyOwner
+        onlyGovernor
     {
         _payableToken[name] = IERC20(token);
     }
@@ -69,13 +71,13 @@ contract REITIPO is
      * - Only the owner can withdraw
      * - The contract must have ether left.
      */
-    function withdrawFunds() external nonReentrant onlyOwner {
+    function withdrawFunds() external nonReentrant onlyGovernor {
         require(
             address(this).balance > 0,
             "REIT IPO: Contract's balance is empty"
         );
 
-        payable(owner()).transfer(address(this).balance);
+        payable(governor()).transfer(address(this).balance);
     }
 
     /**
@@ -87,11 +89,11 @@ contract REITIPO is
     function withdrawPayableToken(string calldata name)
         external
         nonReentrant
-        onlyOwner
+        onlyGovernor
     {
         IERC20 token = _payableToken[name];
         uint256 balance = token.balanceOf(address(this));
-        token.transfer(owner(), balance);
+        token.transfer(governor(), balance);
     }
 
     /**
@@ -100,65 +102,66 @@ contract REITIPO is
      * Requirements:
      * - Only the owner can withdraw.
      */
-    function withdrawNFT() external nonReentrant onlyOwner {
-        uint256 balance = _nft.balanceOf(address(this), _nftId);
+    function withdrawNFT(uint256 id) external nonReentrant onlyGovernor {
+        uint256 balance = _nft.balanceOf(address(this), id);
 
         bytes memory empty;
-        _nft.safeTransferFrom(address(this), owner(), _nftId, balance, empty);
+        _nft.safeTransferFrom(address(this), governor(), id, balance, empty);
     }
 
     /**
      * @notice Buy Token with stable coin under vesting conditions.
      * @param token Name of token to use
+     * @param id ID of NFT
      * @param quantity Amount of REIT NFT to buy
      */
-    function purchaseWithToken(string calldata token, uint256 quantity)
+    function purchaseWithToken(string calldata token, uint256 id, uint256 quantity)
         external
         onlyWhitelisted
     {
-        require(_nft.isIPOContract(_nftId, address(this)), "REITIPO: Must set this as REIT IPO contract");
+        require(_nft.isIPOContract(id, address(this)), "REITIPO: Must set this as REIT IPO contract");
 
-        uint256 stock = _nft.balanceOf(address(this), _nftId);
+        uint256 stock = _nft.registeredBalanceOf(address(this), id);
         require(stock >= quantity, "REITIPO: not enough units to sell");
 
-        uint256 price = _nft.getIPOUnitPrice(_nftId);
+        uint256 price = _nft.getIPOUnitPrice(id);
         require(price > 0, "REITIPO: price not set");
 
         uint256 amount = price * quantity;
         require(
             _payableToken[token].transferFrom(
-                msg.sender,
+                _msgSender(),
                 address(this),
                 amount
             ),
             "REITIPO: not enough funds to buy"
         );
 
-        if (_nft.isKYC(msg.sender)) {        
+        if (_nft.isKYC(_msgSender())) {        
             bytes memory empty;
 
             // IPO contract will register the balance without fee
-            _nft.safeTransferFrom(address(this), msg.sender, _nftId, quantity, empty);            
+            _nft.safeTransferFrom(address(this), _msgSender(), id, quantity, empty);            
         } else {
             // Pending this purchase until buyer is KYC
-            _pendingBalances[msg.sender] = _pendingBalances[msg.sender].add(quantity);
+            _pendingBalances[id][_msgSender()] = _pendingBalances[id][_msgSender()].add(quantity);
         }
     }
 
-    function claimPendingBalances()
+    function claimPendingBalances(uint256 id)
         external
         onlyWhitelisted
     {
-        require(_nft.isKYC(msg.sender), "KYC required");
-        require(_pendingBalances[msg.sender] > 0, "No more pending balances");
+        require(_nft.isKYC(_msgSender()), "KYC required");
+        require(_pendingBalances[id][_msgSender()] > 0, "No more pending balances");
 
-        uint256 quantity = _pendingBalances[msg.sender];
-        uint256 stock = _nft.balanceOf(address(this), _nftId);
+        uint256 quantity = _pendingBalances[id][_msgSender()];
+        uint256 stock = _nft.balanceOf(address(this), id);
         require(stock >= quantity, "REITIPO: not enough units to claim");
 
         bytes memory empty;        
-        _nft.safeTransferFrom(address(this), msg.sender, _nftId, quantity, empty);
-        _pendingBalances[msg.sender] = 0;
+        _nft.safeTransferFrom(address(this), _msgSender(), id, quantity, empty);
+        _pendingBalances[id][_msgSender()] = 0;
     }
 
     function onERC1155Received(
