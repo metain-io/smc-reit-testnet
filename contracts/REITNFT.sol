@@ -2028,7 +2028,7 @@ interface IREITTradable {
 
     function isKYC(address account) external view returns (bool);
 
-    function getIPOUnitPrice(uint256 _id) external view returns (uint256);
+    function getShareUnitPrice(uint256 _id) external view returns (uint256);
 
     function isIPOContract(uint256 _id, address account)
         external
@@ -2252,7 +2252,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         uint256 ipoTime;
         uint256 ipoUnitPrice;
         uint256 liquidationTime;
-        uint256 registerationFee;
+        uint256 registerationTaxRate;
     }
 
     struct REITYield {
@@ -2267,6 +2267,8 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         // amount of tokens vested
         uint256 released;
     }
+
+    uint constant PERCENT_DECIMALS_MULTIPLY = 100000000; // allow upto 6 decimals of percentage
 
     mapping(uint256 => REITMetadata) public tokenMetadata;
     mapping(uint256 => REITYield) public tokenYieldData;
@@ -2343,13 +2345,13 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         uint256 ipoTime,
         uint256 ipoUnitPrice,
         uint256 liquidationTime,
-        uint256 registerationFee
+        uint256 registerationTaxRate
     ) external creatorOnly(_id) {
         tokenMetadata[_id] = REITMetadata(
             ipoTime,
             ipoUnitPrice,
             liquidationTime,
-            registerationFee
+            registerationTaxRate
         );
     }
 
@@ -2364,6 +2366,19 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             "ERC1155: balance query for the zero address"
         );
         return _registeredBalances[id][account];
+    }
+
+    function getBalanceRegistrationFee(uint256 _id) public onlyKYC shareHoldersOnly(_id) view returns (uint256) {
+        REITMetadata memory metadata = tokenMetadata[_id];
+        uint256 balance = balanceOf(_msgSender(), _id);
+        uint256 quantity = balance.sub(_registeredBalances[_id][_msgSender()]);
+
+        uint256 fee = quantity
+            .mul(metadata.ipoUnitPrice)
+            .mul(metadata.registerationTaxRate)
+            .div(PERCENT_DECIMALS_MULTIPLY);
+
+        return fee;
     }
 
     function registerBalanceOwnership(uint256 _id)
@@ -2381,8 +2396,8 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         IERC20Extented payableToken = fundingToken[_id];
         uint256 fee = quantity
             .mul(metadata.ipoUnitPrice)
-            .mul(metadata.registerationFee)
-            .div(10**payableToken.decimals());
+            .mul(metadata.registerationTaxRate)
+            .div(PERCENT_DECIMALS_MULTIPLY);
 
         require(
             payableToken.transferFrom(_msgSender(), address(this), fee),
@@ -2390,6 +2405,28 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         );
 
         _registeredBalances[_id][_msgSender()] = balance;
+    }
+
+    function getTotalBenefit(uint256 _id) external shareHoldersOnly(_id) view returns (uint256) {
+        if (!tokenYieldVesting[_id][_msgSender()].initialized) {
+            return 0;
+        }
+
+        REITYield memory yieldData = tokenYieldData[_id];
+        YieldVesting memory yieldVesting = tokenYieldVesting[_id][_msgSender()];
+        uint256 claimableYield = _registeredBalances[_id][_msgSender()]
+            .mul(yieldData.yieldDividend)
+            .sub(yieldVesting.released);
+
+        return claimableYield;
+    }
+
+    function getClaimedBenefit(uint256 _id) external shareHoldersOnly(_id) view returns (uint256) {
+        if (!tokenYieldVesting[_id][_msgSender()].initialized) {
+            return 0;
+        }
+
+        return tokenYieldVesting[_id][_msgSender()].released;
     }
 
     function claimBenefit(uint256 _id)
@@ -2564,7 +2601,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         return ERC1155Upgradeable.balanceOf(account, id);
     }
 
-    function getIPOUnitPrice(uint256 _id)
+    function getShareUnitPrice(uint256 _id)
         external
         view
         override
