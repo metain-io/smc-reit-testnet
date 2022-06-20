@@ -38,7 +38,7 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
      */
     modifier creatorOnly(uint256 _id) {
         require(
-            creators[_id] == msg.sender,
+            creators[_id] == _msgSender(),
             "ERC1155Tradable#creatorOnly: ONLY_CREATOR_ALLOWED"
         );
         _;
@@ -170,10 +170,11 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
     function setCreator(address _to, uint256[] memory _ids) public {
         require(
             _to != address(0),
-            "ERC1155Tradable#setCreator: INVALID_ADDRESS."
+            "ERC1155Tradable#setCreator: INVALID_ADDRESS"
         );
         for (uint256 i = 0; i < _ids.length; i++) {
             uint256 id = _ids[i];
+            require(creators[id] == _msgSender(), "ERC1155Tradable#setCreator: ONLY_CREATOR_ALLOWED");
             _setCreator(_to, id);
         }
     }
@@ -183,7 +184,7 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
      * @param _to   Address of the new creator
      * @param _id  Token IDs to change creator of
      */
-    function _setCreator(address _to, uint256 _id) internal creatorOnly(_id) {
+    function _setCreator(address _to, uint256 _id) internal {
         creators[_id] = _to;
     }
 

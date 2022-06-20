@@ -2063,7 +2063,7 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
      */
     modifier creatorOnly(uint256 _id) {
         require(
-            creators[_id] == msg.sender,
+            creators[_id] == _msgSender(),
             "ERC1155Tradable#creatorOnly: ONLY_CREATOR_ALLOWED"
         );
         _;
@@ -2195,10 +2195,11 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
     function setCreator(address _to, uint256[] memory _ids) public {
         require(
             _to != address(0),
-            "ERC1155Tradable#setCreator: INVALID_ADDRESS."
+            "ERC1155Tradable#setCreator: INVALID_ADDRESS"
         );
         for (uint256 i = 0; i < _ids.length; i++) {
             uint256 id = _ids[i];
+            require(creators[id] == _msgSender(), "ERC1155Tradable#setCreator: ONLY_CREATOR_ALLOWED");
             _setCreator(_to, id);
         }
     }
@@ -2208,7 +2209,7 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
      * @param _to   Address of the new creator
      * @param _id  Token IDs to change creator of
      */
-    function _setCreator(address _to, uint256 _id) internal creatorOnly(_id) {
+    function _setCreator(address _to, uint256 _id) internal {
         creators[_id] = _to;
     }
 
@@ -2283,6 +2284,22 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     mapping(uint256 => mapping(address => uint256)) private _registeredBalances;
 
     /**
+     * @dev Initialization
+     * @param _name string Name of the NFT
+     * @param _symbol string Symbol of the NFT
+     * @param _uri string URI to JSON data of the smart contract
+     */
+    function initialize(
+        string memory _name,
+        string memory _symbol,
+        string memory _uri
+    ) public override initializer {
+        super.initialize(_name, _symbol, _uri);
+
+        __KYCAccess_init();
+    }
+
+    /**
      * @dev Require msg.sender to own more than 0 of the token id
      */
     modifier shareHoldersOnly(uint256 _id) {
@@ -2320,7 +2337,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     ) external onlyGovernor returns (uint256) {
         uint256 _id = super._getNextTokenID();
         super._incrementTokenTypeId();
-        _setCreator(_msgSender(), _id);
+        _setCreator(_initialOwner, _id);
 
         if (bytes(_uri).length > 0) {
             emit URI(_uri, _id);
@@ -2329,11 +2346,11 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         fundingToken[_id] = IERC20Extented(_fundingToken);
         tokenMetadata[_id] = REITMetadata(0, 0, 0, 0);
-        tokenYieldData[_id] = REITYield(0, 0);
+        tokenYieldData[_id] = REITYield(0, 0);        
 
-        mint(_initialOwner, _id, _initialSupply, _data);
+        _mint(_initialOwner, _id, _initialSupply, _data);
         _registeredBalances[_id][_initialOwner] = _initialSupply;
-
+        
         tokenSupply[_id] = _initialSupply;
 
         emit Create(_id);

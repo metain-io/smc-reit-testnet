@@ -1244,6 +1244,11 @@ contract REITIPO is
 
     fallback() external payable {}
 
+    function setWhitelistAdmin(address account) external onlyGovernor {
+        require(account != address(0), "Whitelist Admin cannot be zero address");
+        _setWhitelistAdmin(account);
+    }
+
     /**
      * @dev Returns the address of the IERC1155 contract
      */
@@ -1251,7 +1256,7 @@ contract REITIPO is
         return address(_nft);
     }
 
-    function getPendingBalances(uint256 id, address account) external view returns(uint256) {
+    function getPendingBalances(address account, uint256 id) external view returns(uint256) {
         return _pendingBalances[id][account];
     }
 

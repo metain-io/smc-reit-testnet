@@ -2,44 +2,9 @@
   "manifestVersion": "3.2",
   "admin": {
     "address": "0x5b1869D9A4C187F2EAa108f3062412ecf0526b24",
-    "txHash": "0xb4d116301561d76f79eda0e9120865b2e7dfcd3da8d0e490ff4aac423c62edfa"
+    "txHash": "0x74403be67a02ce7224b86858e846b8b7fd74752468a20207567556a1382b7a27"
   },
   "proxies": [
-    {
-      "address": "0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7",
-      "txHash": "0x3d1cc56fcef44ed77f1c67c72e96c02f5d1e080b342629c883dffb5762edae58",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x0290FB167208Af455bB137780163b7B7a9a10C16",
-      "txHash": "0x655ad426310aa858bd5e908a833cfafd92f80ec3868590bc7ed2a0cf9f2620d2",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x2612Af3A521c2df9EAF28422Ca335b04AdF3ac66",
-      "txHash": "0x03976a30a98cf288ce44c5896a8093c223f8325ec7459c6617d4c4b3712ef109",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x26b4AFb60d6C903165150C6F0AA14F8016bE4aec",
-      "txHash": "0xab39c149ead249c1904f52e6b649234ac41810d4f334261b2847ad1068a1e63a",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xCfEB869F69431e42cdB54A4F4f105C19C080A601",
-      "txHash": "0x99be13d0eb107a5841f048fb492e9ddb74b3f34672471502d0ed30a3d8f9f1c8",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xC89Ce4735882C9F0f0FE26686c53074E09B0D550",
-      "txHash": "0x6c86c1e5276b2660d89ae813b402158f675b7f8cc84f049bb3c715d3fdd54ea5",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x59d3631c86BbE35EF041872d502F218A39FBa150",
-      "txHash": "0xa3210948d2510df7c9fce95ec56f3f0fc2d01159e2a3844813afce434aa6148b",
-      "kind": "transparent"
-    },
     {
       "address": "0x9b1f7F645351AF3631a656421eD2e40f2802E6c0",
       "txHash": "0x49e860e362bd0c032faf2100f4686fb0e7e5665000447a34d120e43f07a3215e",
@@ -51,48 +16,13 @@
       "kind": "transparent"
     },
     {
-      "address": "0xA94B7f0465E98609391C623d0560C5720a3f2D33",
-      "txHash": "0x62a2e6dd919d0d38ae4860f863ed6ace0b68d965e6bee3b917665856cf92ec30",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xb09bCc172050fBd4562da8b229Cf3E45Dc3045A6",
-      "txHash": "0x4ff8372e1e0d9d80e3a3cba366fb55b218684391139b1ceb3513dffa347c06c2",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xFC628dd79137395F3C9744e33b1c5DE554D94882",
-      "txHash": "0x307e43f29573a93303e4880888d9ab9478d551b3a7b36a473eccdab2226ad8ee",
-      "kind": "transparent"
-    },
-    {
       "address": "0xFF6049B87215476aBf744eaA3a476cBAd46fB1cA",
       "txHash": "0x1f4060b13a429d8dc18f45f4047c8ddb291c92b5c4977f82994d2ceee1f5c161",
       "kind": "transparent"
     },
     {
-      "address": "0xA586074FA4Fe3E546A132a16238abe37951D41fE",
-      "txHash": "0x878ed3ad4f4a88779a7eca953eec5b8ef6cbfdfd3216c36ce611cda9556934d1",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x2D8BE6BF0baA74e0A907016679CaE9190e80dD0A",
-      "txHash": "0xd23c4a054ba68c36a0646a819342e89639237516bfd977f0476e49b03efa72b0",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x22d5C8BdD4346b390014a07109a8F830094d4abf",
-      "txHash": "0xfb6d7898b27ce80ad47eec625bbb38b0bfbfa0ed2738267fd5b4b86876dc9df8",
-      "kind": "transparent"
-    },
-    {
       "address": "0xB9bdBAEc07751F6d54d19A6B9995708873F3DE18",
       "txHash": "0xc8aa27bd216990dc63c4e3db8947294936d80a172572c7c36baafc9d43299ecd",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xc0b3B62DD0400E4baa721DdEc9B8A384147b23fF",
-      "txHash": "0x3de3f00866b4fe83b5ea17ac82b5a126221ec1f229991fc0f59cd7c1edf702ef",
       "kind": "transparent"
     },
     {
@@ -111,18 +41,8 @@
       "kind": "transparent"
     },
     {
-      "address": "0x966d3e76E7a890A2d7B9AE1E370dC219E920F9D4",
-      "txHash": "0xa2579880fcb33c058b4c7b7b6e5bc13dff72469f8db407bcb9fa19ae922636dd",
-      "kind": "transparent"
-    },
-    {
       "address": "0x9e90054F4B6730cffAf1E6f6ea10e1bF9dD26dbb",
       "txHash": "0x319a697fdd4652f39b219e73472e6da811bfe9c70f5f050421c3619d19947df6",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xb4fFe5983B0B748124577Af4d16953bd096b6897",
-      "txHash": "0x8efac0dc86235ee29a3089f2793e62e791fc81f28d80c62cec99eb771cfea04a",
       "kind": "transparent"
     },
     {
@@ -133,11 +53,6 @@
     {
       "address": "0xC5aFE31AE505594B190AC71EA689B58139d1C354",
       "txHash": "0x2eb1c96184049017ce9a92dc833c343984ca34fb1fcfc47d52253987a45cf53a",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x42D4BA5e542d9FeD87EA657f0295F1968A61c00A",
-      "txHash": "0xefc5a659e4bcbafb189c74c22903efcc8596d6fb417c2dd5d8d100e0dcb94172",
       "kind": "transparent"
     },
     {
@@ -161,436 +76,292 @@
       "kind": "transparent"
     },
     {
-      "address": "0x393A6a6850e0788e496d73c50a436606e6CcA874",
-      "txHash": "0x455026cffebce9fcb124d533ae767a90d4731d91446e3f45436fabda42917163",
+      "address": "0xc22Ffa318051d8aF4E5f2E2732d7049486fcE093",
+      "txHash": "0x381b8f250a15333dbe98a67f7ab3e69fefc6aab5134bbf3dd72c925d472ea4d8",
       "kind": "transparent"
     },
     {
-      "address": "0xc22Ffa318051d8aF4E5f2E2732d7049486fcE093",
-      "txHash": "0x381b8f250a15333dbe98a67f7ab3e69fefc6aab5134bbf3dd72c925d472ea4d8",
+      "address": "0xCfEB869F69431e42cdB54A4F4f105C19C080A601",
+      "txHash": "0x3ffefcacae5070b7903e5d69c5d2a8d3dd771c21d603fc1bf2a262e3778300bd",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xC89Ce4735882C9F0f0FE26686c53074E09B0D550",
+      "txHash": "0x4924b3495540040e22ffd8630996f86facda580572a55edf8edb1df4a98481e0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xD833215cBcc3f914bD1C9ece3EE7BF8B14f841bb",
+      "txHash": "0x78fa609e7efdcf9ca04d507d3aadccceb496f2caf4c3b0f69f6c93acb45523bf",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7",
+      "txHash": "0x6655fd297f80fff7ef95f111a1ed47524f1f0d78c21bd44b167783e5f56b49ec",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x59d3631c86BbE35EF041872d502F218A39FBa150",
+      "txHash": "0x4ff286ab217d36896ee9d836988ceb62cf0072e173d86f7863822822fd03c154",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x0290FB167208Af455bB137780163b7B7a9a10C16",
+      "txHash": "0xa4760e55dd076aa52148b7640cf5c3754bb085156ad0fbf96cc8c31f5c7352ba",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x67B5656d60a809915323Bf2C40A8bEF15A152e3e",
+      "txHash": "0x01ab1bd71d908bd69510e04238d547fa4347d4cf7ffd0648271dfbc3d728871e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2612Af3A521c2df9EAF28422Ca335b04AdF3ac66",
+      "txHash": "0x1d0df9f7bb307239656c1154d2ba8ec055959545a566acea46c38c4703c976ca",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x26b4AFb60d6C903165150C6F0AA14F8016bE4aec",
+      "txHash": "0x2b90bd68ade1ab6a60f98e7f99d97701a1ccc2fa0e3de3e3cfefc86d1df67e03",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x630589690929E9cdEFDeF0734717a9eF3Ec7Fcfe",
+      "txHash": "0xa2069de0278527d9c064e96885115e844122521353ea496609ff1e8ee5079e82",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xDb56f2e9369E0D7bD191099125a3f6C370F8ed15",
+      "txHash": "0xbf98c59fa9e1c35d08a05f5bcd7f360a55b9794b3095b51e3d782d8d5d4f8bf5",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xA94B7f0465E98609391C623d0560C5720a3f2D33",
+      "txHash": "0x95b4d76b5e78434aafd00af04edeac75bf1f72d451ed070d445a69fde82ee371",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xb09bCc172050fBd4562da8b229Cf3E45Dc3045A6",
+      "txHash": "0xe5b40aa0d8abf21430bb0be0f0b06ac290844a964b7d1d55f7365765291764a7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xFC628dd79137395F3C9744e33b1c5DE554D94882",
+      "txHash": "0xf5573b1ca23bf6bdf5b3f0038e014a8917fd3f70062be8e36c6b8cf04a8460c1",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x21a59654176f2689d12E828B77a783072CD26680",
+      "txHash": "0xa5a81656e00ed1d6c5c855305888019f079bfceb6b5b7ea14a2764bc54d2b10c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xD86C8F0327494034F60e25074420BcCF560D5610",
+      "txHash": "0x01bc292707bba538622c0ec4a8c59a0a2f99d18a92cff91f5b504fbdf16b5ca0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7C728214be9A0049e6a86f2137ec61030D0AA964",
+      "txHash": "0xc0d736c7bf385f7b38bcbf2c4ea5aa8dff7ade9f162c77c090f144cc29d9dbf4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5017A545b09ab9a30499DE7F431DF0855bCb7275",
+      "txHash": "0x1f09e3f423caf625d716c55948dd062333607e97643ee6eeeae4bc1136564bc0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xA586074FA4Fe3E546A132a16238abe37951D41fE",
+      "txHash": "0x023f97c90cfd345c469a479b090368b050af1a31f9ec94368a868bac713e79ca",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2D8BE6BF0baA74e0A907016679CaE9190e80dD0A",
+      "txHash": "0xe27a8402a6e70c44a7f2e3a1a87df2b8f1f27f16e98d8ca946f04a26dc8049a7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xaf5C4C6C7920B4883bC6252e9d9B8fE27187Cf68",
+      "txHash": "0x91711bd61447a765cccc116340327a7670b4ae23d4407edd0aecb1b01e79c9de",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xEC5d4F247aF81A843612eb1371CBCfa88b762119",
+      "txHash": "0x8abd7980e627714589fa05fe085f0450cd57a04d9881bd770e33729ac29d21a4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x22d5C8BdD4346b390014a07109a8F830094d4abf",
+      "txHash": "0x60c8188bda83473c70f3d56d9cf9aff6c08dc4303c39aad134a4a9c6f3a2ee81",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7414e38377D6DAf6045626EC8a8ABB8a1BC4B97a",
+      "txHash": "0x50dc69e70fe25c10429fdf503e5b58608f24686ab3d915778a633730e070ea32",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xFcCeD5E997E7fb1D0594518D3eD57245bB8ed17E",
+      "txHash": "0x705e5faed4430ed497999d0ad12b414b09ea74cfb89bbc10a970362465880218",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4339316e04CFfB5961D1c41fEF8E44bfA2A7fBd1",
+      "txHash": "0xdeac1ebd02397bb72a42df2748e04a6a9c523db4e0ea2252f49798e78b9073a7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4cFB3F70BF6a80397C2e634e5bDd85BC0bb189EE",
+      "txHash": "0x2ae45662a0d599fd129ae52e4bf5cdfa4c3c66f906dd25c8702308019ac57afa",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xc0b3B62DD0400E4baa721DdEc9B8A384147b23fF",
+      "txHash": "0x53f683f66cae1793d9e3b5b9315aa048c566136c0e1b5e623bffa0ee88410b8e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x988B6CFBf3332FF98FFBdED665b1F53a61f92612",
+      "txHash": "0xf28b8c223d1cba04836a2ac8fd2cd132153bb3f74508891e92fba11147dc6eac",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xeea2Fc1D255Fd28aA15c6c2324Ad40B03267f9c5",
+      "txHash": "0xa1149f7cb07d567471f0e9f88f37b1baa4f5ae8da4baa2cbae9214e973699642",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xD13ebb5C39fB00C06122827E1cbD389930C9E0E3",
+      "txHash": "0x5333404fd65c73c56123882e7a03dd1d69f33fb410cb3d937a95060fd260c08b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8914a9E5C5E234fDC3Ce9dc155ec19F43947ab59",
+      "txHash": "0xda006003d97614010bb2b92f2c90ac0cc57c2164897441d97e7b0ef65d3a9f2a",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2f3efA6bbDC5fAf4dC1a600765c7B7829e47bE10",
+      "txHash": "0x6e8ba91250b6acc1a2a944f673c1e2dd1d55dee31dad1ab1f9bad077368eeb72",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x966d3e76E7a890A2d7B9AE1E370dC219E920F9D4",
+      "txHash": "0xdd1f83d2ec64453762b5639f9bf718ea214de7be16d010e2d332119d9a4ec9fb",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xfE82e8f24A51E670133f4268cDfc164c49FC3b37",
+      "txHash": "0xee6cadac026e21c959d42ae6d2e418314a938e10a8e5ccab256abd411dd44da8",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xb4fFe5983B0B748124577Af4d16953bd096b6897",
+      "txHash": "0xce67cc7758c4aa1e6e663a17f51609ecaeb86a027e72d1854f9081d9452fc38e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x42D4BA5e542d9FeD87EA657f0295F1968A61c00A",
+      "txHash": "0x0a3fde37e6fe91f49a54240a5b46c5bcc0c8a27e2f6057d25fd8dd6732c82d9a",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x25AF99b922857C37282f578F428CB7f34335B379",
+      "txHash": "0xc216a764150564ec14b3ba58dc047f3aa62a79cbd565334fb1d1320bd59a2f2d",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x25D02115bd67258a406A0F676147E6C3598a91a9",
+      "txHash": "0x2354daf19f5fa1d64d9eb31eea38237a361c403caa2cfc871c5e372069d5b4e4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9ce4cd6D7f5e8b14c7a3e8e6A257A86Bd5a6EeA0",
+      "txHash": "0x41f9679447180b9f57811c703935e8fef2680cd1788371980584b90bc04cfb21",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xd45A464a2412A2f83498d13635698a041b9dBe9b",
+      "txHash": "0x491f0364268f3905217c550d3e2c87c1a9bfdb5b54e02d152cb6e751f1bee4f8",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x83EE15DFDDD8b8AD56A73001Ca7A1627c7fe6716",
+      "txHash": "0xd802f8c91ddbe1dc143e6670de70c0f8d9ab05ce4d1a23bfa5a1a85947455508",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xEd447aCB0CEb49d77f317dD6D37CB64da7a7E7F8",
+      "txHash": "0xcc3c4c464a20c40d6b9c6dfc2e50e314aece1aed4426535918547a57c4650af7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xE8e43b5D61C43375aB7b651F1419F2a81C5E6615",
+      "txHash": "0x9834dbf650562add3a971db7f40994622e3a9a60b8f5467dd3f165c41bdfb0b6",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x393A6a6850e0788e496d73c50a436606e6CcA874",
+      "txHash": "0x02d5a0d6cd6fd4f92eaa081ac163156c5714ec50bb74ff7634b2bab235d18d74",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x71e7EC880873af0FE33Ad988F862bE200FdD85cC",
+      "txHash": "0xca2335b1bdcde10d3b73a4561e45431f957d735e5b4f010654d724c24d4b9fab",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa6f8431C9eEe4Ac2859207aF4004F7a948924c30",
+      "txHash": "0x1cdee8c3637656609a3a9bd84de63451830290caa1eb1288b5b85e9220cf6fd0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x81920CAF1F99Bb0f7D72Fdfba840cff21d63CcC5",
+      "txHash": "0x03d02316947422ab989d33d32f75d242eb1a085aba7d1070d64716ce8a13eed0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x770191B327a9f6cd83B997F68c1ce3c8e6a018dc",
+      "txHash": "0x9eeda34e10b182e037a38a47827fe0c11a22f523ad366a477857a4aeba3ec836",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x84b085c0d4B4D6fbf6490f8246Bc5cD317d2d4cD",
+      "txHash": "0x6696cedfc2f4eabf45d370d0c0e6dca3a3c8540497ebd8efeaee2cc05e66b607",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x027e4121d4675465E8029F09511D813c3476Ebf5",
+      "txHash": "0x18fcf9ae9feed78dbcff4a034c51fc1508a7991ee0ff3330b374d7bee976aad5",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8b9e409a817c7dC1a42C3DDe9E85dcBFF602c0fC",
+      "txHash": "0x0c791f0e1990ef1f4abf89c75469bcf95041a5e791bffdd50d63bbe050986cd9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1886Fa412064137BDe9Ea996EA2bB85377de8aB6",
+      "txHash": "0xea85126e98bdbfcbad941a6dc98df169b89cb5e8adaa6238ea41b97fcabeca49",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xACF05e2a9b757e70C2900432c9b4E08Fdc54dD53",
+      "txHash": "0x284dbc6349e80496a61b4b1d28dd2a584589df55e7a9a54a1ed6194afc3c4ca0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8E7a8d3CAeEbbe9A92faC4db19424218aE6791a3",
+      "txHash": "0x1722bd7cbffd57fed3aa4c7579544fdd43be77bb3d5f3e322492cb74592bfa24",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x49bC4443E05f7c05A823920CaD1c9EbaAcD7201E",
+      "txHash": "0x7560fffd2dc8ebe61b01d4256df5cdcd8903d55a7aaf7fe155aa4c09699968a1",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "28e39bb84323adea64f6b6dc8ed54ea1f2c6bfc414a29299e99827527ea132f5": {
-      "address": "0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab",
-      "txHash": "0x1a5f3757f778b48c541f4ed2a236e741cc4f004247cd553ccf48be55c0006386",
-      "layout": {
-        "storage": [
-          {
-            "label": "_initialized",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_uint8",
-            "contract": "Initializable",
-            "src": "contracts\\REITNFT.sol:470",
-            "retypedFrom": "bool"
-          },
-          {
-            "label": "_initializing",
-            "offset": 1,
-            "slot": "0",
-            "type": "t_bool",
-            "contract": "Initializable",
-            "src": "contracts\\REITNFT.sol:475"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ContextUpgradeable",
-            "src": "contracts\\REITNFT.sol:590"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "51",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ERC165Upgradeable",
-            "src": "contracts\\REITNFT.sol:627"
-          },
-          {
-            "label": "_balances",
-            "offset": 0,
-            "slot": "101",
-            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
-            "contract": "ERC1155Upgradeable",
-            "src": "contracts\\REITNFT.sol:643"
-          },
-          {
-            "label": "_operatorApprovals",
-            "offset": 0,
-            "slot": "102",
-            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
-            "contract": "ERC1155Upgradeable",
-            "src": "contracts\\REITNFT.sol:646"
-          },
-          {
-            "label": "_uri",
-            "offset": 0,
-            "slot": "103",
-            "type": "t_string_storage",
-            "contract": "ERC1155Upgradeable",
-            "src": "contracts\\REITNFT.sol:649"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "104",
-            "type": "t_array(t_uint256)47_storage",
-            "contract": "ERC1155Upgradeable",
-            "src": "contracts\\REITNFT.sol:1140"
-          },
-          {
-            "label": "proxyRegistryAddress",
-            "offset": 0,
-            "slot": "151",
-            "type": "t_address",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1708"
-          },
-          {
-            "label": "currentTokenID",
-            "offset": 0,
-            "slot": "152",
-            "type": "t_uint256",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1709"
-          },
-          {
-            "label": "creators",
-            "offset": 0,
-            "slot": "153",
-            "type": "t_mapping(t_uint256,t_address)",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1710"
-          },
-          {
-            "label": "tokenSupply",
-            "offset": 0,
-            "slot": "154",
-            "type": "t_mapping(t_uint256,t_uint256)",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1711"
-          },
-          {
-            "label": "tokenUri",
-            "offset": 0,
-            "slot": "155",
-            "type": "t_mapping(t_uint256,t_string_storage)",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1712"
-          },
-          {
-            "label": "_contractURI",
-            "offset": 0,
-            "slot": "156",
-            "type": "t_string_storage",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1714"
-          },
-          {
-            "label": "_owner",
-            "offset": 0,
-            "slot": "157",
-            "type": "t_address",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1715"
-          },
-          {
-            "label": "name",
-            "offset": 0,
-            "slot": "158",
-            "type": "t_string_storage",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1718"
-          },
-          {
-            "label": "symbol",
-            "offset": 0,
-            "slot": "159",
-            "type": "t_string_storage",
-            "contract": "ERC1155Tradable",
-            "src": "contracts\\REITNFT.sol:1720"
-          },
-          {
-            "label": "tokenMetadata",
-            "offset": 0,
-            "slot": "160",
-            "type": "t_mapping(t_uint256,t_struct(REITMetadata)3210_storage)",
-            "contract": "REITNFT",
-            "src": "contracts\\REITNFT.sol:2003"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_array(t_uint256)47_storage": {
-            "label": "uint256[47]",
-            "numberOfBytes": "1504"
-          },
-          "t_array(t_uint256)50_storage": {
-            "label": "uint256[50]",
-            "numberOfBytes": "1600"
-          },
-          "t_array(t_uint256)dyn_storage": {
-            "label": "uint256[]",
-            "numberOfBytes": "32"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
-            "label": "mapping(address => mapping(address => bool))",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_address)": {
-            "label": "mapping(uint256 => address)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
-            "label": "mapping(uint256 => mapping(address => uint256))",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_string_storage)": {
-            "label": "mapping(uint256 => string)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(REITMetadata)3210_storage)": {
-            "label": "mapping(uint256 => struct REITNFT.REITMetadata)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_uint256)": {
-            "label": "mapping(uint256 => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_string_storage": {
-            "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_struct(REITMetadata)3210_storage": {
-            "label": "struct REITNFT.REITMetadata",
-            "members": [
-              {
-                "label": "ipoTime",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "ipoUnitPrice",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "yieldPeriod",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "yieldDividend",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "liquidationTime",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "4"
-              },
-              {
-                "label": "liquidationExtension",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "5"
-              },
-              {
-                "label": "annualAUM",
-                "type": "t_array(t_uint256)dyn_storage",
-                "offset": 0,
-                "slot": "6"
-              },
-              {
-                "label": "purchaseQuota",
-                "type": "t_array(t_uint256)dyn_storage",
-                "offset": 0,
-                "slot": "7"
-              }
-            ],
-            "numberOfBytes": "256"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint8": {
-            "label": "uint8",
-            "numberOfBytes": "1"
-          }
-        }
-      }
-    },
-    "31ff64e7121e4a0058e556674e17d683b386f79e723e9c60ae5c825ee5c1caab": {
-      "address": "0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B",
-      "txHash": "0x2c85f9fb8a100c91defad8703ab4f319e2bc74fc2d9658cf48d2942056e705e1",
-      "layout": {
-        "storage": [
-          {
-            "label": "_initialized",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_uint8",
-            "contract": "Initializable",
-            "src": "contracts\\REITIPO.sol:334",
-            "retypedFrom": "bool"
-          },
-          {
-            "label": "_initializing",
-            "offset": 1,
-            "slot": "0",
-            "type": "t_bool",
-            "contract": "Initializable",
-            "src": "contracts\\REITIPO.sol:339"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ContextUpgradeable",
-            "src": "contracts\\REITIPO.sol:687"
-          },
-          {
-            "label": "_owner",
-            "offset": 0,
-            "slot": "51",
-            "type": "t_address",
-            "contract": "OwnableUpgradeable",
-            "src": "contracts\\REITIPO.sol:705"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "52",
-            "type": "t_array(t_uint256)49_storage",
-            "contract": "OwnableUpgradeable",
-            "src": "contracts\\REITIPO.sol:770"
-          },
-          {
-            "label": "whitelisteds",
-            "offset": 0,
-            "slot": "101",
-            "type": "t_mapping(t_address,t_bool)",
-            "contract": "Whitelisting",
-            "src": "contracts\\REITIPO.sol:776"
-          },
-          {
-            "label": "_status",
-            "offset": 0,
-            "slot": "102",
-            "type": "t_uint256",
-            "contract": "ReentrancyGuardUpgradeable",
-            "src": "contracts\\REITIPO.sol:456"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "103",
-            "type": "t_array(t_uint256)49_storage",
-            "contract": "ReentrancyGuardUpgradeable",
-            "src": "contracts\\REITIPO.sol:492"
-          },
-          {
-            "label": "_nft",
-            "offset": 0,
-            "slot": "152",
-            "type": "t_contract(IREITTradable)671",
-            "contract": "REITIPO",
-            "src": "contracts\\REITIPO.sol:841"
-          },
-          {
-            "label": "_nftId",
-            "offset": 0,
-            "slot": "153",
-            "type": "t_uint256",
-            "contract": "REITIPO",
-            "src": "contracts\\REITIPO.sol:842"
-          },
-          {
-            "label": "_payableToken",
-            "offset": 0,
-            "slot": "154",
-            "type": "t_mapping(t_string_memory_ptr,t_contract(IERC20)77)",
-            "contract": "REITIPO",
-            "src": "contracts\\REITIPO.sol:845"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_array(t_uint256)49_storage": {
-            "label": "uint256[49]",
-            "numberOfBytes": "1568"
-          },
-          "t_array(t_uint256)50_storage": {
-            "label": "uint256[50]",
-            "numberOfBytes": "1600"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_contract(IERC20)77": {
-            "label": "contract IERC20",
-            "numberOfBytes": "20"
-          },
-          "t_contract(IREITTradable)671": {
-            "label": "contract IREITTradable",
-            "numberOfBytes": "20"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_string_memory_ptr,t_contract(IERC20)77)": {
-            "label": "mapping(string => contract IERC20)",
-            "numberOfBytes": "32"
-          },
-          "t_string_memory_ptr": {
-            "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint8": {
-            "label": "uint8",
-            "numberOfBytes": "1"
-          },
-          "t_string_storage": {
-            "label": "string"
-          }
-        }
-      }
-    },
     "3877b80577b968313f6aadc0b529c31e066a1cd5345790aab2160c5797e9e305": {
       "address": "0x0290FB167208Af455bB137780163b7B7a9a10C16",
       "txHash": "0x5be6a415ae0f54ef59d2337f3d90208c5313579ddbbf00f40e796a174b165bac",
@@ -2657,8 +2428,8 @@
       }
     },
     "4952b3ec68e8de60bef585c9fe8114da64df3fe4b6b009445a765fd6e07bd3bf": {
-      "address": "0xE8e43b5D61C43375aB7b651F1419F2a81C5E6615",
-      "txHash": "0x4076d0551bc11e4e7ad2568f1413215511c7f2c8c989574069d28cbbe0d3f204",
+      "address": "0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab",
+      "txHash": "0x2f3ea5b3936cb3dc4c8fd007ce8d3775c681fce4b0d11515ddef573022b23f70",
       "layout": {
         "storage": [
           {
@@ -3056,8 +2827,8 @@
       }
     },
     "ae3f1a7d8e555a575392d2cfdc36dda588ac838af7bf0bf95dcf32049567fe96": {
-      "address": "0x71e7EC880873af0FE33Ad988F862bE200FdD85cC",
-      "txHash": "0x19868d1faac8bb4e9f26cd7a81383cc29e31c96f10ba8be30660ef8b694081e5",
+      "address": "0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B",
+      "txHash": "0xd1fafc271184e9ef463aa90e7d8b26e003a398687532c168cffebfe07bbe053b",
       "layout": {
         "storage": [
           {
@@ -3229,6 +3000,1559 @@
           },
           "t_string_storage": {
             "label": "string"
+          }
+        }
+      }
+    },
+    "616f72856b17f69bb485c23c913c064ec005243bfdb7341c7f64907cbd15cc38": {
+      "address": "0xaD888d0Ade988EbEe74B8D4F39BF29a8d0fe8A8D",
+      "txHash": "0xf4968bf144eff51b27ab55c827392c79bea057d870c0e9634115bd98eb81af83",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:558",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:563"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITNFT.sol:678"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\REITNFT.sol:1007"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1023"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1026"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1029"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1520"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1768"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1833"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:1556"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:1592"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2049"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2050"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2051"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2052"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2054"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2057"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2059"
+          },
+          {
+            "label": "kycAccounts",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:684"
+          },
+          {
+            "label": "_kycAdmin",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_address",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:686"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:754"
+          },
+          {
+            "label": "tokenMetadata",
+            "offset": 0,
+            "slot": "309",
+            "type": "t_mapping(t_uint256,t_struct(REITMetadata)3528_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2274"
+          },
+          {
+            "label": "tokenYieldData",
+            "offset": 0,
+            "slot": "310",
+            "type": "t_mapping(t_uint256,t_struct(REITYield)3533_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2275"
+          },
+          {
+            "label": "tokenYieldVesting",
+            "offset": 0,
+            "slot": "311",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3540_storage))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2276"
+          },
+          {
+            "label": "dividendFunds",
+            "offset": 0,
+            "slot": "312",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2278"
+          },
+          {
+            "label": "fundingToken",
+            "offset": 0,
+            "slot": "313",
+            "type": "t_mapping(t_uint256,t_contract(IERC20Extented)3503)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2281"
+          },
+          {
+            "label": "ipoContracts",
+            "offset": 0,
+            "slot": "314",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2282"
+          },
+          {
+            "label": "_registeredBalances",
+            "offset": 0,
+            "slot": "315",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2284"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20Extented)3503": {
+            "label": "contract IERC20Extented",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(YieldVesting)3540_storage)": {
+            "label": "mapping(address => struct REITNFT.YieldVesting)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_contract(IERC20Extented)3503)": {
+            "label": "mapping(uint256 => contract IERC20Extented)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3540_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct REITNFT.YieldVesting))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(REITMetadata)3528_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.REITMetadata)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(REITYield)3533_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.REITYield)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(REITMetadata)3528_storage": {
+            "label": "struct REITNFT.REITMetadata",
+            "members": [
+              {
+                "label": "ipoTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "ipoUnitPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "liquidationTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "registerationTaxRate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(REITYield)3533_storage": {
+            "label": "struct REITNFT.REITYield",
+            "members": [
+              {
+                "label": "yieldDividend",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "liquidationExtension",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(YieldVesting)3540_storage": {
+            "label": "struct REITNFT.YieldVesting",
+            "members": [
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "released",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "3c98eeaeac076071d58f27e11208fca500b881c5ed8ed9213056f46dfc839e65": {
+      "address": "0xFF6049B87215476aBf744eaA3a476cBAd46fB1cA",
+      "txHash": "0x8b579f83ed5eedaf4bd39bd9f26c867c57b324f29f2375d062270d84142e3dc9",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:558",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:563"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITNFT.sol:678"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\REITNFT.sol:1007"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1023"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1026"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1029"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1520"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1768"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1833"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:1556"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:1592"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2049"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2050"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2051"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2052"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2054"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2057"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2059"
+          },
+          {
+            "label": "kycAccounts",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:684"
+          },
+          {
+            "label": "_kycAdmin",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_address",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:686"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:754"
+          },
+          {
+            "label": "tokenMetadata",
+            "offset": 0,
+            "slot": "309",
+            "type": "t_mapping(t_uint256,t_struct(REITMetadata)3528_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2274"
+          },
+          {
+            "label": "tokenYieldData",
+            "offset": 0,
+            "slot": "310",
+            "type": "t_mapping(t_uint256,t_struct(REITYield)3533_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2275"
+          },
+          {
+            "label": "tokenYieldVesting",
+            "offset": 0,
+            "slot": "311",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3540_storage))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2276"
+          },
+          {
+            "label": "dividendFunds",
+            "offset": 0,
+            "slot": "312",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2278"
+          },
+          {
+            "label": "fundingToken",
+            "offset": 0,
+            "slot": "313",
+            "type": "t_mapping(t_uint256,t_contract(IERC20Extented)3503)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2281"
+          },
+          {
+            "label": "ipoContracts",
+            "offset": 0,
+            "slot": "314",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2282"
+          },
+          {
+            "label": "_registeredBalances",
+            "offset": 0,
+            "slot": "315",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2284"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20Extented)3503": {
+            "label": "contract IERC20Extented",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(YieldVesting)3540_storage)": {
+            "label": "mapping(address => struct REITNFT.YieldVesting)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_contract(IERC20Extented)3503)": {
+            "label": "mapping(uint256 => contract IERC20Extented)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3540_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct REITNFT.YieldVesting))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(REITMetadata)3528_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.REITMetadata)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(REITYield)3533_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.REITYield)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(REITMetadata)3528_storage": {
+            "label": "struct REITNFT.REITMetadata",
+            "members": [
+              {
+                "label": "ipoTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "ipoUnitPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "liquidationTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "registerationTaxRate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(REITYield)3533_storage": {
+            "label": "struct REITNFT.REITYield",
+            "members": [
+              {
+                "label": "yieldDividend",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "liquidationExtension",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(YieldVesting)3540_storage": {
+            "label": "struct REITNFT.YieldVesting",
+            "members": [
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "released",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "16b97cbb44ece3dd8fa9845cefa61eb05d5b1f962f35eccabb0cba468d6ca0a2": {
+      "address": "0x3F4E941ef5071a1D09C2eB4a24DA1Fc43F76fcfF",
+      "txHash": "0xb88de1e67cc1d4b22ddabd050f485abe791fae6ed9ad458ec0f0f8225eaf0b3e",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITIPO.sol:411",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITIPO.sol:416"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITIPO.sol:1030"
+          },
+          {
+            "label": "whitelisteds",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "WhitelistingUpgradeable",
+            "src": "contracts\\REITIPO.sol:1036"
+          },
+          {
+            "label": "_whiteListAdmin",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "WhitelistingUpgradeable",
+            "src": "contracts\\REITIPO.sol:1038"
+          },
+          {
+            "label": "_whitelistFree",
+            "offset": 20,
+            "slot": "52",
+            "type": "t_bool",
+            "contract": "WhitelistingUpgradeable",
+            "src": "contracts\\REITIPO.sol:1039"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "WhitelistingUpgradeable",
+            "src": "contracts\\REITIPO.sol:1132"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITIPO.sol:1149"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITIPO.sol:1214"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITIPO.sol:533"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITIPO.sol:569"
+          },
+          {
+            "label": "_nft",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_contract(IREITTradable)1073",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1227"
+          },
+          {
+            "label": "_pendingBalances",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1229"
+          },
+          {
+            "label": "_payableToken",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_string_memory_ptr,t_contract(IERC20)77)",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1232"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20)77": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IREITTradable)1073": {
+            "label": "contract IREITTradable",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_contract(IERC20)77)": {
+            "label": "mapping(string => contract IERC20)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "5faa8d39fbe1ea45679fe629aa34ea34750ea49bc2f2ccf09cb42ef2eae986a9": {
+      "address": "0xEdCD6442143188Deb586e182B7900dFb8707Bc27",
+      "txHash": "0x185f02ccdd4070c5e4e6251ba56784d0b75423b09914633b1f26ad8b41536550",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITIPO.sol:411",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITIPO.sol:416"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITIPO.sol:1030"
+          },
+          {
+            "label": "whitelisteds",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "WhitelistingUpgradeable",
+            "src": "contracts\\REITIPO.sol:1036"
+          },
+          {
+            "label": "_whiteListAdmin",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "WhitelistingUpgradeable",
+            "src": "contracts\\REITIPO.sol:1038"
+          },
+          {
+            "label": "_whitelistFree",
+            "offset": 20,
+            "slot": "52",
+            "type": "t_bool",
+            "contract": "WhitelistingUpgradeable",
+            "src": "contracts\\REITIPO.sol:1039"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "WhitelistingUpgradeable",
+            "src": "contracts\\REITIPO.sol:1132"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITIPO.sol:1149"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITIPO.sol:1214"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITIPO.sol:533"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITIPO.sol:569"
+          },
+          {
+            "label": "_nft",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_contract(IREITTradable)1073",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1227"
+          },
+          {
+            "label": "_pendingBalances",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1229"
+          },
+          {
+            "label": "_payableToken",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_string_memory_ptr,t_contract(IERC20)77)",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1232"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20)77": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IREITTradable)1073": {
+            "label": "contract IREITTradable",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_contract(IERC20)77)": {
+            "label": "mapping(string => contract IERC20)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "7e846d54f6687f63be61c843210ac5fa6b681125dd152fe6ee1abfe7e9aa6f2b": {
+      "address": "0xe5608e4945998aB5E4548Bc95b421E188095DA8E",
+      "txHash": "0x55403fa3ee648682bac3149c8bac699938bac4ee5c2cb5fb44adaa8ff9cfdaad",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:558",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:563"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITNFT.sol:678"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\REITNFT.sol:1007"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1023"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1026"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1029"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1520"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1768"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1833"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:1556"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:1592"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2049"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2050"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2051"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2052"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2054"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2057"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2059"
+          },
+          {
+            "label": "kycAccounts",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:684"
+          },
+          {
+            "label": "_kycAdmin",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_address",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:686"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:754"
+          },
+          {
+            "label": "tokenMetadata",
+            "offset": 0,
+            "slot": "309",
+            "type": "t_mapping(t_uint256,t_struct(REITMetadata)3528_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2274"
+          },
+          {
+            "label": "tokenYieldData",
+            "offset": 0,
+            "slot": "310",
+            "type": "t_mapping(t_uint256,t_struct(REITYield)3533_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2275"
+          },
+          {
+            "label": "tokenYieldVesting",
+            "offset": 0,
+            "slot": "311",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3540_storage))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2276"
+          },
+          {
+            "label": "dividendFunds",
+            "offset": 0,
+            "slot": "312",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2278"
+          },
+          {
+            "label": "fundingToken",
+            "offset": 0,
+            "slot": "313",
+            "type": "t_mapping(t_uint256,t_contract(IERC20Extented)3503)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2281"
+          },
+          {
+            "label": "ipoContracts",
+            "offset": 0,
+            "slot": "314",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2282"
+          },
+          {
+            "label": "_registeredBalances",
+            "offset": 0,
+            "slot": "315",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2284"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20Extented)3503": {
+            "label": "contract IERC20Extented",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(YieldVesting)3540_storage)": {
+            "label": "mapping(address => struct REITNFT.YieldVesting)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_contract(IERC20Extented)3503)": {
+            "label": "mapping(uint256 => contract IERC20Extented)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3540_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct REITNFT.YieldVesting))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(REITMetadata)3528_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.REITMetadata)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(REITYield)3533_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.REITYield)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(REITMetadata)3528_storage": {
+            "label": "struct REITNFT.REITMetadata",
+            "members": [
+              {
+                "label": "ipoTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "ipoUnitPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "liquidationTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "registerationTaxRate",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(REITYield)3533_storage": {
+            "label": "struct REITNFT.REITYield",
+            "members": [
+              {
+                "label": "yieldDividend",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "liquidationExtension",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(YieldVesting)3540_storage": {
+            "label": "struct REITNFT.YieldVesting",
+            "members": [
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "released",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
           }
         }
       }
