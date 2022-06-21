@@ -984,8 +984,6 @@ interface IREITTradable {
         bytes calldata data
     ) external;
 
-    function registeredBalanceOf(address account, uint256 id) external view returns (uint256);
-
     function isKYC(address account) external view returns (bool);
 
     function getShareUnitPrice(uint256 _id) external view returns (uint256);
@@ -1329,7 +1327,7 @@ contract REITIPO is
     {
         require(_nft.isIPOContract(id, address(this)), "REITIPO: Must set this as REIT IPO contract");
 
-        uint256 stock = _nft.registeredBalanceOf(address(this), id);
+        uint256 stock = _nft.balanceOf(address(this), id);
         require(stock >= quantity, "REITIPO: not enough units to sell");
 
         uint256 price = _nft.getShareUnitPrice(id);

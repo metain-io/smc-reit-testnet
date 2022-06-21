@@ -49,8 +49,6 @@ interface IREITTradable {
         bytes calldata data
     ) external;
 
-    function registeredBalanceOf(address account, uint256 id) external view returns (uint256);
-
     function isKYC(address account) external view returns (bool);
 
     function getShareUnitPrice(uint256 _id) external view returns (uint256);
