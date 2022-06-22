@@ -2481,14 +2481,17 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             "ERC1155: caller is not owner nor approved"
         );
 
-        uint256 taxAmount = _calculateTransferTax(id, amount);
-        IERC20 payableToken = fundingToken[id];
-        require(
-            payableToken.transferFrom(from, address(this), taxAmount),
-            "REITNFT: Could not pay tax"
-        );
+        if (!isIPOContract(id, from) && !isIPOContract(id, to)) {
+            uint256 taxAmount = _calculateTransferTax(id, amount);
+            IERC20 payableToken = fundingToken[id];
+            require(
+                payableToken.transferFrom(from, address(this), taxAmount),
+                "REITNFT: Could not pay tax"
+            );
 
-        _liquidateYield(from, id);
+            _liquidateYield(from, id);
+        }
+        
         _liquidateYield(to, id);
 
         _safeTransferFrom(from, to, id, amount, data);
@@ -2513,14 +2516,17 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             uint256 id = ids[i];
             uint256 amount = amounts[i];
 
-            uint256 taxAmount = _calculateTransferTax(id, amount);
-            IERC20 payableToken = fundingToken[id];
-            require(
-                payableToken.transferFrom(from, address(this), taxAmount),
-                "REITNFT: Could not pay tax"
-            );
+            if (!isIPOContract(id, from) && !isIPOContract(id, to)) {
+                uint256 taxAmount = _calculateTransferTax(id, amount);
+                IERC20 payableToken = fundingToken[id];
+                require(
+                    payableToken.transferFrom(from, address(this), taxAmount),
+                    "REITNFT: Could not pay tax"
+                );
 
-            _liquidateYield(from, id);
+                _liquidateYield(from, id);
+            }
+
             _liquidateYield(to, id);
         }
 

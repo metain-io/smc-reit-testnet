@@ -84,7 +84,7 @@ describe('Initiate REIT Opportunity Trust', function () {
     const now = Math.floor(Date.now() / 1000);
     await NFTContractForCreator.initiate(1, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);    
     await NFTContractForCreator.safeTransferFrom(creator.address, IPOContract.address, 1, TEST_REIT_AMOUNT, [])
-    const ipoBalance = await NFTContract.registeredBalanceOf(IPOContract.address, 1);
+    const ipoBalance = await NFTContract.balanceOf(IPOContract.address, 1);
     expect(ipoBalance).equal(TEST_REIT_AMOUNT);
   });
 });
@@ -109,7 +109,7 @@ describe('Buying IPO', function () {
     const pending = await IPOContract.getPendingBalances(shareholder1.address, 1);
     await NFTContract.addToKYC(shareholder1.address);
     await IPOContractForShareholder1.claimPendingBalances(1);
-    const claimed = await NFTContract.registeredBalanceOf(shareholder1.address, 1);
+    const claimed = await NFTContract.balanceOf(shareholder1.address, 1);
     expect(pending).equal(claimed);
   });
 });
