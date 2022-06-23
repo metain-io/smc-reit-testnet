@@ -2255,8 +2255,9 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     }
 
     struct REITYield {
-        uint256[] yieldDividends;
         uint256 liquidationExtension;
+        uint256[] yieldDividends;
+        uint yieldDividendIndex;        
     }
 
     struct YieldVesting {
@@ -2344,7 +2345,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         fundingToken[_id] = IERC20Extented(_fundingToken);
         tokenMetadata[_id] = REITMetadata(0, 0, 0, 0);
-        tokenYieldData[_id] = REITYield(new uint256[](0), 0);
+        tokenYieldData[_id] = REITYield(0, new uint256[](120), 0);
 
         _mint(_initialOwner, _id, _initialSupply, _data);
 
@@ -2389,7 +2390,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         uint256 balance = balanceOf(account, _id);
         uint256 claimableYield = 0;
-        for (uint i = yieldVesting.lastClaimTime; i < yieldData.yieldDividends.length; ++i) {
+        for (uint i = yieldVesting.lastClaimTime; i < yieldData.yieldDividendIndex; ++i) {
             uint256 amount = yieldData.yieldDividends[i].mul(balance);
             claimableYield = claimableYield.add(amount);
         }
@@ -2423,7 +2424,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         REITYield memory yieldData = tokenYieldData[_id];
         dividendFunds[_id] = dividendFunds[_id].sub(claimableYield);
         tokenYieldVesting[_id][_msgSender()].futureAmount = 0;
-        tokenYieldVesting[_id][_msgSender()].lastClaimTime = yieldData.yieldDividends.length;
+        tokenYieldVesting[_id][_msgSender()].lastClaimTime = yieldData.yieldDividendIndex;
 
         IERC20Extented payableToken = fundingToken[_id];
         require(
@@ -2444,7 +2445,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         if (claimableYield > 0) {
             REITYield memory yieldData = tokenYieldData[_id];
             tokenYieldVesting[_id][acount].futureAmount = tokenYieldVesting[_id][acount].futureAmount.add(claimableYield);
-            tokenYieldVesting[_id][acount].lastClaimTime = yieldData.yieldDividends.length;
+            tokenYieldVesting[_id][acount].lastClaimTime = yieldData.yieldDividendIndex;
         }
     }
 
@@ -2459,11 +2460,22 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         dividendFunds[_id] = dividendFunds[_id].add(amount);
     }
 
-    function unlockDividends(uint256 _id, uint256 dividend)
+    function unlockDividends(uint256 _id, uint256 dividend, uint index)
         external
         creatorOnly(_id)
-    {        
-        tokenYieldData[_id].yieldDividends.push(dividend);
+    {
+        tokenYieldData[_id].yieldDividends[index] = dividend;
+        if (tokenYieldData[_id].yieldDividendIndex < index) {
+            tokenYieldData[_id].yieldDividendIndex = index;
+        }
+    }
+
+    function getYieldDividendAt(uint256 _id, uint index)
+        external
+        view
+        returns (uint256)
+    {
+        return tokenYieldData[_id].yieldDividends[index];
     }
 
     /**

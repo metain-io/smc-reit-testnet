@@ -27,8 +27,9 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     }
 
     struct REITYield {
-        uint256[] yieldDividends;
         uint256 liquidationExtension;
+        uint256[] yieldDividendPerShares;
+        uint yieldDividendIndexCounter;        
     }
 
     struct YieldVesting {
@@ -41,6 +42,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         uint256 futureAmount;
     }
 
+    uint constant MAX_REIT_LIFE_MONTHS = 10 * 12;
     uint256 constant PERCENT_DECIMALS_MULTIPLY = 100000000; // allow upto 6 decimals of percentage
 
     mapping(uint256 => REITMetadata) public tokenMetadata;
@@ -116,7 +118,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         fundingToken[_id] = IERC20Extented(_fundingToken);
         tokenMetadata[_id] = REITMetadata(0, 0, 0, 0);
-        tokenYieldData[_id] = REITYield(new uint256[](0), 0);
+        tokenYieldData[_id] = REITYield(0, new uint256[](MAX_REIT_LIFE_MONTHS), 0);
 
         _mint(_initialOwner, _id, _initialSupply, _data);
 
@@ -161,8 +163,8 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         uint256 balance = balanceOf(account, _id);
         uint256 claimableYield = 0;
-        for (uint i = yieldVesting.lastClaimTime; i < yieldData.yieldDividends.length; ++i) {
-            uint256 amount = yieldData.yieldDividends[i].mul(balance);
+        for (uint i = yieldVesting.lastClaimTime; i < yieldData.yieldDividendIndexCounter; ++i) {
+            uint256 amount = yieldData.yieldDividendPerShares[i].mul(balance);
             claimableYield = claimableYield.add(amount);
         }
         
@@ -192,16 +194,17 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             "REITNFT: need more fundings from issuer"
         );
 
-        REITYield memory yieldData = tokenYieldData[_id];
-        dividendFunds[_id] = dividendFunds[_id].sub(claimableYield);
+        REITYield memory yieldData = tokenYieldData[_id];        
         tokenYieldVesting[_id][_msgSender()].futureAmount = 0;
-        tokenYieldVesting[_id][_msgSender()].lastClaimTime = yieldData.yieldDividends.length;
+        tokenYieldVesting[_id][_msgSender()].lastClaimTime = yieldData.yieldDividendIndexCounter;
 
         IERC20Extented payableToken = fundingToken[_id];
         require(
             payableToken.transfer(_msgSender(), claimableYield),
             "REITNFT: Could not transfer fund"
         );
+
+        dividendFunds[_id] = dividendFunds[_id].sub(claimableYield);
     }
 
     function _liquidateYield(address acount, uint256 _id) internal {
@@ -216,7 +219,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         if (claimableYield > 0) {
             REITYield memory yieldData = tokenYieldData[_id];
             tokenYieldVesting[_id][acount].futureAmount = tokenYieldVesting[_id][acount].futureAmount.add(claimableYield);
-            tokenYieldVesting[_id][acount].lastClaimTime = yieldData.yieldDividends.length;
+            tokenYieldVesting[_id][acount].lastClaimTime = yieldData.yieldDividendIndexCounter;
         }
     }
 
@@ -231,11 +234,22 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         dividendFunds[_id] = dividendFunds[_id].add(amount);
     }
 
-    function unlockDividends(uint256 _id, uint256 dividend)
+    function unlockDividendPerShare(uint256 _id, uint256 dividendPerShare, uint index)
         external
         creatorOnly(_id)
-    {        
-        tokenYieldData[_id].yieldDividends.push(dividend);
+    {
+        tokenYieldData[_id].yieldDividendPerShares[index] = dividendPerShare;
+        if (tokenYieldData[_id].yieldDividendIndexCounter < index + 1) {
+            tokenYieldData[_id].yieldDividendIndexCounter = index + 1;
+        }
+    }
+
+    function getYieldDividendPerShareAt(uint256 _id, uint index)
+        external
+        view
+        returns (uint256)
+    {
+        return tokenYieldData[_id].yieldDividendPerShares[index];
     }
 
     /**
