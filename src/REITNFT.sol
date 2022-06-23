@@ -40,6 +40,8 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         uint256 lastClaimTime;
         // amount of tokens in pending
         uint256 futureAmount;
+        // total yield claimed so far
+        uint256 totalClaimedYield;
     }
 
     uint constant MAX_REIT_LIFE_MONTHS = 10 * 12;
@@ -143,7 +145,11 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         );
     }
 
-    function getTotalBenefit(uint256 _id)
+    function getClaimedYield(uint256 _id) external view shareHoldersOnly(_id) returns (uint256) {
+        return tokenYieldVesting[_id][_msgSender()].totalClaimedYield;
+    }
+
+    function getTotalClaimableBenefit(uint256 _id)
         external
         view
         shareHoldersOnly(_id)
@@ -182,6 +188,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             tokenYieldVesting[_id][_msgSender()].beneficiary = _msgSender();
             tokenYieldVesting[_id][_msgSender()].futureAmount = 0;
             tokenYieldVesting[_id][_msgSender()].lastClaimTime = 0;
+            tokenYieldVesting[_id][_msgSender()].totalClaimedYield = 0;
         }
 
         YieldVesting memory yieldVesting = tokenYieldVesting[_id][_msgSender()];
@@ -197,6 +204,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         REITYield memory yieldData = tokenYieldData[_id];        
         tokenYieldVesting[_id][_msgSender()].futureAmount = 0;
         tokenYieldVesting[_id][_msgSender()].lastClaimTime = yieldData.yieldDividendIndexCounter;
+        tokenYieldVesting[_id][_msgSender()].totalClaimedYield = tokenYieldVesting[_id][_msgSender()].totalClaimedYield.add(claimableYield);
 
         IERC20Extented payableToken = fundingToken[_id];
         require(
@@ -250,6 +258,16 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         returns (uint256)
     {
         return tokenYieldData[_id].yieldDividendPerShares[index];
+    }
+
+    function getTotalYieldDividendPerShare(uint _id) external view returns (uint256) { 
+        uint256 sum = 0;
+        REITYield memory yieldData = tokenYieldData[_id];
+        for (uint i = 0; i < yieldData.yieldDividendIndexCounter; ++i) {
+            sum += yieldData.yieldDividendPerShares[i];
+        }
+        return sum;
+
     }
 
     /**
