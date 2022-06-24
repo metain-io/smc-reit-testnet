@@ -2452,11 +2452,11 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         }
 
         uint256 claimableYield = _getClaimableBenefit(acount, _id);
-        if (claimableYield > 0) {
-            REITYield memory yieldData = tokenYieldData[_id];
-            tokenYieldVesting[_id][acount].futureAmount = tokenYieldVesting[_id][acount].futureAmount.add(claimableYield);
-            tokenYieldVesting[_id][acount].lastClaimTime = yieldData.yieldDividendIndexCounter;
-        }
+        REITYield memory yieldData = tokenYieldData[_id];
+        tokenYieldVesting[_id][acount].lastClaimTime = yieldData.yieldDividendIndexCounter;
+        if (claimableYield > 0) {            
+            tokenYieldVesting[_id][acount].futureAmount = tokenYieldVesting[_id][acount].futureAmount.add(claimableYield);            
+        }        
     }
 
     function payDividends(uint256 _id, uint256 amount) external {

@@ -40,7 +40,6 @@ task("deployNFT", "Deploy REIT NFT Contract").setAction(async () => {
  */
 task("deployIPO", "Deploy REIT IPO Contract")
   .addOptionalParam("nft", "Deployed NFT contract address")
-  .addOptionalParam("id", "NFT ID to IPO")
   .setAction(async (taskArgs) => {
     const [deployer] = await ethers.getSigners();
 
@@ -57,12 +56,9 @@ task("deployIPO", "Deploy REIT IPO Contract")
       nftAddress = deployedNFTData.proxy;
     }
 
-    const nftId = taskArgs.id || 1;
-
     const Token = await ethers.getContractFactory(contractFileName);
     const ipo = await upgrades.deployProxy(Token, [
-      nftAddress,
-      nftId
+      nftAddress
     ]);
     await ipo.deployed();
     console.log("IPO deployed to:", ipo.address);
