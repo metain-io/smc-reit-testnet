@@ -10,38 +10,62 @@ const TEST_REIT_AMOUNT = 200000;
 const TEST_REIT_UNIT_PRICE = ethers.utils.parseEther('10');
 const TEST_SHARE_HOLDER_FUND = ethers.utils.parseEther('100000');
 const TEST_SHARES_TO_BUY_1 = 101;
+const TEST_SHARES_TO_BUY_2 = 102;
+const TEST_SHARES_TO_BUY_3 = 103;
+const TEST_SHARES_TO_BUY_4 = 104;
 
 const TEST_REIT_DATA_URL = "ipfs://QmZ485APXNEhzLAtXccy5S78nMg83xBYJYXPSKtRVo8wy8";
 
 // const [governor, creator, shareholder1, shareholder2, shareholder3] = await ethers.getSigners();
+let governor;
+let creator;
+let shareholder = [];
+const SHAREHOLDER_COUNT = 4;
 
 let USDContract;
-let USDContractForShareholder1;
+let USDContractForShareholder = [];
 
 let NFTContract;
 let NFTContractForCreator;
+let NFTContractForShareholder = [];
+const NFT_ID = 1;
+const NFT_TRANSFER_AMOUNT = 9;
 
 let IPOContract;
-let IPOContractForShareholder1;
+let IPOContractForShareholder = [];
 
 async function attachContractForSigner(name, signer, address) {
   const factory = await ethers.getContractFactory(name, signer);
   return factory.attach(address);  
 }
 
-describe('Deploy contracts', function () {  
-  it('USDM', async function () {    
-    const [governor, creator, shareholder1] = await ethers.getSigners();
+console.log("\n--------- TEST FULL CASES ---------");
+
+describe('Deploy contracts', function () {
+  it('Init Accounts', async function () {    
+    // const [governor, creator, shareholder1, shareholder2, shareholder3, shareholder4] = await ethers.getSigners();
+    const accounts = await ethers.getSigners();
+    governor = accounts[0];
+    creator = accounts[1];
+    for (let i = 2; i < SHAREHOLDER_COUNT+2; ++i) {
+      shareholder.push(accounts[i]);
+    }
+    expect(governor,creator,shareholder);
+  });
+
+  it('USDM', async function () {
     const USDFactory = await ethers.getContractFactory('USDMToken', governor);
     USDContract = await USDFactory.deploy('USDT', 'Mock USDT');
     await USDContract.deployed();
 
-    USDContractForShareholder1 = await attachContractForSigner('USDMToken', shareholder1, USDContract.address);
+    for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
+      const contract = await attachContractForSigner('USDMToken', shareholder[i], USDContract.address);
+      USDContractForShareholder.push(contract);
+    }
     expect(USDContract.address);
   });
 
   it('NFT', async function () {
-    const [governor, creator] = await ethers.getSigners();
     const NFTFactory = await ethers.getContractFactory('REITNFT', governor);
     NFTContract = await upgrades.deployProxy(NFTFactory, [
       "Metain REIT",
@@ -51,25 +75,31 @@ describe('Deploy contracts', function () {
     await NFTContract.deployed();
 
     NFTContractForCreator = await attachContractForSigner('REITNFT', creator, NFTContract.address);
+
+    for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
+      const contract = await attachContractForSigner('REITNFT', shareholder[i], NFTContract.address);
+      NFTContractForShareholder.push(contract);
+    }
+
     expect(NFTContract.address);
   });
 
   it('IPO', async function () {
-    const [governor, creator, shareholder1] = await ethers.getSigners();
     const IPOFactory = await ethers.getContractFactory('REITIPO', governor);
     IPOContract = await upgrades.deployProxy(IPOFactory, [
       NFTContract.address
     ]);
     await IPOContract.deployed();
-
-    IPOContractForShareholder1 = await attachContractForSigner('REITIPO', shareholder1, IPOContract.address);
+    for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
+      const contract = await attachContractForSigner('REITIPO', shareholder[i], IPOContract.address);
+      IPOContractForShareholder.push(contract);
+    }
     expect(IPOContract.address);
   });
 });
 
 describe('Initiate REIT Opportunity Trust', function () {
-  it('Create NFT Trust', async function () {    
-    const [governor, creator] = await ethers.getSigners();
+  it('Create NFT Trust', async function () {
     await NFTContract.createREIT(creator.address, TEST_REIT_AMOUNT, TEST_REIT_DATA_URL, USDContract.address, []);
     await NFTContractForCreator.setIPOContract(1, IPOContract.address);    
     const ipoContractAddress = await NFTContract.getIPOContract(1);
@@ -77,9 +107,10 @@ describe('Initiate REIT Opportunity Trust', function () {
   });
 
   it('Setup NFT Trust', async function () {
-    const [governor, creator, shareholder1] = await ethers.getSigners();
     await IPOContract.allowPayableToken('USDT', USDContract.address);
-    await IPOContract.addToWhitelisted(shareholder1.address);
+    for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
+      await IPOContract.addToWhitelisted(shareholder[i].address);
+    }
     
     const now = Math.floor(Date.now() / 1000);
     await NFTContractForCreator.initiate(1, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);    
@@ -90,26 +121,150 @@ describe('Initiate REIT Opportunity Trust', function () {
 });
 
 describe('Buying IPO', function () {
-  
-  it('Buy NFT without KYC', async function () {
-    const [governor, creator, shareholder1] = await ethers.getSigners();
 
-    await USDContract.transfer(shareholder1.address, TEST_SHARE_HOLDER_FUND);
-    await USDContractForShareholder1.increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);
+  // it('User 0: KYC => buy NFT => claim NFT', async function () {
+  //   console.log(`\nUser 0: KYC => buy NFT => claim NFT`);
+  //   // transfer USDT for User
+  //   await USDContract.transfer(shareholder[0].address, TEST_SHARE_HOLDER_FUND);
+  //   // allow IPOContract get USDT from user
+  //   await USDContractForShareholder[0].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);
 
-    await IPOContractForShareholder1.purchaseWithToken('USDT', 1, TEST_SHARES_TO_BUY_1);
+  //   // KYC user
+  //   await NFTContract.addToKYC(shareholder[0].address);
 
-    const b1 = await NFTContract.balanceOf(shareholder1.address, 1);
-    const b2 = await IPOContract.getPendingBalances(shareholder1.address, 1);
-    expect(b1).not.equal(b2);
+  //   // buy NFT with USDT
+  //   await IPOContractForShareholder[0].purchaseWithToken('USDT', 1, TEST_SHARES_TO_BUY_1);
+
+  //   // check NFT baland after buy
+  //   let balance = await NFTContract.balanceOf(shareholder[0].address, 1);
+  //   console.log(`User 0: balance after buy: ${balance}`);
+
+  //   // check NFT pending baland after buy
+  //   let pendingBalance = await IPOContract.getPendingBalances(shareholder[0].address, 1);
+  //   console.log(`User 0: pending Balance after buy: ${pendingBalance}`);
+
+  //   expect(balance).equal(TEST_SHARES_TO_BUY_1);
+
+  // });
+
+  // it('User 1: buy NFT without KYC => KYC => claim NFT', async function () {
+  //   console.log(`\nUser 1: buy NFT without KYC => KYC => claim NFT`);    
+  //   // transfer USDT for User
+  //   await USDContract.transfer(shareholder[1].address, TEST_SHARE_HOLDER_FUND);
+  //   // allow IPOContract get USDT from user
+  //   await USDContractForShareholder[1].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);
+
+  //   // buy NFT with USDT
+  //   await IPOContractForShareholder[1].purchaseWithToken('USDT', 1, TEST_SHARES_TO_BUY_2);
+
+  //   // check NFT baland after buy
+  //   let balance = await NFTContract.balanceOf(shareholder[1].address, 1);
+  //   console.log(`User 1: balance after buy: ${balance}`);
+
+  //   // check NFT pending baland after buy
+  //   let pendingBalance = await IPOContract.getPendingBalances(shareholder[1].address, 1);
+  //   console.log(`User 1: pendingBalance after buy: ${pendingBalance}`);
+
+  //   // KYC user
+  //   await NFTContract.addToKYC(shareholder[1].address);
+
+  //   // user clam NFT from NFT contract
+  //   await IPOContractForShareholder[1].claimPendingBalances(1);
+
+  //   // check NFT baland after KYC-Claim
+  //   balance = await NFTContract.balanceOf(shareholder[1].address, 1);
+  //   console.log(`User 1: balance after KYC-Claim: ${balance}`);
+
+  //   // check NFT pending baland after KYC-Claim
+  //   pendingBalance = await IPOContract.getPendingBalances(shareholder[1].address, 1);
+  //   console.log(`User 1: pendingBalance after KYC-Claim: ${pendingBalance}`);
+
+  //   expect(balance).equal(TEST_SHARES_TO_BUY_2);
+  // });
+
+  // it('User 2: try to claim NFT without buy/KYC', async function () {
+  //   console.log(`\nUser 2: try to claim NFT without buy/KYC`);    
+  //   let error;
+  //   try {
+  //     // user clam NFT from NFT contract
+  //     await IPOContractForShareholder[2].claimPendingBalances(1);
+  //   } catch(ex) {
+  //     console.log(`User 2: ex: ${ex}`);
+  //     error = ex;
+  //   }
+  //   expect(error);
+  // });
+
+  // it('User 2: KYC => try to claim NFT without buy', async function () {
+  //   console.log(`\nUser 2: KYC => try to claim NFT without buy`);    
+  //   let error;
+  //   try {
+  //     // KYC user
+  //     await NFTContract.addToKYC(shareholder[2].address);
+  //     // user clam NFT from NFT contract
+  //     await IPOContractForShareholder[2].claimPendingBalances(1);
+  //   } catch(ex) {
+  //     console.log(`User 2: ex: ${ex}`);
+  //     error = ex;
+  //   }
+  //   expect(error);
+  // });
+
+  it('User 2: KYC => buy NFT => transfer NFT to User 1, User 3', async function () {
+    console.log(`\nUser 2: KYC => buy NFT => transfer NFT to User 1, User 3`);    
+    // transfer USDT for User
+    await USDContract.transfer(shareholder[2].address, TEST_SHARE_HOLDER_FUND);
+    // allow IPOContract get USDT from user
+    await USDContractForShareholder[2].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);
+
+    // KYC user
+    await NFTContract.addToKYC(shareholder[2].address);
+
+    // buy NFT with USDT
+    await IPOContractForShareholder[2].purchaseWithToken('USDT', 1, TEST_SHARES_TO_BUY_2);
+
+    // check NFT balance after buy
+    let balance = await NFTContract.balanceOf(shareholder[2].address, 1);
+    console.log(`User 2: balance after buy: ${balance}`);
+
+    // Asset manager pays dividend, each NFT will receive $2
+    await USDContract.increaseAllowance(NFTContract.address, ethers.utils.parseEther('1000000'));
+    await NFTContract.payDividends(1, ethers.utils.parseEther('100000'));
+    await NFTContractForCreator.unlockDividendPerShare(1, 2, 0);
+
+    console.log((await NFTContractForShareholder[2].getTotalClaimableBenefit(1)).toString());
+
+    // buy NFT with USDT again
+    await IPOContractForShareholder[2].purchaseWithToken('USDT', 1, TEST_SHARES_TO_BUY_2);
+    await NFTContractForCreator.unlockDividendPerShare(1, 1, 1);
+
+    // now try to claim benefits
+    const usdBalance1 = await USDContract.balanceOf(shareholder[2].address);
+    console.log(usdBalance1.toString());
+    console.log((await NFTContractForShareholder[2].getTotalClaimableBenefit(1)).toString());
+    await NFTContractForShareholder[2].claimBenefit(1);
+    const usdBalance2 = await USDContract.balanceOf(shareholder[2].address);
+    console.log(usdBalance2.toString());
+    console.log(`User 2: USD claimed: ${usdBalance2 - usdBalance1}`);
+
+    // // User 2 transfer NFT to User 1, User 3
+    // NFTContract.safeTransferFrom(shareholder[2].address, shareholder[1].address, NFT_ID, NFT_TRANSFER_AMOUNT, [])
+    // NFTContract.safeTransferFrom(shareholder[2].address, shareholder[3].address, NFT_ID, NFT_TRANSFER_AMOUNT, [])
+
+    // balance = await NFTContract.balanceOf(shareholder[2].address, 1);
+    // console.log(`User 2: balance after transfer: ${balance}`);
+
+    // balance_user_1 = await NFTContract.balanceOf(shareholder[1].address, 1);
+    // console.log(`User 1: balance after transfer: ${balance_user_1}`);
+
+    // balance_user_3 = await NFTContract.balanceOf(shareholder[3].address, 1);
+    // console.log(`User 3: balance after transfer: ${balance_user_3}`);
+
+    expect(balance);
   });
 
-  it('Try to KYC and reclaim', async function () {
-    const [governor, creator, shareholder1] = await ethers.getSigners();
-    const pending = await IPOContract.getPendingBalances(shareholder1.address, 1);
-    await NFTContract.addToKYC(shareholder1.address);
-    await IPOContractForShareholder1.claimPendingBalances(1);
-    const claimed = await NFTContract.balanceOf(shareholder1.address, 1);
-    expect(pending).equal(claimed);
-  });
+
+
 });
+
+
