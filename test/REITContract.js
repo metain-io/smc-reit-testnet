@@ -380,11 +380,11 @@ describe('Buying IPO', function () {
     // USD balance before claim
     const usdBalance_user5_claimed = BigInt(await USDContract.balanceOf(shareholder[5].address));
     const usdBalance_user6_claimed = BigInt(await USDContract.balanceOf(shareholder[6].address));
-    console.log(`User 5: USD balance after claim: ${usdBalance_user5} USD`);
-    console.log(`User 6: USD balance after claim: ${usdBalance_user6} USD`);
+    console.log(`User 5: USD balance after claim: ${usdBalance_user5_claimed} USD`);
+    console.log(`User 6: USD balance after claim: ${usdBalance_user6_claimed} USD`);
 
-    const claimCount_user5 = BigInt(usdBalance_user5 - usdBalance_user5_claimed);
-    const claimCount_user6 = BigInt(usdBalance_user6 - usdBalance_user6_claimed);
+    const claimCount_user5 = BigInt(usdBalance_user5_claimed - usdBalance_user5);
+    const claimCount_user6 = BigInt(usdBalance_user6_claimed - usdBalance_user6);
     console.log(`User 5: USD claimed: ${claimCount_user5}`);
     console.log(`User 6: USD claimed: ${claimCount_user6}`);
 
