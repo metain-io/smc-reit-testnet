@@ -247,9 +247,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         _liquidateYield(_msgSender(), _id);
 
         YieldVesting memory yieldVesting = tokenYieldVesting[_id][_msgSender()];
-        uint256 claimableYield = _getClaimableBenefit(_msgSender(), _id).add(
-            yieldVesting.futureAmount
-        );
+        uint256 claimableYield = yieldVesting.futureAmount;
         require(claimableYield > 0, "REITNFT: no more claimable yield");
 
         uint256 availableFund = dividendFunds[_id];
@@ -258,10 +256,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             "REITNFT: need more fundings from issuer"
         );
 
-        REITYield memory yieldData = tokenYieldData[_id];
-        tokenYieldVesting[_id][_msgSender()].futureAmount = 0;
-        tokenYieldVesting[_id][_msgSender()].lastClaimTime = yieldData
-            .yieldDividendIndexCounter;
+        tokenYieldVesting[_id][_msgSender()].futureAmount = 0;        
         tokenYieldVesting[_id][_msgSender()]
             .totalClaimedYield = tokenYieldVesting[_id][_msgSender()]
             .totalClaimedYield
