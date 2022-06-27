@@ -235,11 +235,6 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         shareHoldersOnly(_id)
         nonReentrant
     {
-        require(
-            _unregisteredBalances[_id][_msgSender()] <= 0,
-            "Must register all REIT balances"
-        );
-
         if (!tokenYieldVesting[_id][_msgSender()].initialized) {
             tokenYieldVesting[_id][_msgSender()].initialized = true;
             tokenYieldVesting[_id][_msgSender()].beneficiary = _msgSender();
@@ -248,6 +243,8 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             tokenYieldVesting[_id][_msgSender()].lastClaimTime = 0;
             tokenYieldVesting[_id][_msgSender()].totalClaimedYield = 0;
         }
+
+        _liquidateYield(_msgSender(), _id);
 
         YieldVesting memory yieldVesting = tokenYieldVesting[_id][_msgSender()];
         uint256 claimableYield = _getClaimableBenefit(_msgSender(), _id).add(
