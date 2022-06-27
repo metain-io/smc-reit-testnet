@@ -755,6 +755,237 @@ contract KYCAccessUpgradeable is Initializable, ContextUpgradeable {
 }
 
 // 
+// OpenZeppelin Contracts v4.4.1 (security/ReentrancyGuard.sol)
+/**
+ * @dev Contract module that helps prevent reentrant calls to a function.
+ *
+ * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier
+ * available, which can be applied to functions to make sure there are no nested
+ * (reentrant) calls to them.
+ *
+ * Note that because there is a single `nonReentrant` guard, functions marked as
+ * `nonReentrant` may not call one another. This can be worked around by making
+ * those functions `private`, and then adding `external` `nonReentrant` entry
+ * points to them.
+ *
+ * TIP: If you would like to learn more about reentrancy and alternative ways
+ * to protect against it, check out our blog post
+ * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].
+ */
+abstract contract ReentrancyGuardUpgradeable is Initializable {
+    // Booleans are more expensive than uint256 or any type that takes up a full
+    // word because each write operation emits an extra SLOAD to first read the
+    // slot's contents, replace the bits taken up by the boolean, and then write
+    // back. This is the compiler's defense against contract upgrades and
+    // pointer aliasing, and it cannot be disabled.
+
+    // The values being non-zero value makes deployment a bit more expensive,
+    // but in exchange the refund on every call to nonReentrant will be lower in
+    // amount. Since refunds are capped to a percentage of the total
+    // transaction's gas, it is best to keep them low in cases like this one, to
+    // increase the likelihood of the full refund coming into effect.
+    uint256 private constant _NOT_ENTERED = 1;
+    uint256 private constant _ENTERED = 2;
+
+    uint256 private _status;
+
+    function __ReentrancyGuard_init() internal onlyInitializing {
+        __ReentrancyGuard_init_unchained();
+    }
+
+    function __ReentrancyGuard_init_unchained() internal onlyInitializing {
+        _status = _NOT_ENTERED;
+    }
+
+    /**
+     * @dev Prevents a contract from calling itself, directly or indirectly.
+     * Calling a `nonReentrant` function from another `nonReentrant`
+     * function is not supported. It is possible to prevent this from happening
+     * by making the `nonReentrant` function external, and making it call a
+     * `private` function that does the actual work.
+     */
+    modifier nonReentrant() {
+        // On the first call to nonReentrant, _notEntered will be true
+        require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
+
+        // Any calls to nonReentrant after this point will fail
+        _status = _ENTERED;
+
+        _;
+
+        // By storing the original value once again, a refund is triggered (see
+        // https://eips.ethereum.org/EIPS/eip-2200)
+        _status = _NOT_ENTERED;
+    }
+
+    /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting down storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[49] private __gap;
+}
+
+// 
+// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+/**
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        return msg.data;
+    }
+}
+
+// 
+// OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an owner) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the owner account will be the one that deploys the contract. This
+ * can later be changed with {transferOwnership}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyOwner`, which can be applied to your functions to restrict their use to
+ * the owner.
+ */
+abstract contract Ownable is Context {
+    address private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial owner.
+     */
+    constructor() {
+        _transferOwnership(_msgSender());
+    }
+
+    /**
+     * @dev Returns the address of the current owner.
+     */
+    function owner() public view virtual returns (address) {
+        return _owner;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        require(owner() == _msgSender(), "Ownable: caller is not the owner");
+        _;
+    }
+
+    /**
+     * @dev Leaves the contract without owner. It will not be possible to call
+     * `onlyOwner` functions anymore. Can only be called by the current owner.
+     *
+     * NOTE: Renouncing ownership will leave the contract without an owner,
+     * thereby removing any functionality that is only available to the owner.
+     */
+    function renounceOwnership() public virtual onlyOwner {
+        _transferOwnership(address(0));
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Can only be called by the current owner.
+     */
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        _transferOwnership(newOwner);
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Internal function without access restriction.
+     */
+    function _transferOwnership(address newOwner) internal virtual {
+        address oldOwner = _owner;
+        _owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
+}
+
+// 
+// OpenZeppelin Contracts v4.4.1 (utils/Strings.sol)
+/**
+ * @dev String operations.
+ */
+library Strings {
+    bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
+
+    /**
+     * @dev Converts a `uint256` to its ASCII `string` decimal representation.
+     */
+    function toString(uint256 value) internal pure returns (string memory) {
+        // Inspired by OraclizeAPI's implementation - MIT licence
+        // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
+
+        if (value == 0) {
+            return "0";
+        }
+        uint256 temp = value;
+        uint256 digits;
+        while (temp != 0) {
+            digits++;
+            temp /= 10;
+        }
+        bytes memory buffer = new bytes(digits);
+        while (value != 0) {
+            digits -= 1;
+            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
+            value /= 10;
+        }
+        return string(buffer);
+    }
+
+    /**
+     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation.
+     */
+    function toHexString(uint256 value) internal pure returns (string memory) {
+        if (value == 0) {
+            return "0x00";
+        }
+        uint256 temp = value;
+        uint256 length = 0;
+        while (temp != 0) {
+            length++;
+            temp >>= 8;
+        }
+        return toHexString(value, length);
+    }
+
+    /**
+     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.
+     */
+    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {
+        bytes memory buffer = new bytes(2 * length + 2);
+        buffer[0] = "0";
+        buffer[1] = "x";
+        for (uint256 i = 2 * length + 1; i > 1; --i) {
+            buffer[i] = _HEX_SYMBOLS[value & 0xf];
+            value >>= 4;
+        }
+        require(value == 0, "Strings: hex length insufficient");
+        return string(buffer);
+    }
+}
+
+// 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -1020,7 +1251,7 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
     using AddressUpgradeable for address;
 
     // Mapping from token ID to account balances
-    mapping(uint256 => mapping(address => uint256)) private _balances;
+    mapping(uint256 => mapping(address => uint256)) internal _balances;
 
     // Mapping from account to operator approvals
     mapping(address => mapping(address => bool)) private _operatorApprovals;
@@ -1468,7 +1699,7 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
         uint256 id,
         uint256 amount,
         bytes memory data
-    ) private {
+    ) internal {
         if (to.isContract()) {
             try IERC1155ReceiverUpgradeable(to).onERC1155Received(operator, from, id, amount, data) returns (bytes4 response) {
                 if (response != IERC1155ReceiverUpgradeable.onERC1155Received.selector) {
@@ -1489,7 +1720,7 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
         uint256[] memory ids,
         uint256[] memory amounts,
         bytes memory data
-    ) private {
+    ) internal {
         if (to.isContract()) {
             try IERC1155ReceiverUpgradeable(to).onERC1155BatchReceived(operator, from, ids, amounts, data) returns (
                 bytes4 response
@@ -1505,7 +1736,7 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
         }
     }
 
-    function _asSingletonArray(uint256 element) private pure returns (uint256[] memory) {
+    function _asSingletonArray(uint256 element) internal pure returns (uint256[] memory) {
         uint256[] memory array = new uint256[](1);
         array[0] = element;
 
@@ -1518,237 +1749,6 @@ contract ERC1155Upgradeable is Initializable, ContextUpgradeable, ERC165Upgradea
      * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
      */
     uint256[47] private __gap;
-}
-
-// 
-// OpenZeppelin Contracts v4.4.1 (security/ReentrancyGuard.sol)
-/**
- * @dev Contract module that helps prevent reentrant calls to a function.
- *
- * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier
- * available, which can be applied to functions to make sure there are no nested
- * (reentrant) calls to them.
- *
- * Note that because there is a single `nonReentrant` guard, functions marked as
- * `nonReentrant` may not call one another. This can be worked around by making
- * those functions `private`, and then adding `external` `nonReentrant` entry
- * points to them.
- *
- * TIP: If you would like to learn more about reentrancy and alternative ways
- * to protect against it, check out our blog post
- * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].
- */
-abstract contract ReentrancyGuardUpgradeable is Initializable {
-    // Booleans are more expensive than uint256 or any type that takes up a full
-    // word because each write operation emits an extra SLOAD to first read the
-    // slot's contents, replace the bits taken up by the boolean, and then write
-    // back. This is the compiler's defense against contract upgrades and
-    // pointer aliasing, and it cannot be disabled.
-
-    // The values being non-zero value makes deployment a bit more expensive,
-    // but in exchange the refund on every call to nonReentrant will be lower in
-    // amount. Since refunds are capped to a percentage of the total
-    // transaction's gas, it is best to keep them low in cases like this one, to
-    // increase the likelihood of the full refund coming into effect.
-    uint256 private constant _NOT_ENTERED = 1;
-    uint256 private constant _ENTERED = 2;
-
-    uint256 private _status;
-
-    function __ReentrancyGuard_init() internal onlyInitializing {
-        __ReentrancyGuard_init_unchained();
-    }
-
-    function __ReentrancyGuard_init_unchained() internal onlyInitializing {
-        _status = _NOT_ENTERED;
-    }
-
-    /**
-     * @dev Prevents a contract from calling itself, directly or indirectly.
-     * Calling a `nonReentrant` function from another `nonReentrant`
-     * function is not supported. It is possible to prevent this from happening
-     * by making the `nonReentrant` function external, and making it call a
-     * `private` function that does the actual work.
-     */
-    modifier nonReentrant() {
-        // On the first call to nonReentrant, _notEntered will be true
-        require(_status != _ENTERED, "ReentrancyGuard: reentrant call");
-
-        // Any calls to nonReentrant after this point will fail
-        _status = _ENTERED;
-
-        _;
-
-        // By storing the original value once again, a refund is triggered (see
-        // https://eips.ethereum.org/EIPS/eip-2200)
-        _status = _NOT_ENTERED;
-    }
-
-    /**
-     * @dev This empty reserved space is put in place to allow future versions to add new
-     * variables without shifting down storage in the inheritance chain.
-     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
-     */
-    uint256[49] private __gap;
-}
-
-// 
-// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
-/**
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-}
-
-// 
-// OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
-/**
- * @dev Contract module which provides a basic access control mechanism, where
- * there is an account (an owner) that can be granted exclusive access to
- * specific functions.
- *
- * By default, the owner account will be the one that deploys the contract. This
- * can later be changed with {transferOwnership}.
- *
- * This module is used through inheritance. It will make available the modifier
- * `onlyOwner`, which can be applied to your functions to restrict their use to
- * the owner.
- */
-abstract contract Ownable is Context {
-    address private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    /**
-     * @dev Initializes the contract setting the deployer as the initial owner.
-     */
-    constructor() {
-        _transferOwnership(_msgSender());
-    }
-
-    /**
-     * @dev Returns the address of the current owner.
-     */
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    /**
-     * @dev Throws if called by any account other than the owner.
-     */
-    modifier onlyOwner() {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
-
-    /**
-     * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
-     *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
-     */
-    function renounceOwnership() public virtual onlyOwner {
-        _transferOwnership(address(0));
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
-     */
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
-        _transferOwnership(newOwner);
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Internal function without access restriction.
-     */
-    function _transferOwnership(address newOwner) internal virtual {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }
-}
-
-// 
-// OpenZeppelin Contracts v4.4.1 (utils/Strings.sol)
-/**
- * @dev String operations.
- */
-library Strings {
-    bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
-
-    /**
-     * @dev Converts a `uint256` to its ASCII `string` decimal representation.
-     */
-    function toString(uint256 value) internal pure returns (string memory) {
-        // Inspired by OraclizeAPI's implementation - MIT licence
-        // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
-
-        if (value == 0) {
-            return "0";
-        }
-        uint256 temp = value;
-        uint256 digits;
-        while (temp != 0) {
-            digits++;
-            temp /= 10;
-        }
-        bytes memory buffer = new bytes(digits);
-        while (value != 0) {
-            digits -= 1;
-            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
-            value /= 10;
-        }
-        return string(buffer);
-    }
-
-    /**
-     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation.
-     */
-    function toHexString(uint256 value) internal pure returns (string memory) {
-        if (value == 0) {
-            return "0x00";
-        }
-        uint256 temp = value;
-        uint256 length = 0;
-        while (temp != 0) {
-            length++;
-            temp >>= 8;
-        }
-        return toHexString(value, length);
-    }
-
-    /**
-     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.
-     */
-    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {
-        bytes memory buffer = new bytes(2 * length + 2);
-        buffer[0] = "0";
-        buffer[1] = "x";
-        for (uint256 i = 2 * length + 1; i > 1; --i) {
-            buffer[i] = _HEX_SYMBOLS[value & 0xf];
-            value >>= 4;
-        }
-        require(value == 0, "Strings: hex length insufficient");
-        return string(buffer);
-    }
 }
 
 // 
@@ -2257,7 +2257,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     struct REITYield {
         uint256 liquidationExtension;
         uint256[] yieldDividendPerShares;
-        uint yieldDividendIndexCounter;        
+        uint256 yieldDividendIndexCounter;
     }
 
     struct YieldVesting {
@@ -2266,13 +2266,15 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         address beneficiary;
         // amount of tokens given
         uint256 lastClaimTime;
+        // amount to be paid when registered
+        uint256 unregisteredDividend;
         // amount of tokens in pending
         uint256 futureAmount;
         // total yield claimed so far
         uint256 totalClaimedYield;
     }
 
-    uint constant MAX_REIT_LIFE_MONTHS = 10 * 12;
+    uint256 constant MAX_REIT_LIFE_MONTHS = 10 * 12;
     uint256 constant PERCENT_DECIMALS_MULTIPLY = 100000000; // allow upto 6 decimals of percentage
 
     mapping(uint256 => REITMetadata) public tokenMetadata;
@@ -2284,6 +2286,10 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     // address of the payable tokens to fund and claim
     mapping(uint256 => IERC20Extented) private fundingToken;
     mapping(uint256 => address) private ipoContracts;
+
+    // Mapping from token ID to account balances
+    mapping(uint256 => mapping(address => uint256))
+        internal _unregisteredBalances;
 
     /**
      * @dev Initialization
@@ -2348,7 +2354,11 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         fundingToken[_id] = IERC20Extented(_fundingToken);
         tokenMetadata[_id] = REITMetadata(0, 0, 0, 0);
-        tokenYieldData[_id] = REITYield(0, new uint256[](MAX_REIT_LIFE_MONTHS), 0);
+        tokenYieldData[_id] = REITYield(
+            0,
+            new uint256[](MAX_REIT_LIFE_MONTHS),
+            0
+        );
 
         _mint(_initialOwner, _id, _initialSupply, _data);
 
@@ -2373,7 +2383,12 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         );
     }
 
-    function getClaimedYield(uint256 _id) external view shareHoldersOnly(_id) returns (uint256) {
+    function getClaimedYield(uint256 _id)
+        external
+        view
+        shareHoldersOnly(_id)
+        returns (uint256)
+    {
         return tokenYieldVesting[_id][_msgSender()].totalClaimedYield;
     }
 
@@ -2384,10 +2399,17 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         returns (uint256)
     {
         YieldVesting memory yieldVesting = tokenYieldVesting[_id][_msgSender()];
-        return _getClaimableBenefit(_msgSender(), _id).add(yieldVesting.futureAmount);
+        return
+            _getClaimableBenefit(_msgSender(), _id).add(
+                yieldVesting.futureAmount
+            );
     }
 
-    function _getClaimableBenefit(address account, uint256 _id) internal view returns (uint256) {        
+    function _getClaimableBenefit(address account, uint256 _id)
+        internal
+        view
+        returns (uint256)
+    {
         YieldVesting memory yieldVesting = tokenYieldVesting[_id][account];
         if (!yieldVesting.initialized) {
             return 0;
@@ -2397,11 +2419,41 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         uint256 balance = balanceOf(account, _id);
         uint256 claimableYield = 0;
-        for (uint i = yieldVesting.lastClaimTime; i < yieldData.yieldDividendIndexCounter; ++i) {
+        for (
+            uint256 i = yieldVesting.lastClaimTime;
+            i < yieldData.yieldDividendIndexCounter;
+            ++i
+        ) {
             uint256 amount = yieldData.yieldDividendPerShares[i].mul(balance);
             claimableYield = claimableYield.add(amount);
         }
-        
+
+        return claimableYield;
+    }
+
+    function _getUnregisteredBenefit(address account, uint256 _id)
+        internal
+        view
+        returns (uint256)
+    {
+        YieldVesting memory yieldVesting = tokenYieldVesting[_id][account];
+        if (!yieldVesting.initialized) {
+            return 0;
+        }
+
+        REITYield memory yieldData = tokenYieldData[_id];
+
+        uint256 balance = _unregisteredBalances[_id][account];
+        uint256 claimableYield = 0;
+        for (
+            uint256 i = yieldVesting.lastClaimTime;
+            i < yieldData.yieldDividendIndexCounter;
+            ++i
+        ) {
+            uint256 amount = yieldData.yieldDividendPerShares[i].mul(balance);
+            claimableYield = claimableYield.add(amount);
+        }
+
         return claimableYield;
     }
 
@@ -2411,16 +2463,24 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         shareHoldersOnly(_id)
         nonReentrant
     {
+        require(
+            _unregisteredBalances[_id][_msgSender()] <= 0,
+            "Must register all REIT balances"
+        );
+
         if (!tokenYieldVesting[_id][_msgSender()].initialized) {
             tokenYieldVesting[_id][_msgSender()].initialized = true;
             tokenYieldVesting[_id][_msgSender()].beneficiary = _msgSender();
+            tokenYieldVesting[_id][_msgSender()].unregisteredDividend = 0;
             tokenYieldVesting[_id][_msgSender()].futureAmount = 0;
             tokenYieldVesting[_id][_msgSender()].lastClaimTime = 0;
             tokenYieldVesting[_id][_msgSender()].totalClaimedYield = 0;
         }
 
         YieldVesting memory yieldVesting = tokenYieldVesting[_id][_msgSender()];
-        uint256 claimableYield = _getClaimableBenefit(_msgSender(), _id).add(yieldVesting.futureAmount);        
+        uint256 claimableYield = _getClaimableBenefit(_msgSender(), _id).add(
+            yieldVesting.futureAmount
+        );
         require(claimableYield > 0, "REITNFT: no more claimable yield");
 
         uint256 availableFund = dividendFunds[_id];
@@ -2429,10 +2489,14 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             "REITNFT: need more fundings from issuer"
         );
 
-        REITYield memory yieldData = tokenYieldData[_id];        
+        REITYield memory yieldData = tokenYieldData[_id];
         tokenYieldVesting[_id][_msgSender()].futureAmount = 0;
-        tokenYieldVesting[_id][_msgSender()].lastClaimTime = yieldData.yieldDividendIndexCounter;
-        tokenYieldVesting[_id][_msgSender()].totalClaimedYield = tokenYieldVesting[_id][_msgSender()].totalClaimedYield.add(claimableYield);
+        tokenYieldVesting[_id][_msgSender()].lastClaimTime = yieldData
+            .yieldDividendIndexCounter;
+        tokenYieldVesting[_id][_msgSender()]
+            .totalClaimedYield = tokenYieldVesting[_id][_msgSender()]
+            .totalClaimedYield
+            .add(claimableYield);
 
         IERC20Extented payableToken = fundingToken[_id];
         require(
@@ -2443,20 +2507,35 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         dividendFunds[_id] = dividendFunds[_id].sub(claimableYield);
     }
 
-    function _liquidateYield(address acount, uint256 _id) internal {
-        if (!tokenYieldVesting[_id][acount].initialized) {
-            tokenYieldVesting[_id][acount].initialized = true;
-            tokenYieldVesting[_id][acount].beneficiary = acount;
-            tokenYieldVesting[_id][acount].futureAmount = 0;
-            tokenYieldVesting[_id][acount].lastClaimTime = 0;
+    function _liquidateYield(address account, uint256 _id) internal {
+        if (isIPOContract(_id, account)) {
+            return;
         }
 
-        uint256 claimableYield = _getClaimableBenefit(acount, _id);
+        if (!tokenYieldVesting[_id][account].initialized) {
+            tokenYieldVesting[_id][account].initialized = true;
+            tokenYieldVesting[_id][account].beneficiary = account;
+            tokenYieldVesting[_id][account].unregisteredDividend = 0;
+            tokenYieldVesting[_id][account].futureAmount = 0;
+            tokenYieldVesting[_id][account].lastClaimTime = 0;
+        }
+        
+        uint256 claimableYield = _getClaimableBenefit(account, _id);
+        uint256 unregisteredYield = _getUnregisteredBenefit(account, _id);
+
         REITYield memory yieldData = tokenYieldData[_id];
-        tokenYieldVesting[_id][acount].lastClaimTime = yieldData.yieldDividendIndexCounter;
-        if (claimableYield > 0) {            
-            tokenYieldVesting[_id][acount].futureAmount = tokenYieldVesting[_id][acount].futureAmount.add(claimableYield);            
-        }        
+        tokenYieldVesting[_id][account].lastClaimTime = yieldData
+            .yieldDividendIndexCounter;
+
+        if (claimableYield > 0) {
+            tokenYieldVesting[_id][account].futureAmount = tokenYieldVesting[
+                _id
+            ][account].futureAmount.add(claimableYield);
+        }
+        
+        if (unregisteredYield > 0) {
+            tokenYieldVesting[_id][account].unregisteredDividend = tokenYieldVesting[_id][account].unregisteredDividend.add(unregisteredYield);
+        }
     }
 
     function payDividends(uint256 _id, uint256 amount) external {
@@ -2470,17 +2549,18 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         dividendFunds[_id] = dividendFunds[_id].add(amount);
     }
 
-    function unlockDividendPerShare(uint256 _id, uint256 dividendPerShare, uint index)
-        external
-        creatorOnly(_id)
-    {
+    function unlockDividendPerShare(
+        uint256 _id,
+        uint256 dividendPerShare,
+        uint256 index
+    ) external creatorOnly(_id) {
         tokenYieldData[_id].yieldDividendPerShares[index] = dividendPerShare;
         if (tokenYieldData[_id].yieldDividendIndexCounter < index + 1) {
             tokenYieldData[_id].yieldDividendIndexCounter = index + 1;
         }
     }
 
-    function getYieldDividendPerShareAt(uint256 _id, uint index)
+    function getYieldDividendPerShareAt(uint256 _id, uint256 index)
         external
         view
         returns (uint256)
@@ -2488,14 +2568,40 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         return tokenYieldData[_id].yieldDividendPerShares[index];
     }
 
-    function getTotalYieldDividendPerShare(uint _id) external view returns (uint256) { 
+    function getTotalYieldDividendPerShare(uint256 _id)
+        external
+        view
+        returns (uint256)
+    {
         uint256 sum = 0;
         REITYield memory yieldData = tokenYieldData[_id];
-        for (uint i = 0; i < yieldData.yieldDividendIndexCounter; ++i) {
+        for (uint256 i = 0; i < yieldData.yieldDividendIndexCounter; ++i) {
             sum += yieldData.yieldDividendPerShares[i];
         }
         return sum;
+    }
 
+    function registerBalances(uint256 _id)
+        external
+        onlyKYC
+        shareHoldersOnly(_id)
+        nonReentrant
+    {
+        uint256 amount = _unregisteredBalances[_id][_msgSender()];
+        require(amount > 0, "Already registered all");
+
+        uint256 taxAmount = _calculateTransferTax(_id, amount);
+        IERC20 payableToken = fundingToken[_id];
+        require(
+            payableToken.transferFrom(_msgSender(), address(this), taxAmount),
+            "REITNFT: Could not pay tax"
+        );
+
+        _unregisteredBalances[_id][_msgSender()] = 0;
+        _balances[_id][_msgSender()] += amount;
+
+        tokenYieldVesting[_id][_msgSender()].futureAmount = tokenYieldVesting[_id][_msgSender()].futureAmount.add(tokenYieldVesting[_id][_msgSender()].unregisteredDividend);
+        tokenYieldVesting[_id][_msgSender()].unregisteredDividend = 0;
     }
 
     /**
@@ -2508,25 +2614,44 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         uint256 amount,
         bytes memory data
     ) public virtual override(ERC1155Upgradeable, IREITTradable) {
+        require(to != address(0), "ERC1155: transfer to the zero address");
+
         require(
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: caller is not owner nor approved"
         );
 
-        if (!isIPOContract(id, from) && !isIPOContract(id, to)) {
-            uint256 taxAmount = _calculateTransferTax(id, amount);
-            IERC20 payableToken = fundingToken[id];
-            require(
-                payableToken.transferFrom(from, address(this), taxAmount),
-                "REITNFT: Could not pay tax"
-            );
+        address operator = _msgSender();
+        uint256[] memory ids = _asSingletonArray(id);
+        uint256[] memory amounts = _asSingletonArray(amount);
 
-            _liquidateYield(from, id);
-        }
-        
+        _beforeTokenTransfer(operator, from, to, ids, amounts, data);
+
+        uint256 fromBalance = _balances[id][from];
+        require(
+            fromBalance >= amount,
+            "ERC1155: insufficient balance for transfer"
+        );
+
+        _liquidateYield(from, id);
         _liquidateYield(to, id);
 
-        _safeTransferFrom(from, to, id, amount, data);
+        unchecked {
+            _balances[id][from] = fromBalance - amount;
+        }
+
+        bool isIPOTransfer = isIPOContract(id, from) || isIPOContract(id, to);
+        if (!isIPOTransfer) {
+            _unregisteredBalances[id][to] += amount;
+        } else {
+            _balances[id][to] += amount;
+        }
+
+        emit TransferSingle(operator, from, to, id, amount);
+
+        _afterTokenTransfer(operator, from, to, ids, amounts, data);
+
+        _doSafeTransferAcceptanceCheck(operator, from, to, id, amount, data);
     }
 
     /**
@@ -2540,34 +2665,81 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         bytes memory data
     ) public virtual override(ERC1155Upgradeable, IREITTradable) {
         require(
+            ids.length == amounts.length,
+            "ERC1155: ids and amounts length mismatch"
+        );
+        require(to != address(0), "ERC1155: transfer to the zero address");
+
+        require(
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: transfer caller is not owner nor approved"
         );
 
-        for (uint i = 0; i < ids.length; ++i) {
+        address operator = _msgSender();
+
+        _beforeTokenTransfer(operator, from, to, ids, amounts, data);
+
+        for (uint256 i = 0; i < ids.length; ++i) {
             uint256 id = ids[i];
             uint256 amount = amounts[i];
 
-            if (!isIPOContract(id, from) && !isIPOContract(id, to)) {
-                uint256 taxAmount = _calculateTransferTax(id, amount);
-                IERC20 payableToken = fundingToken[id];
-                require(
-                    payableToken.transferFrom(from, address(this), taxAmount),
-                    "REITNFT: Could not pay tax"
-                );
+            uint256 fromBalance = _balances[id][from];
+            require(
+                fromBalance >= amount,
+                "ERC1155: insufficient balance for transfer"
+            );
+        }
 
-                _liquidateYield(from, id);
-            }
-
+        for (uint256 i = 0; i < ids.length; ++i) {
+            uint256 id = ids[i];
+            _liquidateYield(from, id);
             _liquidateYield(to, id);
         }
 
-        _safeBatchTransferFrom(from, to, ids, amounts, data);
+        for (uint256 i = 0; i < ids.length; ++i) {
+            uint256 id = ids[i];
+            uint256 amount = amounts[i];
+
+            uint256 fromBalance = _balances[id][from];
+            unchecked {
+                _balances[id][from] = fromBalance - amount;
+            }
+
+            bool isIPOTransfer = isIPOContract(id, from) ||
+                isIPOContract(id, to);
+            if (!isIPOTransfer) {
+                _unregisteredBalances[id][to] += amount;
+            } else {
+                _balances[id][to] += amount;
+            }
+        }
+
+        emit TransferBatch(operator, from, to, ids, amounts);
+
+        _afterTokenTransfer(operator, from, to, ids, amounts, data);
+
+        _doSafeBatchTransferAcceptanceCheck(
+            operator,
+            from,
+            to,
+            ids,
+            amounts,
+            data
+        );
     }
 
-    function _calculateTransferTax (uint256 _id, uint256 amount) internal view returns (uint256) {
+    function _calculateTransferTax(uint256 _id, uint256 amount)
+        internal
+        view
+        returns (uint256)
+    {
         REITMetadata memory metadata = tokenMetadata[_id];
-        return metadata.ipoUnitPrice.mul(amount).mul(metadata.registerationTaxRate).div(PERCENT_DECIMALS_MULTIPLY);
+        return
+            metadata
+                .ipoUnitPrice
+                .mul(amount)
+                .mul(metadata.registerationTaxRate)
+                .div(PERCENT_DECIMALS_MULTIPLY);
     }
 
     function setKYCAdmin(address account) external onlyGovernor {
