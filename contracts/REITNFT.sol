@@ -2584,7 +2584,6 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     function registerBalances(uint256 _id)
         external
         onlyKYC
-        shareHoldersOnly(_id)
         nonReentrant
     {
         uint256 amount = _unregisteredBalances[_id][_msgSender()];
