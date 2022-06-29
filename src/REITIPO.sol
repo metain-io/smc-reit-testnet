@@ -8,13 +8,11 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import "./IREITTradable.sol";
-import "./WhitelistingUpgradeable.sol";
 import "./GovernableUpgradeable.sol";
 
 contract REITIPO is
     IERC1155ReceiverUpgradeable,
     Initializable,
-    WhitelistingUpgradeable,
     GovernableUpgradeable,
     ReentrancyGuardUpgradeable
 {
@@ -31,21 +29,14 @@ contract REITIPO is
     function initialize(address _nftAddress) external initializer {
         require(_nftAddress != address(0x0), "NFT contract cannot be zero address");
         __Governable_init();
-        __Whitelisting_init();
 
-        _nft = IREITTradable(_nftAddress);
-        _whitelistFree = false;
+        _nft = IREITTradable(_nftAddress);        
     }
 
     receive() external payable {}
 
     fallback() external payable {}
-
-    function setWhitelistAdmin(address account) external onlyGovernor {
-        require(account != address(0), "Whitelist Admin cannot be zero address");
-        _setWhitelistAdmin(account);
-    }
-
+    
     /**
      * @dev Returns the address of the IERC1155 contract
      */
@@ -122,7 +113,6 @@ contract REITIPO is
      */
     function purchaseWithToken(string calldata token, uint256 id, uint256 quantity)
         external
-        onlyWhitelisted
     {
         require(_nft.isIPOContract(id, address(this)), "REITIPO: Must set this as REIT IPO contract");
 
@@ -155,7 +145,6 @@ contract REITIPO is
 
     function claimPendingBalances(uint256 id)
         external
-        onlyWhitelisted
     {
         require(_nft.isKYC(_msgSender()), "KYC required");
         require(_pendingBalances[id][_msgSender()] > 0, "No more pending balances");
