@@ -16,22 +16,21 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     event Create(uint256 id);
 
     struct TokenMetadata {
-        uint256 unitValue;  
-
+        uint256 unitValue;
         uint64 initiateTime;
         uint64 liquidationTime;
-        uint64 taxRate;                      
+        uint64 taxRate;
     }
 
     struct TokenYieldData {        
-        uint256 dividendsLength;
         uint256[] dividendPerShares;
+        uint32 dividendsLength;
         uint64 liquidationTimeExtension;
     }
 
-    struct YieldVesting {        
+    struct YieldVesting {
         // beneficiary of yield
-        address beneficiary;        
+        address beneficiary;
         // amount of tokends locked
         uint256 lockingDividends;
         // amount of tokens in pending
@@ -41,12 +40,12 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         bool initialized;
         // amount of tokens given
-        uint lastClaimIndex;
+        uint32 lastClaimIndex;
     }
 
-    uint64 public constant PERCENT_DECIMALS_MULTIPLY = 100 * 10**6; // allow upto 6 decimals of percentage
+    uint256 public constant PERCENT_DECIMALS_MULTIPLY = 100 * 10**6; // allow upto 6 decimals of percentage
 
-    uint private constant MAX_REIT_LIFE_MONTHS = 10 * 12;
+    uint256 private constant MAX_REIT_LIFE_MONTHS = 10 * 12;
 
     mapping(uint256 => TokenMetadata) public tokenMetadata;
     mapping(uint256 => TokenYieldData) public tokenYieldData;
@@ -60,8 +59,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     mapping(uint256 => address) private ipoContracts;
 
     // Mapping from token ID to account balances
-    mapping(uint256 => mapping(address => uint256))
-        internal _unregisteredBalances;
+    mapping(uint256 => mapping(address => uint256)) internal _lockingBalances;
 
     /**
      * @dev Initialization
@@ -126,10 +124,10 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         fundingToken[_id] = IERC20(_fundingToken);
         tokenMetadata[_id] = TokenMetadata(0, 0, 0, 0);
-        tokenYieldData[_id] = TokenYieldData(
-            0,
+        tokenYieldData[_id] = TokenYieldData(            
             new uint256[](MAX_REIT_LIFE_MONTHS),
-            0            
+            0,
+            0
         );
 
         _mint(_initialOwner, _id, _initialSupply, _data);
@@ -149,7 +147,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     ) external creatorOnly(_id) {
         tokenMetadata[_id] = TokenMetadata(
             unitValue,
-            initiateTime,            
+            initiateTime,
             liquidationTime,
             taxRate
         );
@@ -176,14 +174,14 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             return 0;
         }
 
-        uint256 registeredBalance = _balances[_id][account];
+        uint256 unlockedBalances = _balances[_id][account];
         uint256 claimableYield = 0;
-        uint256 dividendsLength = tokenYieldData[_id].dividendsLength;
-        uint256 lastClaimIndex = tokenYieldVesting[_id][account].lastClaimIndex;
-        for (uint256 i = lastClaimIndex; i < dividendsLength; ++i) {
+        uint32 dividendsLength = tokenYieldData[_id].dividendsLength;
+        uint32 lastClaimIndex = tokenYieldVesting[_id][account].lastClaimIndex;
+        for (uint32 i = lastClaimIndex; i < dividendsLength; ++i) {
             claimableYield +=
                 tokenYieldData[_id].dividendPerShares[i] *
-                registeredBalance;
+                unlockedBalances;
         }
 
         return
@@ -202,14 +200,14 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             return 0;
         }
 
-        uint256 unregisteredBalance = _unregisteredBalances[_id][account];
+        uint256 lockedBalance = _lockingBalances[_id][account];
         uint256 lockedYield = 0;
-        uint256 dividendsLength = tokenYieldData[_id].dividendsLength;
-        uint256 lastClaimIndex = tokenYieldVesting[_id][account].lastClaimIndex;
-        for (uint256 i = lastClaimIndex; i < dividendsLength; ++i) {
+        uint32 dividendsLength = tokenYieldData[_id].dividendsLength;
+        uint32 lastClaimIndex = tokenYieldVesting[_id][account].lastClaimIndex;
+        for (uint32 i = lastClaimIndex; i < dividendsLength; ++i) {
             lockedYield +=
                 tokenYieldData[_id].dividendPerShares[i] *
-                unregisteredBalance;
+                lockedBalance;
         }
 
         return lockedYield + tokenYieldVesting[_id][account].lockingDividends;
@@ -251,7 +249,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         }
 
         if (!tokenYieldVesting[_id][account].initialized) {
-            tokenYieldVesting[_id][account] = YieldVesting(                
+            tokenYieldVesting[_id][account] = YieldVesting(
                 account,
                 0,
                 0,
@@ -266,15 +264,15 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         uint256 unregisteredYield = 0;
 
         if (tokenYieldVesting[_id][account].initialized) {
-            uint256 unregisteredBalance = _unregisteredBalances[_id][account];
-            uint256 registeredBalance = _balances[_id][account];
-            uint256 dividendsLength = tokenYieldData[_id].dividendsLength;
-            uint256 lastClaimIndex = tokenYieldVesting[_id][account]
+            uint256 lockedBalance = _lockingBalances[_id][account];
+            uint256 unlockedBalance = _balances[_id][account];
+            uint32 dividendsLength = tokenYieldData[_id].dividendsLength;
+            uint32 lastClaimIndex = tokenYieldVesting[_id][account]
                 .lastClaimIndex;
-            for (uint256 i = lastClaimIndex; i < dividendsLength; ++i) {
+            for (uint32 i = lastClaimIndex; i < dividendsLength; ++i) {
                 uint256 dividend = tokenYieldData[_id].dividendPerShares[i];
-                claimableYield += dividend * registeredBalance;
-                unregisteredYield += dividend * unregisteredBalance;
+                claimableYield += dividend * unlockedBalance;
+                unregisteredYield += dividend * lockedBalance;
             }
 
             tokenYieldVesting[_id][account].lastClaimIndex = dividendsLength;
@@ -309,7 +307,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     function unlockDividendPerShare(
         uint256 _id,
         uint256 dividendPerShare,
-        uint256 index
+        uint32 index
     ) external creatorOnly(_id) {
         tokenYieldData[_id].dividendPerShares[index] = dividendPerShare;
         if (tokenYieldData[_id].dividendsLength < index + 1) {
@@ -332,7 +330,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     {
         uint256 sum = 0;
         TokenYieldData memory yieldData = tokenYieldData[_id];
-        for (uint256 i = 0; i < yieldData.dividendsLength; ++i) {
+        for (uint32 i = 0; i < yieldData.dividendsLength; ++i) {
             sum += yieldData.dividendPerShares[i];
         }
         return sum;
@@ -341,7 +339,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     function registerBalances(uint256 _id) external onlyKYC nonReentrant {
         address account = _msgSender();
 
-        uint256 amount = _unregisteredBalances[_id][account];
+        uint256 amount = _lockingBalances[_id][account];
         require(amount > 0, "Already registered all");
 
         uint256 taxAmount = (tokenMetadata[_id].unitValue *
@@ -355,7 +353,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         );
 
         unchecked {
-            _unregisteredBalances[_id][account] = 0;
+            _lockingBalances[_id][account] = 0;
             _balances[_id][account] += amount;
 
             tokenYieldVesting[_id][account]
@@ -403,7 +401,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         bool isIPOTransfer = isIPOContract(id, from) || isIPOContract(id, to);
         if (!isIPOTransfer) {
-            _unregisteredBalances[id][to] += amount;
+            _lockingBalances[id][to] += amount;
         } else {
             _balances[id][to] += amount;
         }
@@ -469,7 +467,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             bool isIPOTransfer = isIPOContract(id, from) ||
                 isIPOContract(id, to);
             if (!isIPOTransfer) {
-                _unregisteredBalances[id][to] += amount;
+                _lockingBalances[id][to] += amount;
             } else {
                 _balances[id][to] += amount;
             }
