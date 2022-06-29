@@ -145,6 +145,9 @@ module.exports = {
       chainId: 3
     }
   },
+  mocha: {
+    timeout: 1000000
+  },
   solidity: {
     version: "0.8.9",
     settings: {

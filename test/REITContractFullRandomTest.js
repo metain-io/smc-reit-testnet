@@ -14,6 +14,7 @@ const TEST_BUY_NFT_MAX = 1000;
 const TEST_DIVIDEND_MIN = 1;
 const TEST_DIVIDEND_MAX = 10;
 let TEST_NFT_SUM = 0;
+let TEST_USER_NFT_BALANCE = [];
 let TEST_DIVIDEND_SUM = 0;
 let TEST_USER_CLAIM_SUM = 0;
 
@@ -32,12 +33,13 @@ let NFTContract;
 let NFTContractForCreator;
 let NFTContractForShareholder = [];
 const NFT_ID = 1;
-const NFT_TRANSFER_AMOUNT = 10;
+const NFT_TRANSFER_MIN = 10;
+const NFT_TRANSFER_MAX = 100;
 
 let IPOContract;
 let IPOContractForShareholder = [];
 
-const TEST_MONTHS = 24;
+const TEST_MONTHS = 12;
 
 async function attachContractForSigner(name, signer, address) {
   const factory = await ethers.getContractFactory(name, signer);
@@ -136,6 +138,7 @@ describe('NFT/IPO RAMDOM TEST', function () {
       await USDContract.transfer(shareholder[i].address, TEST_SHARE_HOLDER_FUND);
       // allow IPOContract get USDT from users
       await USDContractForShareholder[i].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);
+      await USDContractForShareholder[i].increaseAllowance(NFTContract.address, TEST_SHARE_HOLDER_FUND);
       // KYC users
       await NFTContract.addToKYC(shareholder[i].address);
 
@@ -143,9 +146,10 @@ describe('NFT/IPO RAMDOM TEST', function () {
       let NFT_AMOUNT = Math.floor(Math.random() * (TEST_BUY_NFT_MAX - TEST_BUY_NFT_MIN)) + TEST_BUY_NFT_MIN;
       await IPOContractForShareholder[i].purchaseWithToken('USDT', NFT_ID, NFT_AMOUNT);
 
-      // check NFT baland after buy
+      // check NFT balance after buy
       let balance = await NFTContract.balanceOf(shareholder[i].address, NFT_ID);
       TEST_NFT_SUM += parseInt(balance);
+      TEST_USER_NFT_BALANCE.push(balance)
       console.log(`User ${i}: NFT balance: ${balance}`);
     }
     console.log(`NFT_SUM: ${TEST_NFT_SUM}`);
@@ -166,19 +170,37 @@ describe('NFT/IPO RAMDOM TEST', function () {
       await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther(DIVIDEND_AMOUNT.toString()), i);
       TEST_DIVIDEND_SUM += parseInt(DIVIDEND_AMOUNT*TEST_NFT_SUM);
       console.log(`DIVIDEND_AMOUNT of month ${i}: ${DIVIDEND_AMOUNT} USD`);
+
+      // try transfer after Dividends
+      let TRANSFER_FROM = Math.floor(Math.random() * (SHAREHOLDER_COUNT - 1));
+      let TRANSFER_TO = Math.floor(Math.random() * (SHAREHOLDER_COUNT - 1));
+      let TRANSFER_AMOUNT = Math.floor(Math.random() * (NFT_TRANSFER_MAX - NFT_TRANSFER_MIN))+ NFT_TRANSFER_MIN;
+      
+      try {
+        // transfer NFT 
+        await NFTContractForShareholder[TRANSFER_FROM].safeTransferFrom(shareholder[TRANSFER_FROM].address, shareholder[TRANSFER_TO].address, NFT_ID, TRANSFER_AMOUNT, [])
+        // register NFT after transfer
+        await NFTContractForShareholder[TRANSFER_TO].registerBalances(NFT_ID);
+        console.log("\x1b[35m%s\x1b[0m", `Transfer SUCCESS: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
+        TEST_USER_NFT_BALANCE[TRANSFER_FROM] -= parseInt(TRANSFER_AMOUNT);
+        TEST_USER_NFT_BALANCE[TRANSFER_TO] += parseInt(TRANSFER_AMOUNT);
+      } catch (error) {
+        console.log("\x1b[34m%s\x1b[0m", `Transfer FAIL: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
+        console.log("\x1b[34m%s\x1b[0m", `Error: ${error}`);
+      }
     }
     console.log(`TEST_DIVIDEND_SUM after ${TEST_MONTHS} months: ${TEST_DIVIDEND_SUM} USD`)
+    console.log(`TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`)
 
     expect(TEST_DIVIDEND_SUM).not.equal(0);
   });
 
-  // Because the Timeout, only claim dividend from 4 users
-  it('USER CLAIM DIVIDEND 1', async function () {
-    console.log("\x1b[33m%s\x1b[0m", `\n=========== CLAIM DIVIDEND FROM USER 0, 1, 2, 3 =========`);
+  it('CLAIM DIVIDEND FROM USERS', async function () {
+    console.log("\x1b[33m%s\x1b[0m", `\n=========== CLAIM DIVIDEND FROM USERS =========`);
 
-    const beginUser = 0;
-    const lastUser = 4;
-    for (let i = beginUser; i < lastUser; ++i) {
+    let TEST_USER_NFT_BALANCE_SUM = 0
+    let TEST_USER_NFT_BALANCE_FROM_BLOCKCHAIN_SUM = 0
+    for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
       // USD balance before claim
       let usdBalance = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[i].address)));
     
@@ -188,45 +210,54 @@ describe('NFT/IPO RAMDOM TEST', function () {
       // USD balance before claim
       let usdBalance_afterClaim = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[i].address)));
 
-      // dividend money
-      const claimCount = usdBalance_afterClaim - usdBalance;
-      console.log(`User ${i} claimCount: ${claimCount}`);
-    
-      TEST_USER_CLAIM_SUM += claimCount;
-    }
-    console.log(`TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`)
-    console.log(`TEST_DIVIDEND_SUM: ${TEST_DIVIDEND_SUM} USD`)
-
-    expect(TEST_USER_CLAIM_SUM).not.equal(0);
-  });
-
-  // Because the Timeout, only claim dividend from 4 users
-  it('USER CLAIM DIVIDEND 1', async function () {
-    console.log("\x1b[33m%s\x1b[0m", `\n=========== CLAIM DIVIDEND FROM USER 4, 5, 6, 7 =========`);
-
-    const beginUser = 4;
-    const lastUser = SHAREHOLDER_COUNT;
-    for (let i = beginUser; i < lastUser; ++i) {
-      // USD balance before claim
-      let usdBalance = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[i].address)));
-    
-      // user claim dividend money
-      await NFTContractForShareholder[i].claimBenefit(NFT_ID);
-
-      // USD balance before claim
-      let usdBalance_afterClaim = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[i].address)));
+      // check NFT balance after transfer 
+      let NFTbalance = await NFTContract.balanceOf(shareholder[i].address, NFT_ID);
+      TEST_USER_NFT_BALANCE_FROM_BLOCKCHAIN_SUM += parseInt(NFTbalance);
 
       // dividend money
       const claimCount = usdBalance_afterClaim - usdBalance;
-      console.log(`User ${i} claimCount: ${claimCount}`);
-    
+      console.log(`User ${i}: NFTbalance: ${NFTbalance} NFT, claimCount: ${claimCount} USD`);
+   
+      TEST_USER_NFT_BALANCE_SUM += parseInt(TEST_USER_NFT_BALANCE[i]);
       TEST_USER_CLAIM_SUM += claimCount;
     }
-    console.log(`TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`)
-    console.log(`TEST_DIVIDEND_SUM: ${TEST_DIVIDEND_SUM} USD`)
+    console.log("\x1b[35m%s\x1b[0m", `TEST_NFT_SUM: ${TEST_NFT_SUM} NFT`)
+    console.log("\x1b[35m%s\x1b[0m", `TEST_USER_NFT_BALANCE_SUM: ${TEST_USER_NFT_BALANCE_SUM} NFT`)
+    console.log("\x1b[35m%s\x1b[0m", `TEST_USER_NFT_BALANCE_FROM_BLOCKCHAIN_SUM: ${TEST_USER_NFT_BALANCE_FROM_BLOCKCHAIN_SUM} NFT`)
+
+    console.log("\x1b[33m%s\x1b[0m", `TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`)
+    console.log("\x1b[33m%s\x1b[0m", `TEST_DIVIDEND_SUM: ${TEST_DIVIDEND_SUM} USD`)
 
     expect(TEST_USER_CLAIM_SUM).equal(TEST_DIVIDEND_SUM);
   });
+
+  // // Because the Timeout, only claim dividend from 4 users
+  // it('CLAIM DIVIDEND FROM USER 4, 5, 6, 7', async function () {
+  //   console.log("\x1b[33m%s\x1b[0m", `\n=========== CLAIM DIVIDEND FROM USER 4, 5, 6, 7 =========`);
+
+  //   const beginUser = 4;
+  //   const lastUser = SHAREHOLDER_COUNT;
+  //   for (let i = beginUser; i < lastUser; ++i) {
+  //     // USD balance before claim
+  //     let usdBalance = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[i].address)));
+    
+  //     // user claim dividend money
+  //     await NFTContractForShareholder[i].claimBenefit(NFT_ID);
+
+  //     // USD balance before claim
+  //     let usdBalance_afterClaim = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[i].address)));
+
+  //     // dividend money
+  //     const claimCount = usdBalance_afterClaim - usdBalance;
+  //     console.log(`User ${i} claimCount: ${claimCount}`);
+    
+  //     TEST_USER_CLAIM_SUM += claimCount;
+  //   }
+  //   console.log(`TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`)
+  //   console.log(`TEST_DIVIDEND_SUM: ${TEST_DIVIDEND_SUM} USD`)
+
+  //   expect(TEST_USER_CLAIM_SUM).equal(TEST_DIVIDEND_SUM);
+  // });
 
 });
 
