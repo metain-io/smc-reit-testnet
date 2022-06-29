@@ -295,7 +295,7 @@ describe('Buying IPO', function () {
 
     // transfer NFT from user 3 to user 4
     await NFTContractForShareholder[3].safeTransferFrom(shareholder[3].address, shareholder[4].address, NFT_ID, NFT_TRANSFER_AMOUNT, [])
-    
+
     // check NFT balance after Transfer
     NFTbalance_user3 = await NFTContract.balanceOf(shareholder[3].address, NFT_ID);
     console.log(`User 3: NFT balance after transfer: ${NFTbalance_user3}`);
