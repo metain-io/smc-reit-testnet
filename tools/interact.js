@@ -139,16 +139,46 @@ async function interactNFT () {
   }
 }
 
+async function interactUSD () {
+  const [owner, creator] = await ethers.getSigners();
+  console.log("Signer", owner.address);
+
+  const USDMAddress = "0xEf082A75d42A11B8B2c7eF8F969CEAba39eD551c";
+  
+  const Token = await ethers.getContractFactory("USDMToken");
+  const contract = Token.attach(USDMAddress);  
+
+  const TokenForCreator = await ethers.getContractFactory("USDMToken", creator);
+  const contractForCreator = TokenForCreator.attach(USDMAddress);  
+
+  while (true) {
+    console.log("Enter JS command:");
+
+    const command = await prompt("> ");
+    switch (command) {
+
+      default: {
+        await runMethod(contract, command);
+        break;
+      }
+    }
+  }
+}
+
 module.exports = async function main() {
   console.log("Select contract to interact:");
   console.log("1) REIT NFT");
   console.log("2) REIT IPO");
+  console.log("3) USD Token");
 
   const selection = await prompt("> ");
 
   switch (selection) {
     case "2":
       await interactIPO();
+
+    case "3":
+      await interactUSD();
 
     default:
       await interactNFT();  
