@@ -4,11 +4,17 @@ const fs = require("fs");
 
 const argv = require("minimist")(process.argv.slice(2));
 const env = require("./env.json")[argv.network];
-const secret = JSON.parse(fs.readFileSync(".secret"));
 
 const interact = require("./tools/interact");
+const setupTestnet = require("./tools/setupTestnet");
+
+const secret = JSON.parse(fs.readFileSync(".secret"));
+secret.testnet = Array.isArray(secret.testnet) ? secret.testnet : [secret.testnet];
+secret.mainnet = Array.isArray(secret.mainnet) ? secret.mainnet : [secret.mainnet];
 
 task("interact", "Interact with REIT NFT Contract").setAction(interact);
+
+task("setupTestnet", "Setup Testnet").setAction(setupTestnet);
 
 /**
  * Contract deployment task
@@ -117,31 +123,31 @@ module.exports = {
     },
     testnet: {
       url: "https://data-seed-prebsc-1-s1.binance.org:8545",
-      accounts: [secret.testnet],
+      accounts: secret.testnet,
       chainId: 97
     },
     mainnet: {
       url: "https://bsc-dataseed1.binance.org",
-      accounts: [secret.mainnet],
+      accounts: secret.mainnet,
       chainId: 56
     },
 
     // Reserved
     bscTest: {
       url: "https://data-seed-prebsc-1-s1.binance.org:8545",
-      accounts: [secret.testnet],
+      accounts: secret.testnet,
       chainId: 97
     },
 
     rinkeby: {
       url: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-      accounts: [secret.testnet],
+      accounts: secret.testnet,
       chainId: 4
     },
 
     ropsten: {
       url: "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-      accounts: [secret.testnet],
+      accounts: secret.testnet,
       chainId: 3
     }
   },
