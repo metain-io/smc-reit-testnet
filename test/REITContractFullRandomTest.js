@@ -163,13 +163,7 @@ describe('NFT/IPO RAMDOM TEST', function () {
     await NFTContract.payDividends(NFT_ID, ethers.utils.parseEther('100000000'));
 
     for (let i = 0; i < TEST_MONTHS; ++i) {
-      let DIVIDEND_AMOUNT = Math.floor(Math.random() * (TEST_DIVIDEND_MAX - TEST_DIVIDEND_MIN)) + TEST_DIVIDEND_MIN;
-      // Admin unlock Dividends fund for monthS and set Dividends for per user 
-      await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther(DIVIDEND_AMOUNT.toString()), i);
-      TEST_DIVIDEND_SUM += parseInt(DIVIDEND_AMOUNT*TEST_NFT_SUM);
-      console.log(`DIVIDEND_AMOUNT of month ${i}: ${DIVIDEND_AMOUNT} USD`);
-
-      // try transfer after Dividends
+      // try transfer before Dividends
       let TRANSFER_FROM = Math.floor(Math.random() * (SHAREHOLDER_COUNT - 1));
       let TRANSFER_TO = Math.floor(Math.random() * (SHAREHOLDER_COUNT - 1));
       let TRANSFER_AMOUNT = Math.floor(Math.random() * (NFT_TRANSFER_MAX - NFT_TRANSFER_MIN))+ NFT_TRANSFER_MIN;
@@ -177,13 +171,31 @@ describe('NFT/IPO RAMDOM TEST', function () {
       try {
         // transfer NFT 
         await NFTContractForShareholder[TRANSFER_FROM].safeTransferFrom(shareholder[TRANSFER_FROM].address, shareholder[TRANSFER_TO].address, NFT_ID, TRANSFER_AMOUNT, [])
+
+        // check Dividends info before registerBalances
+        dividendClaim = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getTotalClaimableBenefit(NFT_ID)));
+        if (dividendClaim > 0) {
+          console.log(`User ${TRANSFER_TO}: Try to claim ${dividendClaim} USD after transfer`);
+          // try to claim before registerBalances
+          await NFTContractForShareholder[TRANSFER_TO].claimBenefit(NFT_ID);
+          TEST_USER_CLAIM_SUM += dividendClaim;
+        }
+
         // register NFT after transfer
         await NFTContractForShareholder[TRANSFER_TO].registerBalances(NFT_ID);
-        console.log("\x1b[35m%s\x1b[0m", `Transfer SUCCESS: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
+        console.log("\x1b[34m%s\x1b[0m", `Transfer SUCCESS: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
       } catch (error) {
-        console.log("\x1b[34m%s\x1b[0m", `Transfer FAIL: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
-        console.log("\x1b[34m%s\x1b[0m", `Error: ${error}`);
+        console.log("\x1b[35m%s\x1b[0m", `Transfer FAIL: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
+        console.log("\x1b[35m%s\x1b[0m", `Error: ${error}`);
+        let NFTbalance = await NFTContract.balanceOf(shareholder[TRANSFER_FROM].address, NFT_ID);
+        console.log("\x1b[35m%s\x1b[0m", `NFTbalance of User ${TRANSFER_FROM} : ${NFTbalance}`);
       }
+
+      let DIVIDEND_AMOUNT = Math.floor(Math.random() * (TEST_DIVIDEND_MAX - TEST_DIVIDEND_MIN)) + TEST_DIVIDEND_MIN;
+      // Admin unlock Dividends fund for monthS and set Dividends for per user 
+      await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther(DIVIDEND_AMOUNT.toString()), i);
+      TEST_DIVIDEND_SUM += parseInt(DIVIDEND_AMOUNT*TEST_NFT_SUM);
+      console.log(`DIVIDEND_AMOUNT of month ${i}: ${DIVIDEND_AMOUNT} USD`);
     }
     console.log(`TEST_DIVIDEND_SUM after ${TEST_MONTHS} months: ${TEST_DIVIDEND_SUM} USD`)
     console.log(`TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`)
@@ -198,9 +210,13 @@ describe('NFT/IPO RAMDOM TEST', function () {
     for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
       // USD balance before claim
       let usdBalance = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[i].address)));
-    
-      // user claim dividend money
-      await NFTContractForShareholder[i].claimBenefit(NFT_ID);
+
+      try {
+        // user claim dividend money
+        await NFTContractForShareholder[i].claimBenefit(NFT_ID);
+      } catch (error) {
+        console.log("\x1b[35m%s\x1b[0m", `Claim FAIL: User ${i} : Error: ${error}`);
+      }
  
       // USD balance before claim
       let usdBalance_afterClaim = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[i].address)));
