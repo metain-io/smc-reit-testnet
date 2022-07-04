@@ -2310,7 +2310,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      */
     modifier shareHoldersOnly(uint256 _id) {
         require(
-            balanceOf(_msgSender(), _id) > 0,
+            _balances[_id][_msgSender()] + _lockingBalances[_id][_msgSender()] > 0,
             "ERC1155Tradable#shareHoldersOnly: ONLY_OWNERS_ALLOWED"
         );
         _;
