@@ -2733,6 +2733,14 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         return ERC1155Upgradeable.balanceOf(account, id);
     }
 
+    function lockingBalanceOf(address account, uint256 id)
+        public
+        view
+        returns (uint256)
+    {
+        return _lockingBalances[id][account];
+    }
+
     function getShareUnitPrice(uint256 _id)
         external
         view

@@ -407,7 +407,8 @@ describe('Buying IPO', function () {
     let NFTbalance_user6 = await NFTContract.balanceOf(shareholder[6].address, NFT_ID);
     console.log(`User 6: NFT balance after transfer: ${NFTbalance_user6}`);
 
-    
+    let NFTlockingBalance_user6 = await NFTContract.lockingBalanceOf(shareholder[6].address, NFT_ID);
+    console.log(`User 6: NFT locking balance after transfer: ${NFTlockingBalance_user6}`);
     let getTotalClaimableBenefit_user6 = await NFTContractForShareholder[6].getTotalClaimableBenefit(NFT_ID);
     console.log(`User 6: getTotalClaimableBenefit after transfer: ${getTotalClaimableBenefit_user6} USD`);
     let getLockedYieldDividends_user6 = await NFTContractForShareholder[6].getLockedYieldDividends(NFT_ID);

@@ -178,6 +178,9 @@ describe("NFT/IPO RAMDOM TEST", function () {
           []
         );
         console.log(`Transfer SUCCESS: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
+
+        let NFTlockingBalance = await NFTContract.lockingBalanceOf(shareholder[TRANSFER_TO].address, NFT_ID);
+        console.log(`User  ${TRANSFER_TO}: NFT locking balance after transfer: ${NFTlockingBalance}`);
       } catch (error) {
         console.log(`Transfer FAIL: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
         console.log(`Error: ${error}`);
