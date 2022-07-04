@@ -168,6 +168,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
       let DIVIDEND_AMOUNT = Math.floor(Math.random() * (TEST_DIVIDEND_MAX - TEST_DIVIDEND_MIN)) + TEST_DIVIDEND_MIN;
       console.log("\x1b[34m%s\x1b[0m", `=== Month ${i}: DIVIDEND_AMOUNT: ${DIVIDEND_AMOUNT} USD ===`);
 
+      let NFTlockingBalance = 0;
       try {
         // transfer NFT
         await NFTContractForShareholder[TRANSFER_FROM].safeTransferFrom(
@@ -179,11 +180,11 @@ describe("NFT/IPO RAMDOM TEST", function () {
         );
         console.log(`Transfer SUCCESS: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
 
-        let NFTlockingBalance = await NFTContract.lockingBalanceOf(shareholder[TRANSFER_TO].address, NFT_ID);
+        NFTlockingBalance = await NFTContract.lockingBalanceOf(shareholder[TRANSFER_TO].address, NFT_ID);
         console.log(`User  ${TRANSFER_TO}: NFT locking balance after transfer: ${NFTlockingBalance}`);
       } catch (error) {
-        console.log(`Transfer FAIL: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
-        console.log(`Error: ${error}`);
+        console.log("\x1b[35m%s\x1b[0m", `Transfer FAIL: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
+        console.log("\x1b[35m%s\x1b[0m", `Error: ${error}`);
       }
 
       // Admin unlock Dividends fund for monthS and set Dividends for per user
@@ -211,8 +212,10 @@ describe("NFT/IPO RAMDOM TEST", function () {
         TEST_USER_CLAIM_SUM += dividendClaim;
       }
 
-      // register NFT after transfer
-      await NFTContractForShareholder[TRANSFER_TO].registerBalances(NFT_ID);
+      if (NFTlockingBalance > 0) {
+        // register NFT after transfer success
+        await NFTContractForShareholder[TRANSFER_TO].registerBalances(NFT_ID);
+      }
     }
     console.log("\x1b[33m%s\x1b[0m", `TEST_DIVIDEND_SUM after ${TEST_MONTHS} months: ${TEST_DIVIDEND_SUM} USD`);
     console.log("\x1b[33m%s\x1b[0m", `TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`);

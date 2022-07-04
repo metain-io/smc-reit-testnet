@@ -380,6 +380,11 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             "ERC1155: caller is not owner nor approved"
         );
 
+        require(
+            from != to,
+            "ERC1155: From_Address must be different from To_Address"
+        );
+
         address operator = _msgSender();
         uint256[] memory ids = _asSingletonArray(id);
         uint256[] memory amounts = _asSingletonArray(amount);
