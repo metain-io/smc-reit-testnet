@@ -117,7 +117,7 @@ describe('Initiate REIT Opportunity Trust', function () {
     // }
     
     const now = Math.floor(Date.now() / 1000);
-    await NFTContractForCreator.initiate(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);    
+    await NFTContractForCreator.initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);    
     await NFTContractForCreator.safeTransferFrom(creator.address, IPOContract.address, NFT_ID, TEST_REIT_AMOUNT, [])
     const ipoBalance = await NFTContract.balanceOf(IPOContract.address, NFT_ID);
     expect(ipoBalance).equal(TEST_REIT_AMOUNT);
@@ -234,11 +234,11 @@ describe('Buying IPO', function () {
       console.log(`User 2: NFT balance after buy: ${balance}`);
 
       // User get Dividends info of user
-      const shareholderDividend = await NFTContractForShareholder[2].getTotalClaimableBenefit(NFT_ID);
+      const shareholderDividend = await NFTContractForShareholder[2].getTotalClaimableDividends(NFT_ID);
       console.log(`User 2: Dividends info: ${shareholderDividend} USD`);
 
           // user claim dividend money
-      await NFTContractForShareholder[2].claimBenefit(NFT_ID);
+      await NFTContractForShareholder[2].claimDividend(NFT_ID);
 
     } catch(ex) {
       console.log(`User 2: ex: ${ex}`);
@@ -268,12 +268,12 @@ describe('Buying IPO', function () {
     // allow NFTContract get USDT from USDContract
     await USDContract.increaseAllowance(NFTContract.address, ethers.utils.parseEther('1000000'));
     // Admin give Dividends for NFT
-    await NFTContract.payDividends(NFT_ID, ethers.utils.parseEther('100000'));
+    await NFTContract.fundREITVault(NFT_ID, ethers.utils.parseEther('100000'));
     // Admin unlock Dividends fund for month 0 and set Dividends for per user 
     await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther('2'), 0);
 
     // User get Dividends info of user
-    const shareholderDividend = await NFTContractForShareholder[2].getTotalClaimableBenefit(NFT_ID);
+    const shareholderDividend = await NFTContractForShareholder[2].getTotalClaimableDividends(NFT_ID);
     console.log(`User 2: Dividends info: ${shareholderDividend} USD`);
 
     // buy NFT with USDT again
@@ -287,14 +287,14 @@ describe('Buying IPO', function () {
     console.log(`User 2: new NFT Balance after buy again: ${newBalance}`);
 
     // now get new Dividends info of user
-    const newShareholderDividend = await NFTContractForShareholder[2].getTotalClaimableBenefit(NFT_ID);
+    const newShareholderDividend = await NFTContractForShareholder[2].getTotalClaimableDividends(NFT_ID);
     console.log(`User 2: new Dividends info: ${newShareholderDividend} USD`);
 
     const usdBalance1 = BigInt(await USDContract.balanceOf(shareholder[2].address));
     console.log(`User 2: USD balance before claim: ${usdBalance1} USD`);
 
     // user claim dividend money
-    await NFTContractForShareholder[2].claimBenefit(NFT_ID);
+    await NFTContractForShareholder[2].claimDividend(NFT_ID);
 
     const usdBalance2 = BigInt(await USDContract.balanceOf(shareholder[2].address));
     console.log(`User 2: USD balance after claim: ${usdBalance2} USD`);
@@ -336,7 +336,7 @@ describe('Buying IPO', function () {
     console.log(`User 4: NFT balance after transfer: ${NFTbalance_user4}`);
 
     // register NFT after transfer
-    await NFTContractForShareholder[4].registerBalances(NFT_ID);
+    await NFTContractForShareholder[4].redeemLockedBalances(NFT_ID);
 
     // check NFT balance after register
     NFTbalance_user4 = await NFTContract.balanceOf(shareholder[4].address, NFT_ID);
@@ -346,14 +346,14 @@ describe('Buying IPO', function () {
     // allow NFTContract get USDT from USDContract
     await USDContract.increaseAllowance(NFTContract.address, ethers.utils.parseEther('1000000'));
     // Admin give Dividends for NFT
-    await NFTContract.payDividends(NFT_ID, ethers.utils.parseEther('100000'));
+    await NFTContract.fundREITVault(NFT_ID, ethers.utils.parseEther('100000'));
     // Admin unlock Dividends fund for month 2 and set Dividends for per user 
     await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther('1'), 2);
 
     // check Dividends info of user
-    const shareholderDividend_user3 = await NFTContractForShareholder[3].getTotalClaimableBenefit(NFT_ID);
+    const shareholderDividend_user3 = await NFTContractForShareholder[3].getTotalClaimableDividends(NFT_ID);
     console.log(`User 3: Dividends info: ${shareholderDividend_user3} USD`);
-    const shareholderDividend_user4 = await NFTContractForShareholder[4].getTotalClaimableBenefit(NFT_ID);
+    const shareholderDividend_user4 = await NFTContractForShareholder[4].getTotalClaimableDividends(NFT_ID);
     console.log(`User 4: Dividends info: ${shareholderDividend_user4} USD`);
 
     expect(shareholderDividend_user4).not.equal(0)
@@ -380,7 +380,7 @@ describe('Buying IPO', function () {
     // allow NFTContract get USDT from USDContract
     await USDContract.increaseAllowance(NFTContract.address, ethers.utils.parseEther('1000000'));
     // Admin give Dividends for NFT
-    await NFTContract.payDividends(NFT_ID, ethers.utils.parseEther('100000'));
+    await NFTContract.fundREITVault(NFT_ID, ethers.utils.parseEther('100000'));
     // Admin unlock Dividends fund for month 3 and set Dividends for per user 
     await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther('1'), 3);
 
@@ -392,8 +392,8 @@ describe('Buying IPO', function () {
     console.log(`User 5: NFT balance after buy: ${NFTbalance_user5}`);
 
     // User get Dividends info
-    let getTotalClaimableBenefit_user5 = await NFTContractForShareholder[5].getTotalClaimableBenefit(NFT_ID);
-    console.log(`User 5: getTotalClaimableBenefit: ${getTotalClaimableBenefit_user5} USD`);
+    let getTotalClaimableDividends_user5 = await NFTContractForShareholder[5].getTotalClaimableDividends(NFT_ID);
+    console.log(`User 5: getTotalClaimableDividends: ${getTotalClaimableDividends_user5} USD`);
 
     // transfer NFT from user 5 to user 6
     await NFTContractForShareholder[5].safeTransferFrom(shareholder[5].address, shareholder[6].address, NFT_ID, NFT_TRANSFER_AMOUNT, [])
@@ -409,20 +409,20 @@ describe('Buying IPO', function () {
 
     let NFTlockingBalance_user6 = await NFTContract.lockingBalanceOf(shareholder[6].address, NFT_ID);
     console.log(`User 6: NFT locking balance after transfer: ${NFTlockingBalance_user6}`);
-    let getTotalClaimableBenefit_user6 = await NFTContractForShareholder[6].getTotalClaimableBenefit(NFT_ID);
-    console.log(`User 6: getTotalClaimableBenefit after transfer: ${getTotalClaimableBenefit_user6} USD`);
+    let getTotalClaimableDividends_user6 = await NFTContractForShareholder[6].getTotalClaimableDividends(NFT_ID);
+    console.log(`User 6: getTotalClaimableDividends after transfer: ${getTotalClaimableDividends_user6} USD`);
     let getLockedYieldDividends_user6 = await NFTContractForShareholder[6].getLockedYieldDividends(NFT_ID);
     console.log(`User 6: getLockedYieldDividends after transfer: ${getLockedYieldDividends_user6} USD`);
 
     // register NFT after transfer
-    await NFTContractForShareholder[6].registerBalances(NFT_ID);
+    await NFTContractForShareholder[6].redeemLockedBalances(NFT_ID);
 
     // check NFT balance after register
     NFTbalance_user6 = await NFTContract.balanceOf(shareholder[6].address, NFT_ID);
     console.log(`User 6: NFT balance after register: ${NFTbalance_user6}`);
 
-    getTotalClaimableBenefit_user6 = await NFTContractForShareholder[6].getTotalClaimableBenefit(NFT_ID);
-    console.log(`User 6: getTotalClaimableBenefit after register: ${getTotalClaimableBenefit_user6} USD`);
+    getTotalClaimableDividends_user6 = await NFTContractForShareholder[6].getTotalClaimableDividends(NFT_ID);
+    console.log(`User 6: getTotalClaimableDividends after register: ${getTotalClaimableDividends_user6} USD`);
     getLockedYieldDividends_user6 = await NFTContractForShareholder[6].getLockedYieldDividends(NFT_ID);
     console.log(`User 6: getLockedYieldDividends after register: ${getLockedYieldDividends_user6} USD`);
 
@@ -433,8 +433,8 @@ describe('Buying IPO', function () {
     console.log(`User 6: USD balance before claim: ${usdBalance_user6} USD`);
 
     // user claim dividend money
-    await NFTContractForShareholder[5].claimBenefit(NFT_ID);
-    await NFTContractForShareholder[6].claimBenefit(NFT_ID);
+    await NFTContractForShareholder[5].claimDividend(NFT_ID);
+    await NFTContractForShareholder[6].claimDividend(NFT_ID);
 
     // USD balance before claim
     const usdBalance_user5_claimed = BigInt(await USDContract.balanceOf(shareholder[5].address));

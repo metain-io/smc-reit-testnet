@@ -42,7 +42,7 @@ module.exports = async function () {
     await IPOContract.allowPayableToken("USDT", USDAddress);
 
     const now = Math.floor(Date.now() / 1000);
-    await NFTContractForCreator.initiate(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);
+    await NFTContractForCreator.initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);
     await NFTContractForCreator.safeTransferFrom(creator.address, IPOContract.address, NFT_ID, TEST_REIT_AMOUNT, []);
   }
 
