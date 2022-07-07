@@ -51,7 +51,7 @@ interface IREITTradable {
 
     function isKYC(address account) external view returns (bool);
 
-    function getShareUnitPrice(uint256 _id) external view returns (uint256);
+    function getIPOUnitPrice(uint256 _id) external view returns (uint256);
 
     function isIPOContract(uint256 _id, address account)
         external
