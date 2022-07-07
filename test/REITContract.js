@@ -238,7 +238,7 @@ describe('Buying IPO', function () {
       console.log(`User 2: Dividends info: ${shareholderDividend} USD`);
 
           // user claim dividend money
-      await NFTContractForShareholder[2].claimDividend(NFT_ID);
+      await NFTContractForShareholder[2].claimDividends(NFT_ID);
 
     } catch(ex) {
       console.log(`User 2: ex: ${ex}`);
@@ -294,7 +294,7 @@ describe('Buying IPO', function () {
     console.log(`User 2: USD balance before claim: ${usdBalance1} USD`);
 
     // user claim dividend money
-    await NFTContractForShareholder[2].claimDividend(NFT_ID);
+    await NFTContractForShareholder[2].claimDividends(NFT_ID);
 
     const usdBalance2 = BigInt(await USDContract.balanceOf(shareholder[2].address));
     console.log(`User 2: USD balance after claim: ${usdBalance2} USD`);
@@ -433,8 +433,8 @@ describe('Buying IPO', function () {
     console.log(`User 6: USD balance before claim: ${usdBalance_user6} USD`);
 
     // user claim dividend money
-    await NFTContractForShareholder[5].claimDividend(NFT_ID);
-    await NFTContractForShareholder[6].claimDividend(NFT_ID);
+    await NFTContractForShareholder[5].claimDividends(NFT_ID);
+    await NFTContractForShareholder[6].claimDividends(NFT_ID);
 
     // USD balance before claim
     const usdBalance_user5_claimed = BigInt(await USDContract.balanceOf(shareholder[5].address));
@@ -447,11 +447,11 @@ describe('Buying IPO', function () {
     console.log("\x1b[35m%s\x1b[0m", `User 5: USD claimed: ${claimCount_user5} USD`);
     console.log("\x1b[35m%s\x1b[0m", `User 6: USD claimed: ${claimCount_user6} USD`);
 
-    // User get Dividends info - getClaimedYield
-    let getClaimedYield_user5 = await NFTContractForShareholder[5].getClaimedYield(NFT_ID);
-    console.log(`User 5: getClaimedYield: ${getClaimedYield_user5} USD`);
-    let getClaimedYield_user6 = await NFTContractForShareholder[6].getClaimedYield(NFT_ID);
-    console.log(`User 6: getClaimedYield: ${getClaimedYield_user6} USD`);
+    // User get Dividends info - getClaimedDividends
+    let getClaimedDividends_user5 = await NFTContractForShareholder[5].getClaimedDividends(NFT_ID);
+    console.log(`User 5: getClaimedDividends: ${getClaimedDividends_user5} USD`);
+    let getClaimedDividends_user6 = await NFTContractForShareholder[6].getClaimedDividends(NFT_ID);
+    console.log(`User 6: getClaimedDividends: ${getClaimedDividends_user6} USD`);
 
     resultTest = [claimCount_user5, claimCount_user6]
     expect(resultTest).not.contain(0)
