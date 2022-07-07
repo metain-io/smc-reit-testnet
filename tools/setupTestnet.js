@@ -17,7 +17,10 @@ module.exports = async function () {
 
   const [governor, creator] = await ethers.getSigners();
 
-  const USDAddress = "0xEf082A75d42A11B8B2c7eF8F969CEAba39eD551c";
+  const deployedUSDData = JSON.parse(
+    fs.readFileSync(path.join(__dirname, `../test/deployed-usd-${argv.network}.json`), "utf-8")
+  );
+  const USDAddress = deployedUSDData.MUSDT;
 
   const deployedNFTData = JSON.parse(
     fs.readFileSync(path.join(__dirname, `../test/deployed-nft-${argv.network}.json`), "utf-8")
@@ -33,18 +36,18 @@ module.exports = async function () {
   const NFTContractForCreator = await attachContractForSigner("REITNFT", creator, NFTAddress);
   const IPOContract = await attachContractForSigner("REITIPO", governor, IPOAddress);
 
-  const ipoBalance = (await NFTContractForCreator.balanceOf(IPOContract.address, 1)).toString();  
+  const ipoBalance = (await NFTContractForCreator.balanceOf(IPOContract.address, NFT_ID)).toString();    
 
   if (parseInt(ipoBalance.toString()) <= 0) {
-    await NFTContract.createREIT(creator.address, TEST_REIT_AMOUNT, TEST_REIT_DATA_URL, USDAddress, []);
-    await NFTContractForCreator.setIPOContract(NFT_ID, IPOAddress);
-
-    await IPOContract.allowPayableToken("USDT", USDAddress);
+    await NFTContract.createREIT(creator.address, TEST_REIT_AMOUNT, TEST_REIT_DATA_URL, USDAddress, []);     
 
     const now = Math.floor(Date.now() / 1000);
     await NFTContractForCreator.initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);
     await NFTContractForCreator.safeTransferFrom(creator.address, IPOContract.address, NFT_ID, TEST_REIT_AMOUNT, []);
   }
+
+  await IPOContract.allowPayableToken("USDT", USDAddress);
+  await NFTContractForCreator.setIPOContract(NFT_ID, IPOAddress);   
 
   console.log("IPO Balance:", ipoBalance);
 };

@@ -158,7 +158,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
     // allow NFTContract get USDT from USDContract
     await USDContract.increaseAllowance(NFTContract.address, ethers.utils.parseEther("100000000"));
     // Admin give Dividends for NFT
-    await NFTContract.fundREITVault(NFT_ID, ethers.utils.parseEther("100000000"));
+    await NFTContract.fundDividendVault(NFT_ID, ethers.utils.parseEther("100000000"));
 
     for (let i = 0; i < TEST_MONTHS; ++i) {
       // try transfer before Dividends
@@ -180,7 +180,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
         );
         console.log(`Transfer SUCCESS: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
 
-        NFTlockingBalance = await NFTContract.lockingBalanceOf(shareholder[TRANSFER_TO].address, NFT_ID);
+        NFTlockingBalance = await NFTContract.lockedBalanceOf(shareholder[TRANSFER_TO].address, NFT_ID);
         console.log(`User  ${TRANSFER_TO}: NFT locking balance after transfer: ${NFTlockingBalance}`);
       } catch (error) {
         console.log("\x1b[35m%s\x1b[0m", `Transfer FAIL: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);

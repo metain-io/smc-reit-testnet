@@ -7,6 +7,7 @@ const env = require("./env.json")[argv.network];
 
 const interact = require("./tools/interact");
 const setupTestnet = require("./tools/setupTestnet");
+const testPayDividend = require("./tools/testPayDividend");
 
 const secret = JSON.parse(fs.readFileSync(".secret"));
 secret.testnet = Array.isArray(secret.testnet) ? secret.testnet : [secret.testnet];
@@ -15,6 +16,12 @@ secret.mainnet = Array.isArray(secret.mainnet) ? secret.mainnet : [secret.mainne
 task("interact", "Interact with REIT NFT Contract").setAction(interact);
 
 task("setupTestnet", "Setup Testnet").setAction(setupTestnet);
+
+task("testPayDividend", "Pay Dividends on Testnet")
+  .addOptionalParam("time", "Time slot index of the dividend")
+  .addOptionalParam("amount", "Total amount to pay")
+  .addOptionalParam("share", "Amount for each share")
+  .setAction(testPayDividend);
 
 /**
  * Contract deployment task
@@ -76,30 +83,30 @@ task("deployIPO", "Deploy REIT IPO Contract")
  * Mocks deployment task
  */
 task('deployMocks', 'Deploy Mock tokens')
- .setAction(async () => {
-   const [deployer] = await ethers.getSigners();
+  .setAction(async () => {
+    const [deployer] = await ethers.getSigners();
 
-   console.log('Deploying contracts with the account:', deployer.address);
-   console.log('Account balance:', (await deployer.getBalance()).toString());
+    console.log('Deploying contracts with the account:', deployer.address);
+    console.log('Account balance:', (await deployer.getBalance()).toString());
 
-   const MockContract = await ethers.getContractFactory('USDMToken');
+    const MockContract = await ethers.getContractFactory('USDMToken');
 
-   const mockList = [
-     { ticker: 'MUSDT', description: 'Mock USDT' },
-     { ticker: 'MUSDC', description: 'Mock USDC' },
-     { ticker: 'MBUSD', description: 'Mock BUSD' }
-   ];
+    const mockList = [
+      { ticker: 'MUSDT', description: 'Mock USDT' },
+      { ticker: 'MUSDC', description: 'Mock USDC' },
+      { ticker: 'MBUSD', description: 'Mock BUSD' }
+    ];
 
-   let deployedData = {};
-   for (let mock of mockList) {
-     const token = await MockContract.deploy(mock.ticker, mock.description);
-     console.log(`${mock.ticker} address:`, token.address);
+    let deployedData = {};
+    for (let mock of mockList) {
+      const token = await MockContract.deploy(mock.ticker, mock.description);
+      console.log(`${mock.ticker} address:`, token.address);
 
-     deployedData[mock.ticker] = token.address;
-   }
+      deployedData[mock.ticker] = token.address;
+    }
 
-   fs.writeFileSync(`test/deployed-usd-${argv.network}.json`, JSON.stringify(deployedData));
- });
+    fs.writeFileSync(`test/deployed-usd-${argv.network}.json`, JSON.stringify(deployedData));
+  });
 
 /**
  * @type import('hardhat/config').HardhatUserConfig

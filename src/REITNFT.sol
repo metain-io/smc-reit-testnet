@@ -33,8 +33,6 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         uint64 liquidationTime;
         // Tax rate for transfering to others
         uint64 transferTax;
-        // Time needed for a request to make before claiming liquidations
-        uint64 liquidationHoldPeriod;
     }
 
     /**
@@ -67,8 +65,6 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         // total dividends claimed
         uint256 claimedDividends;
 
-        // time at which liquidation was requested
-        uint256 requestedLiquidationTime;
         // total liquidations claimed
         uint256 claimedLiquidations;
         // can user claim liquidation?
@@ -112,7 +108,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     mapping(uint256 => mapping(address => uint256)) private _lockingBalances;
 
     // Mapping from token ID to account balances that are liquidated
-    mapping(uint256 => mapping(address => uint256)) private _liquidatedBalances;
+    mapping(uint256 => mapping(address => uint256)) private _liquidatedBalances;    
 
     /**
      * @dev Initialization
@@ -246,7 +242,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         }
 
         fundingToken[_id] = IERC20(_fundingToken);
-        tokenMetadata[_id] = TokenMetadata(0, 0, 0, 0, 0);
+        tokenMetadata[_id] = TokenMetadata(0, 0, 0, 0);
         tokenDividendData[_id] = TokenDividendData(
             0,
             0,
@@ -274,22 +270,19 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * @param unitValue Value of each NFT unit (in USD)
      * @param liquidationTime Time this project liquidates
      * @param transferTax Transfer tax rate
-     * @param liquidationHoldPeriod Time needed for a request to make before claiming liquidations
      */
     function initiateREIT(
         uint256 _id,
         uint64 initiateTime,
         uint256 unitValue,
         uint64 liquidationTime,
-        uint64 transferTax,
-        uint64 liquidationHoldPeriod
+        uint64 transferTax
     ) external creatorOnly(_id) {
         tokenMetadata[_id] = TokenMetadata(
             unitValue,
             initiateTime,
             liquidationTime,
-            transferTax,
-            liquidationHoldPeriod
+            transferTax
         );
 
         tokenDividendData[_id].unitMarketValue = unitValue;
@@ -484,13 +477,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             dividendVaultBalance[_id] -= claimableYield;
         }
     }
-
-    function requestLiquidations(uint256 id) external onlyKYC {
-        address account = _msgSender();
-        require(tokenYieldVesting[id][account].requestedLiquidationTime == 0, "REITNFT: already request for liquidations");        
-        tokenYieldVesting[id][account].requestedLiquidationTime = block.timestamp;
-    }
-
+    
     function claimLiquidations(uint256 id) external onlyKYC nonReentrant {
         address account = _msgSender();
 
@@ -601,7 +588,6 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         if (!tokenYieldVesting[_id][account].initialized) {
             tokenYieldVesting[_id][account] = YieldVesting(
                 account,
-                0,
                 0,
                 0,
                 0,
