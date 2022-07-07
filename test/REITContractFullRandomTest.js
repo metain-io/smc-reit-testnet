@@ -208,7 +208,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
       if (dividendClaim > 0) {
         console.log(`User ${TRANSFER_TO}: Try to claim ${dividendClaim} USD after Unlock Dividend`);
         // try to claim before redeemLockedBalances
-        await NFTContractForShareholder[TRANSFER_TO].claimDividend(NFT_ID);
+        await NFTContractForShareholder[TRANSFER_TO].claimDividends(NFT_ID);
         TEST_USER_CLAIM_SUM += dividendClaim;
       }
 
@@ -231,7 +231,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
     for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
       try {
         // user claim dividend money
-        await NFTContractForShareholder[i].claimDividend(NFT_ID);
+        await NFTContractForShareholder[i].claimDividends(NFT_ID);
       } catch (error) {
         console.log("\x1b[35m%s\x1b[0m", `Claim FAIL: User ${i} : Error: ${error}`);
       }
@@ -241,12 +241,12 @@ describe("NFT/IPO RAMDOM TEST", function () {
       TEST_USER_NFT_BALANCE_SUM += parseInt(NFTbalance);
 
       // dividend info
-      let getClaimedYield = parseInt(
-        ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedYield(NFT_ID))
+      let getClaimedDividends = parseInt(
+        ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedDividends(NFT_ID))
       );
-      console.log(`User ${i}: NFTbalance: ${NFTbalance} NFT, getClaimedYield: ${getClaimedYield} USD`);
+      console.log(`User ${i}: NFTbalance: ${NFTbalance} NFT, getClaimedDividends: ${getClaimedDividends} USD`);
 
-      TEST_USER_CLAIM_SUM += getClaimedYield;
+      TEST_USER_CLAIM_SUM += getClaimedDividends;
     }
     console.log("\x1b[35m%s\x1b[0m", `TEST_NFT_SUM: ${TEST_NFT_SUM} NFT`);
     console.log("\x1b[35m%s\x1b[0m", `TEST_USER_NFT_BALANCE_SUM: ${TEST_USER_NFT_BALANCE_SUM} NFT`);
