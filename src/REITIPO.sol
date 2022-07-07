@@ -119,7 +119,7 @@ contract REITIPO is
         uint256 stock = _nft.balanceOf(address(this), id);
         require(stock >= quantity, "REITIPO: not enough units to sell");
 
-        uint256 price = _nft.getShareUnitPrice(id);
+        uint256 price = _nft.getIPOUnitPrice(id);
         require(price > 0, "REITIPO: price not set");
 
         uint256 amount = price * quantity;
