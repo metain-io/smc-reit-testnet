@@ -545,8 +545,8 @@ describe('Buying IPO', function () {
     const accounts = [shareholder[7].address];
     await NFTContractForCreator.allowLiquidationClaim(NFT_ID, accounts);
 
-    getTotalClaimableLiquidations = await NFTContractForShareholder[7].getTotalClaimableLiquidations(NFT_ID);
-    console.log(`User 7: getTotalClaimableLiquidations after Unlock: ${getTotalClaimableLiquidations} USD`);
+    getClaimableLiquidations = await NFTContractForShareholder[7].getClaimableLiquidations(NFT_ID);
+    console.log(`User 7: getTotalClaimableLiquidations after Unlock: ${getClaimableLiquidations} USD`);
 
     const usdBalance_before = BigInt(await USDContract.balanceOf(shareholder[7].address));
     console.log(`User 7: USD balance before claim: ${usdBalance_before} USD`);

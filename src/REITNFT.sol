@@ -478,7 +478,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         }
     }
 
-    function getTotalClaimableLiquidations(uint256 _id)
+    function getClaimableLiquidations(uint256 _id)
         external
         view
         shareHoldersOnly(_id)
