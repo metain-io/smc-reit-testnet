@@ -15,6 +15,8 @@ module.exports = async function () {
   const share = argv.share || 1;
   const dividendTimeIndex = argv.time || 0;
 
+  console.log(dividendTimeIndex);
+
   const [governor, creator] = await ethers.getSigners();
 
   const deployedUSDData = JSON.parse(
