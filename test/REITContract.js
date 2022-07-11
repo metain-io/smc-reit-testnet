@@ -287,6 +287,10 @@ describe('Buying IPO', function () {
     // Admin unlock Dividends fund for month 0 and set Dividends for per user 
     await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther('2'), 0);
 
+    // get Dividends info of month
+    const getDividendPerShare = await NFTContractForCreator.getDividendPerShare(NFT_ID, 0);
+    console.log(`User 2: getDividendPerShare: ${getDividendPerShare} USD`);
+
     // User get Dividends info of user
     const shareholderDividend = await NFTContractForShareholder[2].getTotalClaimableDividends(NFT_ID);
     console.log(`User 2: Dividends info: ${shareholderDividend} USD`);
@@ -426,8 +430,8 @@ describe('Buying IPO', function () {
     console.log(`User 6: NFT locking balance after transfer: ${NFTlockingBalance_user6}`);
     let getTotalClaimableDividends_user6 = await NFTContractForShareholder[6].getTotalClaimableDividends(NFT_ID);
     console.log(`User 6: getTotalClaimableDividends after transfer: ${getTotalClaimableDividends_user6} USD`);
-    let getLockedYieldDividends_user6 = await NFTContractForShareholder[6].getLockedYieldDividends(NFT_ID);
-    console.log(`User 6: getLockedYieldDividends after transfer: ${getLockedYieldDividends_user6} USD`);
+    let getLockedDividends_user6 = await NFTContractForShareholder[6].getLockedDividends(NFT_ID);
+    console.log(`User 6: getLockedDividends_user6 after transfer: ${getLockedDividends_user6} USD`);
 
     // register NFT after transfer
     await NFTContractForShareholder[6].redeemLockedBalances(NFT_ID);
@@ -438,8 +442,8 @@ describe('Buying IPO', function () {
 
     getTotalClaimableDividends_user6 = await NFTContractForShareholder[6].getTotalClaimableDividends(NFT_ID);
     console.log(`User 6: getTotalClaimableDividends after register: ${getTotalClaimableDividends_user6} USD`);
-    getLockedYieldDividends_user6 = await NFTContractForShareholder[6].getLockedYieldDividends(NFT_ID);
-    console.log(`User 6: getLockedYieldDividends after register: ${getLockedYieldDividends_user6} USD`);
+    getLockedDividends_user6 = await NFTContractForShareholder[6].getLockedDividends(NFT_ID);
+    console.log(`User 6: getLockedDividends_user6 after register: ${getLockedDividends_user6} USD`);
 
     // USD balance before claim
     const usdBalance_user5 = BigInt(await USDContract.balanceOf(shareholder[5].address));
@@ -543,7 +547,10 @@ describe('Buying IPO', function () {
     await NFTContractForCreator.unlockLiquidationPerShare(NFT_ID, ethers.utils.parseEther('10'));
     // Admin unlock Liquidations for users
     const accounts = [shareholder[7].address];
-    await NFTContractForCreator.allowLiquidationClaim(NFT_ID, accounts);
+    await NFTContractForCreator.allowLiquidationClaims(NFT_ID, accounts);
+
+    // test holdLiquidationClaims function
+    // await NFTContractForCreator.holdLiquidationClaims(NFT_ID, accounts);
 
     getClaimableLiquidations = await NFTContractForShareholder[7].getClaimableLiquidations(NFT_ID);
     console.log(`User 7: getClaimableLiquidations after Unlock: ${getClaimableLiquidations} USD`);

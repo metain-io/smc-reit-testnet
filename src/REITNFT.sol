@@ -541,7 +541,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     {
         address account = _msgSender();
 
-        if (tokenYieldVesting[id][account].isLiquidationUnlocked) {
+        if (tokenYieldVesting[id][account].isLiquidationUnlocked == false) {
             return 0;
         }
 
