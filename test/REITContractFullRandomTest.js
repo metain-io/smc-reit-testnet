@@ -15,7 +15,7 @@ const TEST_DIVIDEND_MIN = 1;
 const TEST_DIVIDEND_MAX = 10;
 let TEST_NFT_SUM = 0;
 let TEST_DIVIDEND_SUM = 0;
-let TEST_USER_CLAIM_SUM = 0;
+let TEST_USER_CLAIM_DIVIDEND_SUM = 0;
 
 const TEST_REIT_DATA_URL = "ipfs://QmZ485APXNEhzLAtXccy5S78nMg83xBYJYXPSKtRVo8wy8";
 
@@ -23,6 +23,7 @@ const TEST_REIT_DATA_URL = "ipfs://QmZ485APXNEhzLAtXccy5S78nMg83xBYJYXPSKtRVo8wy
 let governor;
 let creator;
 let shareholder = [];
+let shareholderAddress = [];
 const SHAREHOLDER_COUNT = 8;
 
 let USDContract;
@@ -55,6 +56,7 @@ describe("Deploy contracts", function () {
     creator = accounts[1];
     for (let i = 2; i < SHAREHOLDER_COUNT + 2; ++i) {
       shareholder.push(accounts[i]);
+      shareholderAddress.push(accounts[i].address);
     }
     expect(governor, creator, shareholder);
   });
@@ -73,11 +75,7 @@ describe("Deploy contracts", function () {
 
   it("NFT", async function () {
     const NFTFactory = await ethers.getContractFactory("REITNFT", governor);
-    NFTContract = await upgrades.deployProxy(NFTFactory, [
-      "Metain REIT",
-      "MREIT",
-      "ipfs://Qme41Gw4qAttT7ZB2o6KVjYxu5LFMihG9aiZvMQLkhPjB3",
-    ]);
+    NFTContract = await upgrades.deployProxy(NFTFactory, ["Metain REIT", "MREIT", "ipfs://Qme41Gw4qAttT7ZB2o6KVjYxu5LFMihG9aiZvMQLkhPjB3"]);
     await NFTContract.deployed();
 
     NFTContractForCreator = await attachContractForSigner("REITNFT", creator, NFTContract.address);
@@ -171,13 +169,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
       let NFTlockingBalance = 0;
       try {
         // transfer NFT
-        await NFTContractForShareholder[TRANSFER_FROM].safeTransferFrom(
-          shareholder[TRANSFER_FROM].address,
-          shareholder[TRANSFER_TO].address,
-          NFT_ID,
-          TRANSFER_AMOUNT,
-          []
-        );
+        await NFTContractForShareholder[TRANSFER_FROM].safeTransferFrom(shareholder[TRANSFER_FROM].address, shareholder[TRANSFER_TO].address, NFT_ID, TRANSFER_AMOUNT, []);
         console.log(`Transfer SUCCESS: ${TRANSFER_AMOUNT} NFT from User ${TRANSFER_FROM} to User ${TRANSFER_TO}`);
 
         NFTlockingBalance = await NFTContract.lockedBalanceOf(shareholder[TRANSFER_TO].address, NFT_ID);
@@ -188,28 +180,20 @@ describe("NFT/IPO RAMDOM TEST", function () {
       }
 
       // Admin unlock Dividends fund for monthS and set Dividends for per user
-      await NFTContractForCreator.unlockDividendPerShare(
-        NFT_ID,
-        ethers.utils.parseEther(DIVIDEND_AMOUNT.toString()),
-        i
-      );
+      await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther(DIVIDEND_AMOUNT.toString()), i);
       TEST_DIVIDEND_SUM += parseInt(DIVIDEND_AMOUNT * TEST_NFT_SUM);
       console.log(`Unlocked DIVIDEND_AMOUNT: ${DIVIDEND_AMOUNT} USD`);
 
       // check Dividends info before redeemLockedBalances
-      getLockedYieldDividends = parseInt(
-        ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getLockedYieldDividends(NFT_ID))
-      );
+      getLockedYieldDividends = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getLockedYieldDividends(NFT_ID)));
       console.log(`User ${TRANSFER_TO}: getLockedYieldDividends after Unlock Dividend: ${getLockedYieldDividends} USD`);
 
-      dividendClaim = parseInt(
-        ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getTotalClaimableDividends(NFT_ID))
-      );
+      dividendClaim = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getTotalClaimableDividends(NFT_ID)));
       if (dividendClaim > 0) {
         console.log(`User ${TRANSFER_TO}: Try to claim ${dividendClaim} USD after Unlock Dividend`);
         // try to claim before redeemLockedBalances
         await NFTContractForShareholder[TRANSFER_TO].claimDividends(NFT_ID);
-        TEST_USER_CLAIM_SUM += dividendClaim;
+        TEST_USER_CLAIM_DIVIDEND_SUM += dividendClaim;
       }
 
       if (NFTlockingBalance > 0) {
@@ -218,7 +202,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
       }
     }
     console.log("\x1b[33m%s\x1b[0m", `TEST_DIVIDEND_SUM after ${TEST_MONTHS} months: ${TEST_DIVIDEND_SUM} USD`);
-    console.log("\x1b[33m%s\x1b[0m", `TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`);
+    console.log("\x1b[33m%s\x1b[0m", `TEST_USER_CLAIM_DIVIDEND_SUM: ${TEST_USER_CLAIM_DIVIDEND_SUM} USD`);
 
     expect(TEST_DIVIDEND_SUM).not.equal(0);
   });
@@ -227,7 +211,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
     console.log("\x1b[33m%s\x1b[0m", `\n=========== CLAIM DIVIDEND FROM USERS =========`);
 
     let TEST_USER_NFT_BALANCE_SUM = 0;
-    let TEST_USER_CLAIM_SUM = 0;
+    let TEST_USER_CLAIM_DIVIDEND_SUM = 0;
     for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
       try {
         // user claim dividend money
@@ -241,19 +225,54 @@ describe("NFT/IPO RAMDOM TEST", function () {
       TEST_USER_NFT_BALANCE_SUM += parseInt(NFTbalance);
 
       // dividend info
-      let getClaimedDividends = parseInt(
-        ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedDividends(NFT_ID))
-      );
+      let getClaimedDividends = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedDividends(NFT_ID)));
       console.log(`User ${i}: NFTbalance: ${NFTbalance} NFT, getClaimedDividends: ${getClaimedDividends} USD`);
 
-      TEST_USER_CLAIM_SUM += getClaimedDividends;
+      TEST_USER_CLAIM_DIVIDEND_SUM += getClaimedDividends;
     }
     console.log("\x1b[35m%s\x1b[0m", `TEST_NFT_SUM: ${TEST_NFT_SUM} NFT`);
     console.log("\x1b[35m%s\x1b[0m", `TEST_USER_NFT_BALANCE_SUM: ${TEST_USER_NFT_BALANCE_SUM} NFT`);
 
     console.log("\x1b[33m%s\x1b[0m", `TEST_DIVIDEND_SUM: ${TEST_DIVIDEND_SUM} USD`);
-    console.log("\x1b[33m%s\x1b[0m", `TEST_USER_CLAIM_SUM: ${TEST_USER_CLAIM_SUM} USD`);
+    console.log("\x1b[33m%s\x1b[0m", `TEST_USER_CLAIM_DIVIDEND_SUM: ${TEST_USER_CLAIM_DIVIDEND_SUM} USD`);
 
-    expect(TEST_USER_CLAIM_SUM).equal(TEST_DIVIDEND_SUM);
+    expect(TEST_USER_CLAIM_DIVIDEND_SUM).equal(TEST_DIVIDEND_SUM);
+  });
+
+  it("CLAIM LIQUIDATIONS FROM USERS", async function () {
+    console.log("\x1b[33m%s\x1b[0m", `\n=========== CLAIM LIQUIDATIONS FROM USERS =========`);
+
+    const LIQUIDATIONS_AMOUNT = 10;
+
+    // Asset manager pays dividend, each NFT will receive $1
+    // allow NFTContract get USDT from USDContract
+    await USDContract.increaseAllowance(NFTContract.address, ethers.utils.parseEther("1000000"));
+    // Admin transfer payable tokens for Liquidations
+    await NFTContract.fundLiquidationVault(NFT_ID, ethers.utils.parseEther("1000000"));
+    // Admin unlock Liquidations for users
+    await NFTContractForCreator.unlockLiquidationPerShare(NFT_ID, ethers.utils.parseEther(LIQUIDATIONS_AMOUNT.toString()));
+    // Admin unlock Liquidations for users
+    await NFTContractForCreator.allowLiquidationClaim(NFT_ID, shareholderAddress);
+
+    let TEST_LIQUIDATIONS_SUM = TEST_NFT_SUM * LIQUIDATIONS_AMOUNT;
+    let TEST_USER_CLAIM_LIQUIDATIONS_SUM = 0;
+    for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
+      getClaimableLiquidations = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimableLiquidations(NFT_ID)));
+      console.log(`User ${i}: getClaimableLiquidations after Unlock: ${getClaimableLiquidations} USD`);
+
+      // user claim Liquidations money
+      await NFTContractForShareholder[i].claimLiquidations(NFT_ID);
+
+      let getClaimedLiquidations = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedLiquidations(NFT_ID)));
+      console.log(`User ${i}: getClaimedLiquidations: ${getClaimedLiquidations} USD`);
+
+      if (getClaimableLiquidations == getClaimedLiquidations) {
+        TEST_USER_CLAIM_LIQUIDATIONS_SUM += getClaimedLiquidations;
+      }
+    }
+    console.log("\x1b[33m%s\x1b[0m", `TEST_DIVIDEND_SUM: ${TEST_LIQUIDATIONS_SUM} USD`);
+    console.log("\x1b[33m%s\x1b[0m", `TEST_USER_CLAIMLIQUIDATIONS_SUM: ${TEST_USER_CLAIM_LIQUIDATIONS_SUM} USD`);
+
+    expect(TEST_USER_CLAIM_LIQUIDATIONS_SUM).equal(TEST_LIQUIDATIONS_SUM);
   });
 });

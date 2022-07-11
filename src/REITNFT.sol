@@ -127,9 +127,9 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * @dev Require `msg.sender` to own more than 0 of the token id
      */
     modifier shareHoldersOnly(uint256 _id) {
+        uint256 totalBalances = _balances[_id][_msgSender()] + _lockingBalances[_id][_msgSender()] + _liquidatedBalances[_id][_msgSender()];
         require(
-            _balances[_id][_msgSender()] + _lockingBalances[_id][_msgSender()] >
-                0,
+            totalBalances > 0,
             "ERC1155Tradable#shareHoldersOnly: ONLY_OWNERS_ALLOWED"
         );
         _;
@@ -525,6 +525,33 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     }
 
     /**
+     * @dev Get total liquidation value of sender
+     * Requirements:
+     *
+     * - Only owners of NFT can execute
+     *
+     * @param id ID of the NFT
+     * @return uint256 total liquidation value
+     */
+    function getClaimableLiquidations(uint256 id)
+        external
+        view
+        shareHoldersOnly(id)
+        returns (uint256)
+    {
+        address account = _msgSender();
+
+        if (tokenYieldVesting[id][account].isLiquidationUnlocked) {
+            return 0;
+        }
+
+        uint256 balance = _balances[id][account];
+        uint256 shareLiquidationValue = balance * tokenDividendData[id].liquidationPerShare;
+
+        return shareLiquidationValue;
+    }
+
+    /**
      * @dev Pay dividends to sender based on total NFT they are owning.
      * Requirements:
      *
@@ -563,7 +590,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             dividendVaultBalance[id] -= claimableYield;
         }
     }
-
+    
     /**
      * @dev Pay liquidations to sender based on total NFT they are owning.
      * Requirements:
@@ -572,7 +599,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * - Owners must be allowed to claim liquidation
      *
      * @param id ID of the NFT
-     */
+     */    
     function claimLiquidations(uint256 id) external onlyKYC nonReentrant {
         address account = _msgSender();
 

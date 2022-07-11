@@ -214,8 +214,23 @@ describe('Buying IPO', function () {
     expect(error);
   });
 
-  it('User 2: KYC => buy NFT => try to claim NFT before Admin pay/unlock Dividend', async function () {
-    console.log("\x1b[33m%s\x1b[0m", `\nUser 2: KYC => buy NFT => try to claim NFT before Admin pay/unlock Dividend`);    
+  it('User 2: KYC => try to claim Dividend without buy NFT', async function () {
+    console.log("\x1b[33m%s\x1b[0m", `\nUser 2: KYC => try to claim Dividend without buy NFT`);    
+    let error;
+    try {
+      // KYC user
+      await NFTContract.addToKYC(shareholder[2].address);
+      // user claim dividend money
+      await NFTContractForShareholder[2].claimDividends(NFT_ID);
+    } catch(ex) {
+      console.log(`User 2: ex: ${ex}`);
+      error = ex;
+    }
+    expect(error);
+  });
+
+  it('User 2: KYC => buy NFT => try to claim Dividend before Admin pay/unlock Dividend', async function () {
+    console.log("\x1b[33m%s\x1b[0m", `\nUser 2: KYC => buy NFT => try to claim Dividend before Admin pay/unlock Dividend`);    
     let error;
     try {
       // transfer USDT for User
@@ -374,7 +389,7 @@ describe('Buying IPO', function () {
     await NFTContract.addToKYC(shareholder[6].address);
 
     // buy NFT with USDT
-    await IPOContractForShareholder[5].purchaseWithToken('USDT', NFT_ID, TEST_SHARES_TO_BUY_4);
+    await IPOContractForShareholder[5].purchaseWithToken('USDT', NFT_ID, TEST_SHARES_TO_BUY_5);
 
     // Asset manager pays dividend, each NFT will receive $1
     // allow NFTContract get USDT from USDContract
@@ -436,7 +451,7 @@ describe('Buying IPO', function () {
     await NFTContractForShareholder[5].claimDividends(NFT_ID);
     await NFTContractForShareholder[6].claimDividends(NFT_ID);
 
-    // USD balance before claim
+    // USD balance after claim
     const usdBalance_user5_claimed = BigInt(await USDContract.balanceOf(shareholder[5].address));
     const usdBalance_user6_claimed = BigInt(await USDContract.balanceOf(shareholder[6].address));
     console.log(`User 5: USD balance after claim: ${usdBalance_user5_claimed} USD`);
@@ -455,6 +470,101 @@ describe('Buying IPO', function () {
 
     resultTest = [claimCount_user5, claimCount_user6]
     expect(resultTest).not.contain(0)
+  });
+
+  it('User 7: KYC => try to claim Liquidations without buy NFT', async function () {
+    console.log("\x1b[33m%s\x1b[0m", `\nUser 7: KYC => try to claim Liquidations without buy NFT`);    
+    let error;
+    try {
+      // KYC user
+      await NFTContract.addToKYC(shareholder[7].address);
+
+      // user claim dividend money
+      await NFTContractForShareholder[7].claimLiquidations(NFT_ID);
+    } catch(ex) {
+      console.log(`User 7: ex: ${ex}`);
+      error = ex;
+    }
+    expect(error);
+  });
+
+  it('User 7: KYC => buy NFT => try to claim Liquidations before Admin unlock', async function () {
+    console.log("\x1b[33m%s\x1b[0m", `\nUser 7: KYC => buy NFT => try to claim Liquidations before Admin unlock`);    
+    let error;
+    try {
+      // transfer USDT for User
+      await USDContract.transfer(shareholder[7].address, TEST_SHARE_HOLDER_FUND);7
+      // allow IPOContract get USDT from user
+      await USDContractForShareholder[7].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);7
+
+      // KYC user
+      await NFTContract.addToKYC(shareholder[7].address);
+
+      // buy NFT with USDT
+      await IPOContractForShareholder[7].purchaseWithToken('USDT', NFT_ID, TEST_SHARES_TO_BUY_7);
+
+      // check NFT balance after buy
+      let NFTbalance = await NFTContract.balanceOf(shareholder[7].address, NFT_ID);
+      console.log(`User 7: NFT balance after buy: ${NFTbalance}`);
+
+      // user claim Liquidations money
+      await NFTContractForShareholder[7].claimLiquidations(NFT_ID);
+
+    } catch(ex) {
+      console.log(`User 7: ex: ${ex}`);
+      error = ex;
+    }
+    expect(error);
+  });
+
+  it('User 7: KYC => buy NFT => Unlock Liquidations => claim Dividend', async function () {
+    console.log("\x1b[33m%s\x1b[0m", `\nUser 7: KYC => buy NFT => Unlock Liquidations => claim Dividend`);    
+    // transfer USDT for User
+    await USDContract.transfer(shareholder[7].address, TEST_SHARE_HOLDER_FUND);7
+    // allow IPOContract get USDT from user
+    await USDContractForShareholder[7].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);7
+
+    // KYC user
+    await NFTContract.addToKYC(shareholder[7].address);
+
+    // buy NFT with USDT
+    await IPOContractForShareholder[7].purchaseWithToken('USDT', NFT_ID, TEST_SHARES_TO_BUY_7);
+
+    // check NFT balance after buy
+    let NFTbalance = await NFTContract.balanceOf(shareholder[7].address, NFT_ID);
+    console.log(`User 7: NFT balance after buy: ${NFTbalance}`);
+
+    // Asset manager pays dividend, each NFT will receive $1
+    // allow NFTContract get USDT from USDContract
+    await USDContract.increaseAllowance(NFTContract.address, ethers.utils.parseEther('1000000'));
+    // Admin transfer payable tokens for Liquidations
+    await NFTContract.fundLiquidationVault(NFT_ID, ethers.utils.parseEther('1000000'));
+    // Admin unlock Liquidations for users
+    await NFTContractForCreator.unlockLiquidationPerShare(NFT_ID, ethers.utils.parseEther('10'));
+    // Admin unlock Liquidations for users
+    const accounts = [shareholder[7].address];
+    await NFTContractForCreator.allowLiquidationClaim(NFT_ID, accounts);
+
+    getClaimableLiquidations = await NFTContractForShareholder[7].getClaimableLiquidations(NFT_ID);
+    console.log(`User 7: getClaimableLiquidations after Unlock: ${getClaimableLiquidations} USD`);
+
+    const usdBalance_before = BigInt(await USDContract.balanceOf(shareholder[7].address));
+    console.log(`User 7: USD balance before claim: ${usdBalance_before} USD`);
+
+    // user claim Liquidations money
+    await NFTContractForShareholder[7].claimLiquidations(NFT_ID);
+
+    const usdBalance_after = BigInt(await USDContract.balanceOf(shareholder[7].address));
+    console.log(`User 7: USD balance after claim: ${usdBalance_after} USD`);
+
+    const usdBalance_claimed = usdBalance_after - usdBalance_before;
+    console.log(`User 7: USD balance claimed: ${usdBalance_claimed} USD`);
+
+    // User get Liquidations info
+    let getClaimedLiquidations = await NFTContractForShareholder[7].getClaimedLiquidations(NFT_ID);
+    console.log(`User 7: getClaimedLiquidations: ${getClaimedLiquidations} USD`);
+
+    expect(usdBalance_claimed).equal(getClaimedLiquidations);
   });
 
 

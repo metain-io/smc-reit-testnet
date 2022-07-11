@@ -2358,9 +2358,9 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * @dev Require `msg.sender` to own more than 0 of the token id
      */
     modifier shareHoldersOnly(uint256 _id) {
+        uint256 totalBalances = _balances[_id][_msgSender()] + _lockingBalances[_id][_msgSender()] + _liquidatedBalances[_id][_msgSender()];
         require(
-            _balances[_id][_msgSender()] + _lockingBalances[_id][_msgSender()] >
-                0,
+            totalBalances > 0,
             "ERC1155Tradable#shareHoldersOnly: ONLY_OWNERS_ALLOWED"
         );
         _;
@@ -2704,6 +2704,26 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
             dividendVaultBalance[_id] -= claimableYield;
         }
+    }
+
+    function getClaimableLiquidations(uint256 _id)
+        external
+        view
+        shareHoldersOnly(_id)
+        returns (uint256)
+    {
+        address account = _msgSender();
+
+        if (!tokenYieldVesting[_id][account].initialized) {
+            return 0;
+        }
+
+        require(tokenYieldVesting[_id][account].isLiquidationUnlocked, "REITNFT: liquidation still on hold");
+
+        uint256 balance = _balances[_id][account];
+        uint256 shareLiquidationValue = balance * tokenDividendData[_id].liquidationPerShare;
+
+        return shareLiquidationValue;
     }
     
     function claimLiquidations(uint256 id) external onlyKYC nonReentrant {
