@@ -40,14 +40,14 @@ module.exports = async function () {
 
   if (parseInt(ipoBalance.toString()) <= 0) {
     await NFTContract.createREIT(creator.address, TEST_REIT_AMOUNT, TEST_REIT_DATA_URL, USDAddress, []);     
+    await NFTContractForCreator.setIPOContract(NFT_ID, IPOAddress);   
 
     const now = Math.floor(Date.now() / 1000);
     await NFTContractForCreator.initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);
     await NFTContractForCreator.safeTransferFrom(creator.address, IPOContract.address, NFT_ID, TEST_REIT_AMOUNT, []);
   }
 
-  await IPOContract.allowPayableToken("USDT", USDAddress);
-  await NFTContractForCreator.setIPOContract(NFT_ID, IPOAddress);   
+  await IPOContract.allowPayableToken("USDT", USDAddress);  
 
   console.log("IPO Balance:", ipoBalance);
 };
