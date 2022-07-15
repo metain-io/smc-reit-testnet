@@ -133,8 +133,14 @@ describe('Buying IPO', function () {
     // allow IPOContract get USDT from user
     await USDContractForShareholder[0].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);
 
+    let isKYC = await NFTContract.isKYC(shareholder[0].address);
+    console.log(`User 0: isKYC before: ${isKYC}`);
+
     // KYC user
     await NFTContract.addToKYC(shareholder[0].address);
+
+    isKYC = await NFTContract.isKYC(shareholder[0].address);
+    console.log(`User 0: isKYC after: ${isKYC}`);
 
     // buy NFT with USDT
     await IPOContractForShareholder[0].purchaseWithToken('USDT', NFT_ID, TEST_SHARES_TO_BUY_0);
