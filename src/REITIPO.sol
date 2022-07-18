@@ -22,6 +22,9 @@ contract REITIPO is
     IREITTradable private _nft;
 
     mapping(uint256 => mapping(address => uint256)) _pendingBalances;
+    mapping(uint256 => mapping(address => uint256)) _totalPurchased;
+    mapping(uint256 => uint256) private _totalPendingAmount;    
+    mapping(uint256 => uint[]) private _purchaseLimits;
 
     // address of the stable token
     mapping(string => IERC20) private _payableToken;
@@ -29,6 +32,7 @@ contract REITIPO is
     function initialize(address _nftAddress) external initializer {
         require(_nftAddress != address(0x0), "NFT contract cannot be zero address");
         __Governable_init();
+        __ReentrancyGuard_init();
 
         _nft = IREITTradable(_nftAddress);        
     }
@@ -46,6 +50,10 @@ contract REITIPO is
 
     function getPendingBalances(address account, uint256 id) external view returns(uint256) {
         return _pendingBalances[id][account];
+    }
+
+    function getTotalPendingAmount(uint256 id) external view returns (uint256) {
+        return _totalPendingAmount[id];
     }
 
     /**
@@ -122,25 +130,36 @@ contract REITIPO is
         uint256 price = _nft.getIPOUnitPrice(id);
         require(price > 0, "REITIPO: price not set");
 
+        address account = _msgSender();
+
+        uint loyalty = _nft.getLoyaltyLevel(account);
+        uint purchaseableAmount = getPurchasableLimit(id, loyalty);
+        require(_totalPurchased[id][account] + quantity <= purchaseableAmount, "MAX_PURCHASE_REACHED");
+        
         uint256 amount = price * quantity;
         require(
             _payableToken[token].transferFrom(
-                _msgSender(),
+                account,
                 address(this),
                 amount
             ),
             "REITIPO: not enough funds to buy"
         );
 
-        if (_nft.isKYC(_msgSender())) {        
+        if (_nft.isKYC(account)) {        
             bytes memory empty;
 
             // IPO contract will register the balance without fee
-            _nft.safeTransferFrom(address(this), _msgSender(), id, quantity, empty);            
+            _nft.safeTransferFrom(address(this), account, id, quantity, empty);            
         } else {
-            // Pending this purchase until buyer is KYC
-            _pendingBalances[id][_msgSender()] = _pendingBalances[id][_msgSender()].add(quantity);
+            unchecked {
+                // Pending this purchase until buyer is KYC
+                _pendingBalances[id][account] += quantity;
+                _totalPendingAmount[id] += quantity;   
+            }            
         }
+
+        _totalPurchased[id][account] += quantity;
     }
 
     function claimPendingBalances(uint256 id)
@@ -155,7 +174,11 @@ contract REITIPO is
 
         bytes memory empty;        
         _nft.safeTransferFrom(address(this), _msgSender(), id, quantity, empty);
-        _pendingBalances[id][_msgSender()] = 0;
+
+        unchecked {
+            _pendingBalances[id][_msgSender()] = 0;
+            _totalPendingAmount[id] -= quantity;       
+        }        
     }
 
     function onERC1155Received(
@@ -189,5 +212,17 @@ contract REITIPO is
 
     function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         return interfaceId == type(IERC1155ReceiverUpgradeable).interfaceId;
+    }
+
+    function setPurchaseLimits(uint256 id, uint[] calldata limits) external onlyGovernor {
+        _purchaseLimits[id] = limits;
+    }
+
+    function getPurchasableLimit(uint256 id, uint loyalty) public view returns(uint) {
+        uint limit = _purchaseLimits[id][loyalty];
+        if (limit == 0) {
+            limit = _purchaseLimits[id][0];
+        }
+        return limit;
     }
 }

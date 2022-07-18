@@ -18,7 +18,7 @@ task("interact", "Interact with REIT NFT Contract").setAction(interact);
 task("setupTestnet", "Setup Testnet").setAction(setupTestnet);
 
 task("testPayDividend", "Pay Dividends on Testnet")
-  .addOptionalParam("time", "Time slot index of the dividend")
+  .addParam("time", "Time slot index of the dividend")
   .addOptionalParam("amount", "Total amount to pay")
   .addOptionalParam("share", "Amount for each share")
   .setAction(testPayDividend);

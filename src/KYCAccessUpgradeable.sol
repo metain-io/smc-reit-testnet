@@ -56,7 +56,7 @@ contract KYCAccessUpgradeable is Initializable, ContextUpgradeable {
      * @param accounts Accounts to grant access
      */
     function addManyToKYC(address[] calldata accounts) external onlyKYCAdmin {
-        for (uint256 i = 0; i < accounts.length; i++) {
+        for (uint i = 0; i < accounts.length; i++) {
             kycAccounts[accounts[i]] = true;
         }
     }
@@ -66,15 +66,8 @@ contract KYCAccessUpgradeable is Initializable, ContextUpgradeable {
      * @param accounts Accounts to remove access
      */
     function removeManyKYC(address[] calldata accounts) external onlyKYCAdmin {
-        for (uint256 i = 0; i < accounts.length; i++) {
+        for (uint i = 0; i < accounts.length; i++) {
             kycAccounts[accounts[i]] = false;
         }
     }
-
-    /**
-     * @dev This empty reserved space is put in place to allow future versions to add new
-     * variables without shifting dgovern storage in the inheritance chain.
-     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
-     */
-    uint256[49] private __gap;
 }

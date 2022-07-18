@@ -112,12 +112,19 @@ describe("Initiate REIT Opportunity Trust", function () {
 
   it("Setup NFT Trust", async function () {
     await IPOContract.allowPayableToken("USDT", USDContract.address);
+    await IPOContract.setPurchaseLimits([200, 1000, 5000, 1200, 3000]);
     // for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
     //   await IPOContract.addToWhitelisted(shareholder[i].address);
     // }
 
     const now = Math.floor(Date.now() / 1000);
-    await NFTContractForCreator.initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);
+    await NFTContractForCreator.initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, [
+      0.2 * Math.pow(10, 6),
+      0.18 * Math.pow(10, 6),
+      0.16 * Math.pow(10, 6),
+      0.14 * Math.pow(10, 6),
+      0.12 * Math.pow(10, 6)
+    ]);
     await NFTContractForCreator.safeTransferFrom(creator.address, IPOContract.address, NFT_ID, TEST_REIT_AMOUNT, []);
     const ipoBalance = await NFTContract.balanceOf(IPOContract.address, NFT_ID);
     expect(ipoBalance).equal(TEST_REIT_AMOUNT);

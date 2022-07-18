@@ -8,18 +8,24 @@ import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "./KYCAccessUpgradeable.sol";
 import "./ERC1155Tradable.sol";
 import "./IREITTradable.sol";
+import "./LoyaltyProgram.sol";
 
 /**
  * @title REITNFT
  */
-contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
+contract REITNFT is
+    IREITTradable,
+    ERC1155Tradable,
+    KYCAccessUpgradeable,
+    LoyaltyProgram
+{
     using SafeMath for uint256;
     using AddressUpgradeable for address;
 
     /**
      * @dev Emitted when REIT NFT of type `id` is created by `creator` wallet.
      */
-    event Create(uint256 id, address creator);
+    event Create(uint256 id, address creator, uint256 supply, string uri);
 
     /**
      * @dev Metadata of a REIT NFT
@@ -27,12 +33,12 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     struct TokenMetadata {
         // Value of each unit at IPO (in USD)
         uint256 unitValue;
+        // Tax rate for transfering to others
+        uint256[] transferTaxes;
         // Time this project starts
         uint64 initiateTime;
         // Time this project is liquidated
         uint64 liquidationTime;
-        // Tax rate for transfering to others
-        uint64 transferTax;
     }
 
     /**
@@ -107,6 +113,12 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     // Mapping from token ID to account balances that are liquidated
     mapping(uint256 => mapping(address => uint256)) private _liquidatedBalances;
 
+    // Staking token contract, which is MEI token
+    IERC20 private stakingToken;
+
+    // Tokens required for each loyalty level
+    uint256[] private loyaltyRequirements;
+
     /**
      * @dev Initialization
      * @param _name string Name of the NFT
@@ -121,17 +133,17 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         super.initialize(_name, _symbol, _uri);
 
         __KYCAccess_init();
+        __LoyaltyProgram_init();
     }
 
     /**
      * @dev Require `msg.sender` to own more than 0 of the token id
      */
     modifier shareHoldersOnly(uint256 _id) {
-        uint256 totalBalances = _balances[_id][_msgSender()] + _lockingBalances[_id][_msgSender()] + _liquidatedBalances[_id][_msgSender()];
-        require(
-            totalBalances > 0,
-            "ERC1155Tradable#shareHoldersOnly: ONLY_OWNERS_ALLOWED"
-        );
+        uint256 totalBalances = _balances[_id][_msgSender()] +
+            _lockingBalances[_id][_msgSender()] +
+            _liquidatedBalances[_id][_msgSender()];
+        require(totalBalances > 0, "ONLY_OWNERS_ALLOWED");
         _;
     }
 
@@ -140,7 +152,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * @return bool
      */
     function isKYC(address account) public view returns (bool) {
-        require(account != address(0));
+        require(account != address(0), "ZERO_ADDRESS");
         return kycAccounts[account];
     }
 
@@ -163,8 +175,22 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * - only governor can execute
      */
     function setKYCAdmin(address account) external onlyGovernor {
-        require(account != address(0), "KYC Admin cannot be zero address");
+        require(account != address(0), "ZERO_ADDRESS");
         _setKYCAdmin(account);
+    }
+
+    /**
+     * @dev Appoint an account as admin that administer loyalty program
+     * Requirements:
+     *
+     * - only governor can execute
+     */
+    function setLoyaltyProgramAdmin(address account) external onlyGovernor {
+        require(
+            account != address(0),
+            "ZERO_ADDRESS"
+        );
+        _setLoyaltyProgramAdmin(account);
     }
 
     /**
@@ -190,7 +216,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         external
         creatorOnly(_id)
     {
-        require(account.isContract(), "IPO must be a contract");
+        require(account.isContract(), "NOT_A_CONTRACT");
         ipoContracts[_id] = account;
     }
 
@@ -247,7 +273,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         }
 
         fundingToken[_id] = IERC20(_fundingToken);
-        tokenMetadata[_id] = TokenMetadata(0, 0, 0, 0);
+        tokenMetadata[_id] = TokenMetadata(0, new uint256[](5), 0, 0);
         tokenDividendData[_id] = TokenDividendData(
             0,
             0,
@@ -260,7 +286,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         tokenSupply[_id] = _initialSupply;
 
-        emit Create(_id, _initialOwner);
+        emit Create(_id, _initialOwner, _initialSupply, _uri);
         return _id;
     }
 
@@ -274,20 +300,20 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * @param initiateTime Time this project starts
      * @param unitValue Value of each NFT unit (in USD)
      * @param liquidationTime Time this project liquidates
-     * @param transferTax Transfer tax rate
+     * @param transferTaxes Transfer tax rates
      */
     function initiateREIT(
         uint256 _id,
         uint64 initiateTime,
         uint256 unitValue,
         uint64 liquidationTime,
-        uint64 transferTax
+        uint256[] calldata transferTaxes
     ) external creatorOnly(_id) {
         tokenMetadata[_id] = TokenMetadata(
             unitValue,
+            transferTaxes,
             initiateTime,
-            liquidationTime,
-            transferTax
+            liquidationTime
         );
 
         tokenDividendData[_id].unitMarketValue = unitValue;
@@ -321,14 +347,14 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     function fundDividendVault(uint256 id, uint256 amount) external {
         require(
             tokenDividendData[id].liquidationPerShare == 0,
-            "Must not yet liquidated"
+            "NOT_LIQUIDATED"
         );
 
         IERC20 payableToken = fundingToken[id];
 
         require(
             payableToken.transferFrom(_msgSender(), address(this), amount),
-            "REITNFT: Could not transfer fund"
+            "TRANSFER_ERROR"
         );
 
         dividendVaultBalance[id] = dividendVaultBalance[id].add(amount);
@@ -344,14 +370,21 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * @param amount Amount of tokens to pay
      * @param to Address to transfer to
      */
-    function withdrawDividendVault(uint256 id, uint256 amount, address to) onlyGovernor external {
-        require(dividendVaultBalance[id] >= amount, "Not enough fund to withdraw");
+    function withdrawDividendVault(
+        uint256 id,
+        uint256 amount,
+        address to
+    ) external onlyGovernor {
+        require(
+            dividendVaultBalance[id] >= amount,
+            "NOT_ENOUGH"
+        );
 
         IERC20 payableToken = fundingToken[id];
 
         require(
             payableToken.transfer(to, amount),
-            "REITNFT: Could not transfer fund"
+            "TRANSFER_ERROR"
         );
 
         dividendVaultBalance[id] = dividendVaultBalance[id].sub(amount);
@@ -367,7 +400,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
         require(
             payableToken.transferFrom(_msgSender(), address(this), amount),
-            "REITNFT: Could not transfer fund"
+            "TRANSFER_ERROR"
         );
 
         liquidationVaultBalance[id] = liquidationVaultBalance[id].add(amount);
@@ -383,14 +416,21 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * @param amount Amount of tokens to pay
      * @param to Address to transfer to
      */
-    function withdrawLiquidationVault(uint256 id, uint256 amount, address to) onlyGovernor external {
-        require(liquidationVaultBalance[id] >= amount, "Not enough fund to withdraw");
+    function withdrawLiquidationVault(
+        uint256 id,
+        uint256 amount,
+        address to
+    ) external onlyGovernor {
+        require(
+            liquidationVaultBalance[id] >= amount,
+            "NOT_ENOUGH"
+        );
 
         IERC20 payableToken = fundingToken[id];
 
         require(
             payableToken.transfer(to, amount),
-            "REITNFT: Could not transfer fund"
+            "TRANSFER_ERROR"
         );
 
         liquidationVaultBalance[id] = liquidationVaultBalance[id].sub(amount);
@@ -413,7 +453,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     ) external creatorOnly(id) {
         require(
             tokenDividendData[id].liquidationPerShare == 0,
-            "Must not yet liquidated"
+            "NOT_LIQUIDATED"
         );
 
         if (tokenDividendData[id].dividendsLength < time + 1) {
@@ -487,6 +527,22 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
     }
 
     /**
+     * @dev Withdraw `amount` of staked tokens
+     * note In emergency situation, governor can withdraw staked tokens to fix things.
+     * Requirements:
+     *
+     * - only governor can execute
+     */
+    function withdrawLoyaltyStakings(uint256 amount) external onlyGovernor {
+        require(amount > 0, "ZERO_AMOUNT");
+
+        uint256 balance = _stakeableToken.balanceOf(address(this));
+        require(balance > amount, "NOT_ENOUGH");
+
+        _stakeableToken.transfer(governor(), amount);
+    }
+
+    /**
      * === CLAIMING DIVIDENDS AND LIQUIDATIONS ===
      */
 
@@ -546,7 +602,8 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         }
 
         uint256 balance = _balances[id][account];
-        uint256 shareLiquidationValue = balance * tokenDividendData[id].liquidationPerShare;
+        uint256 shareLiquidationValue = balance *
+            tokenDividendData[id].liquidationPerShare;
 
         return shareLiquidationValue;
     }
@@ -590,7 +647,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             dividendVaultBalance[id] -= claimableYield;
         }
     }
-    
+
     /**
      * @dev Pay liquidations to sender based on total NFT they are owning.
      * Requirements:
@@ -599,7 +656,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      * - Owners must be allowed to claim liquidation
      *
      * @param id ID of the NFT
-     */    
+     */
     function claimLiquidations(uint256 id) external onlyKYC nonReentrant {
         address account = _msgSender();
 
@@ -607,7 +664,7 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         require(
             tokenYieldVesting[id][account].isLiquidationUnlocked,
             "REITNFT: liquidation still on hold"
-        );        
+        );
 
         uint256 balance = _balances[id][account];
         uint256 shareLiquidationValue = balance *
@@ -630,14 +687,14 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         );
 
         // Done
-        unchecked {            
+        unchecked {
             // Burn all shares belong to the sender
             _liquidatedBalances[id][account] = balance;
-            _balances[id][account] = 0;            
+            _balances[id][account] = 0;
 
             liquidationVaultBalance[id] -= shareLiquidationValue;
             tokenYieldVesting[id][account]
-                .claimedLiquidations += shareLiquidationValue;            
+                .claimedLiquidations += shareLiquidationValue;
         }
     }
 
@@ -737,20 +794,22 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             );
         }
 
-        // Calculate yields         
+        // Calculate yields
         uint32 lastClaimIndex = tokenYieldVesting[id][account].lastClaimIndex;
         uint32 dividendsLength = tokenDividendData[id].dividendsLength;
         if (lastClaimIndex < dividendsLength) {
             uint256 claimableYield = 0;
-            uint256 lockedYield = 0;           
+            uint256 lockedYield = 0;
 
-            uint256 unlockedBalance = _balances[id][account];        
+            uint256 unlockedBalance = _balances[id][account];
             uint256 lockedBalance = _lockingBalances[id][account];
 
             unchecked {
                 // combine all dividends from time indices that were not yet claimed by this account
                 for (uint32 i = lastClaimIndex; i < dividendsLength; ++i) {
-                    uint256 dividend = tokenDividendData[id].dividendPerShares[i];
+                    uint256 dividend = tokenDividendData[id].dividendPerShares[
+                        i
+                    ];
                     claimableYield += dividend * unlockedBalance;
                     lockedYield += dividend * lockedBalance;
                 }
@@ -768,7 +827,8 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
 
             if (lockedYield > 0) {
                 unchecked {
-                    tokenYieldVesting[id][account].lockingDividends += lockedYield;
+                    tokenYieldVesting[id][account]
+                        .lockingDividends += lockedYield;
                 }
             }
         }
@@ -824,6 +884,23 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
             _lockingBalances[id][to] += amount;
         } else {
             _balances[id][to] += amount;
+
+            // this is the IPO purchase, pay all the yields until settlement
+            if (isIPOContract(id, from)) {
+                uint32 lastClaimIndex = tokenYieldVesting[id][to]
+                    .lastClaimIndex;
+                if (lastClaimIndex > 0) {
+                    uint256 unclaimedYield = 0;
+                    for (uint256 i = 0; i < lastClaimIndex; ++i) {
+                        unclaimedYield +=
+                            tokenDividendData[id].dividendPerShares[i] *
+                            amount;
+                    }
+
+                    tokenYieldVesting[id][to]
+                        .pendingDividends += unclaimedYield;
+                }
+            }
         }
 
         emit TransferSingle(operator, from, to, id, amount);
@@ -919,11 +996,13 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
         address account = _msgSender();
 
         uint256 amount = _lockingBalances[id][account];
-        require(amount > 0, "Already unlocked all");
+        require(amount > 0, "ALREADY_UNLOCKED_ALL");
 
-        uint256 taxAmount = (tokenDividendData[id].unitMarketValue *
-            amount *
-            tokenMetadata[id].transferTax) / PERCENT_DECIMALS_MULTIPLY;
+        uint256 tax = _getTransferTaxRate(account, id);
+        uint256 taxAmount;
+        unchecked {
+            taxAmount = (tokenDividendData[id].unitMarketValue * amount * tax) / PERCENT_DECIMALS_MULTIPLY;
+        }
 
         IERC20 payableToken = fundingToken[id];
         require(
@@ -993,5 +1072,40 @@ contract REITNFT is IREITTradable, ERC1155Tradable, KYCAccessUpgradeable {
      */
     function getIPOUnitPrice(uint256 id) external view returns (uint256) {
         return tokenMetadata[id].unitValue;
+    }
+
+    function getIPOTime(uint256 id) external view returns (uint256) {
+        return tokenMetadata[id].initiateTime;
+    }
+
+    function getLiquidationTime(uint256 id) external view returns (uint256) {
+        return
+            tokenMetadata[id].liquidationTime +
+            tokenDividendData[id].liquidationTimeExtension;
+    }
+
+    function getTransferTaxRate(uint256 id) external view returns (uint256) {
+        return _getTransferTaxRate(_msgSender(), id);
+    }
+
+    function _getTransferTaxRate(address account, uint256 id)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 loyalty = _stakings[account].level;
+        uint256 tax = tokenMetadata[id].transferTaxes[loyalty];
+        if (tax == 0) {
+            tax = tokenMetadata[id].transferTaxes[0];
+        }
+        return tax;
+    }
+
+    function getUnitMarketPrice(uint256 id) external view returns (uint256) {
+        return tokenDividendData[id].unitMarketValue;
+    }
+
+    function getLoyaltyLevel(address account) override public view returns(uint) {
+        return _stakings[account].level;
     }
 }

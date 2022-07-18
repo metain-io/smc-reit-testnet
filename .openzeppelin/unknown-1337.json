@@ -1,8 +1,8 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0x02C5eC798a712ABaB289D63cc24474Fb464d383a",
-    "txHash": "0x44a24fd454064c512f9dc9231826a4ff6c3c9a897f8c594a6d8cf8ab16f8b44d"
+    "address": "0x4d46f75Be6E98dBA8E8384802a68d550DeB69770",
+    "txHash": "0x9b5d9c17beec4620c869010822de65b8226366bccfc2daba2267ec2e4b2465e8"
   },
   "proxies": [
     {
@@ -56,21 +56,6 @@
       "kind": "transparent"
     },
     {
-      "address": "0xf454f24A62E5Be73aA877Aa824b78F8F2a31d236",
-      "txHash": "0x12c27db8e31e33294fdb45d698e291357b5a57899c58e72c761eebeb589c502c",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xa390Fa8d4F032cCfCeC1CFF34f2eb549928DcEad",
-      "txHash": "0x82a7e41c89f22a70d0d8efa911ba8385629d3ae859baf05a1e6c246548e6f6b5",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xC739aB616866B180017ee4a594364A761A921bA6",
-      "txHash": "0x711d20c51087b73eb5878ab1892d7492846635d174c60f09ebd998ef18860d06",
-      "kind": "transparent"
-    },
-    {
       "address": "0x2830E4110C99c988694f86d737956305F489B26d",
       "txHash": "0xa01ac6e618f0b89dcf7290516fdf8d57c6203679512154bc0c8e97b8d64e19a6",
       "kind": "transparent"
@@ -86,16 +71,6 @@
       "kind": "transparent"
     },
     {
-      "address": "0x048fA73e8DC04B04C084C2e78fA324a17Ac1D8F5",
-      "txHash": "0x8767b6f25bbf051c9b2dd692254524fc8c30dd4e93e14998e2b36fad580e45cb",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xAE3b465F19Bf5B0B2ef94A1acFd41b412b1D36b2",
-      "txHash": "0x1dfe9ca5394e8707e8d7de8b6b768267fbfeab24fcfa856bfd3dca6e326f1f45",
-      "kind": "transparent"
-    },
-    {
       "address": "0x5D4aA0caf417ad2BA832671DF9a6a976198D109a",
       "txHash": "0x9a4d4b08a4eb93de53310bd8da1dd8c55e01871bbdd9e5b9c381b1ebdc5f830f",
       "kind": "transparent"
@@ -103,11 +78,6 @@
     {
       "address": "0x60003b9Ad41c1cB8bCB9cEff16bdD03cf06f4c5F",
       "txHash": "0xc84690fe940191ddb77be2bc551807e58be367f846f3d64456968e0aca0581bf",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x24eB97E328d7D513a9eb4AA91206d0cF2Ab78Ee0",
-      "txHash": "0xf76dacb52e0e005868031d12b4a14010a0b0ee3cacdfd37ac209da5b709ab9d4",
       "kind": "transparent"
     },
     {
@@ -418,6 +388,116 @@
     {
       "address": "0x54826f9049b805bF94a7aF77d22a1C1528d9b8f8",
       "txHash": "0xce45505420aa66d0c46b9279f8f1a3cbf45c42207c89174760218388278ba151",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4E42782ac3A619Bf6A515Ca33c4B926364A51e31",
+      "txHash": "0xdfbfe4d08ccb6f564418f474b369d6e8b76de1380926563120476f773d720f3d",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xf454f24A62E5Be73aA877Aa824b78F8F2a31d236",
+      "txHash": "0x0c84ae8b02d1d10657befb554ec83d12e64a82bf9beb59ba14c3ab3f06537663",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8BaA4d31B46a272b5a90F192Dcf20348E1845719",
+      "txHash": "0xf2021b0cb64580da2a1d27617e538aae6132079faf8d7deb2bc17f0c53c53095",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x97681569c1007380DEc7075E5aCb6020Be36eC83",
+      "txHash": "0x6f0b6e87a680abb5597338b91049c7d014da36f1fb18a14f9973def35b2486e1",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xC8d87fdd2896E0a1cAb382322075FDAD7526c8D2",
+      "txHash": "0x3e557851f0650418470d0f473f0b6b1d948d520e5e85d80723fc40d1012cb1b2",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3b8847C03D86FF38E79f915b23f6531DF3bA01e1",
+      "txHash": "0x0baad6a0079139a54e3cff0c33c99066edd10d30596624e38209ce1951825aed",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa390Fa8d4F032cCfCeC1CFF34f2eb549928DcEad",
+      "txHash": "0x0847355b20bf8681fefe003b214c6ac78c1d7da148ec8190b20f77d08e1bffc3",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xC739aB616866B180017ee4a594364A761A921bA6",
+      "txHash": "0x6c5bb6ae0466698abe7dc0d3de51b05e5cb6d412db5acceee3347c6def0718cd",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x141e94d9888F9399891f070aFc8eE76eA08B6DbB",
+      "txHash": "0xda7100511e6b69e12bf18c33a59d4afbd7b83fc5298c54312b206683da530e66",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4ae38d5F94A9be67Cd0F50Dd4Ab26D4A627eEA22",
+      "txHash": "0x4e9d6f1ac6af0084f99507158899adb5fc219c714fb04ff3628cee72d4117a10",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xbbf69673e44988D2FD7D878eDbD1cDDa1A70fAB7",
+      "txHash": "0xda2fc102729419d011039aa814959b35235d2228f307d6a8daed4c429fd32036",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x048fA73e8DC04B04C084C2e78fA324a17Ac1D8F5",
+      "txHash": "0xf125f932a4f9c788e108fdfc74953776c6461ccbb0e2044f1d370912f8ced7ff",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x89c320c75520777AB36f4924cE57c65960370fE1",
+      "txHash": "0x3fe6b737eac2198f952f896a067a060772d1610c6097cd5c85620389e4c57e52",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xd517fA80Ed2Aa312cB3e8FDD32CB3BBE7D28f5BC",
+      "txHash": "0x21a6f1d3ac1ea909c6d0f7a79f2a94bb7a663085256c52e8f82cee646fb6322c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1a8238498Ee9FF5FAb5375B4dD4386a236C22Ba3",
+      "txHash": "0xc3f5ac8c07c9a40ef57617ae964895b280b22d2d71038f47f34b120b56e44d8f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xAE3b465F19Bf5B0B2ef94A1acFd41b412b1D36b2",
+      "txHash": "0x24a7284338c19c806ba237c8337c4d0360f0a4c7947f34c0e3ab59bbdf3ab2e7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xd3bfB856c417Ad968B245d3f98aeC598f03F7270",
+      "txHash": "0xde33483c8f2c19a40447c4ae206fb65551d7665d75c0a7760246458377477f52",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3A125bE5bB8A3E1C171947c384795B4a488B74A0",
+      "txHash": "0x630fef58575f3511727b99f2da07b02c46a564f63453311719634697fe728208",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x05b02F6d3d0a602f12212E04dc9a13336e2e6D39",
+      "txHash": "0x336041f05dbd16a22f4257ee0add3cc00ff8b3baad8cc06eac685ef9d67927b3",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x24eB97E328d7D513a9eb4AA91206d0cF2Ab78Ee0",
+      "txHash": "0xde28bc2d08f111d38bef6520c961c5b58a9b0dd516d582c55f63d8deb6d523d7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x45cf31B8A87097E0ac46953Fd757dF8427B9d96D",
+      "txHash": "0xc803d308218c8f00e91d21841edd8490803e13fc9ebbeeb3167747d1c03a5af8",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4bE79425D3A40eBeCDfF4B7A393F879185F6E96d",
+      "txHash": "0x70397308cdf4d6577ed936b5ca030f783162b261311333f3206ddea77efa1af5",
       "kind": "transparent"
     }
   ],
@@ -3921,6 +4001,2961 @@
           },
           "t_string_storage": {
             "label": "string"
+          }
+        }
+      }
+    },
+    "0ff6fcfeff94dc27e0f2af5f9ffb90c7ce55059b213b1c1a8ff040ed482b9e5c": {
+      "address": "0xAffD1e5D27968889E25Ba045c53Ed608cE5Ee223",
+      "txHash": "0x3ef656c5ea1af5928605ffed683f23cc416c6bf8b80f4198783ef9ee56c4c79a",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:558",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:563"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITNFT.sol:678"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\REITNFT.sol:1238"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1254"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1257"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1260"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1751"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1768"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1833"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:790"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:826"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2047"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2048"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2049"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2050"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2052"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2055"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2057"
+          },
+          {
+            "label": "kycAccounts",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:684"
+          },
+          {
+            "label": "_kycAdmin",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_address",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:686"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:754"
+          },
+          {
+            "label": "loyaltyConditions",
+            "offset": 0,
+            "slot": "309",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2256"
+          },
+          {
+            "label": "_stakeableToken",
+            "offset": 0,
+            "slot": "310",
+            "type": "t_contract(IERC20)77",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2259"
+          },
+          {
+            "label": "_minimumStakingPeriod",
+            "offset": 0,
+            "slot": "311",
+            "type": "t_uint256",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2260"
+          },
+          {
+            "label": "_stakings",
+            "offset": 0,
+            "slot": "312",
+            "type": "t_mapping(t_address,t_struct(Staking)3504_storage)",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2262"
+          },
+          {
+            "label": "_loyaltyAdmin",
+            "offset": 0,
+            "slot": "313",
+            "type": "t_address",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2264"
+          },
+          {
+            "label": "tokenMetadata",
+            "offset": 0,
+            "slot": "314",
+            "type": "t_mapping(t_uint256,t_struct(TokenMetadata)3831_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2420"
+          },
+          {
+            "label": "tokenDividendData",
+            "offset": 0,
+            "slot": "315",
+            "type": "t_mapping(t_uint256,t_struct(TokenDividendData)3843_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2423"
+          },
+          {
+            "label": "tokenYieldVesting",
+            "offset": 0,
+            "slot": "316",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3860_storage))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2426"
+          },
+          {
+            "label": "dividendVaultBalance",
+            "offset": 0,
+            "slot": "317",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2430"
+          },
+          {
+            "label": "liquidationVaultBalance",
+            "offset": 0,
+            "slot": "318",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2433"
+          },
+          {
+            "label": "fundingToken",
+            "offset": 0,
+            "slot": "319",
+            "type": "t_mapping(t_uint256,t_contract(IERC20)77)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2436"
+          },
+          {
+            "label": "ipoContracts",
+            "offset": 0,
+            "slot": "320",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2439"
+          },
+          {
+            "label": "_lockingBalances",
+            "offset": 0,
+            "slot": "321",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2442"
+          },
+          {
+            "label": "_liquidatedBalances",
+            "offset": 0,
+            "slot": "322",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2445"
+          },
+          {
+            "label": "stakingToken",
+            "offset": 0,
+            "slot": "323",
+            "type": "t_contract(IERC20)77",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2448"
+          },
+          {
+            "label": "loyaltyRequirements",
+            "offset": 0,
+            "slot": "324",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2451"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20)77": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(Staking)3504_storage)": {
+            "label": "mapping(address => struct LoyaltyProgram.Staking)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(YieldVesting)3860_storage)": {
+            "label": "mapping(address => struct REITNFT.YieldVesting)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_contract(IERC20)77)": {
+            "label": "mapping(uint256 => contract IERC20)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3860_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct REITNFT.YieldVesting))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenDividendData)3843_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenDividendData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenMetadata)3831_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenMetadata)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Staking)3504_storage": {
+            "label": "struct LoyaltyProgram.Staking",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "level",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenDividendData)3843_storage": {
+            "label": "struct REITNFT.TokenDividendData",
+            "members": [
+              {
+                "label": "unitMarketValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "liquidationPerShare",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "dividendPerShares",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "dividendsLength",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "liquidationTimeExtension",
+                "type": "t_uint64",
+                "offset": 4,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenMetadata)3831_storage": {
+            "label": "struct REITNFT.TokenMetadata",
+            "members": [
+              {
+                "label": "unitValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "initiateTime",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "liquidationTime",
+                "type": "t_uint64",
+                "offset": 8,
+                "slot": "1"
+              },
+              {
+                "label": "transferTax",
+                "type": "t_uint64",
+                "offset": 16,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(YieldVesting)3860_storage": {
+            "label": "struct REITNFT.YieldVesting",
+            "members": [
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lockingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "pendingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "claimedDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "claimedLiquidations",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "isLiquidationUnlocked",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "5"
+              },
+              {
+                "label": "lastClaimIndex",
+                "type": "t_uint32",
+                "offset": 2,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "ad8f3dd413f6333b4219320632dd8e4730717e6eb414d59609f973cc6da911f6": {
+      "address": "0xb3212b66C337F83D277172D891Daf31776FF9D79",
+      "txHash": "0x061832cd594b8c79182dcda1c880d723f80e02291ea461c989ffefeea1aa54ff",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITIPO.sol:411",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITIPO.sol:416"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITIPO.sol:1028"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITIPO.sol:1045"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITIPO.sol:1110"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITIPO.sol:533"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITIPO.sol:569"
+          },
+          {
+            "label": "_nft",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_contract(IREITTradable)1064",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1122"
+          },
+          {
+            "label": "_pendingBalances",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1124"
+          },
+          {
+            "label": "_totalPendingAmount",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1125"
+          },
+          {
+            "label": "_payableToken",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_string_memory_ptr,t_contract(IERC20)77)",
+            "contract": "REITIPO",
+            "src": "contracts\\REITIPO.sol:1128"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20)77": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IREITTradable)1064": {
+            "label": "contract IREITTradable",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_contract(IERC20)77)": {
+            "label": "mapping(string => contract IERC20)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "105133e1935e5625f221e1867f37256ca10cc0e1dd6b4ae72ebfd25c04737d1c": {
+      "address": "0x18c07E395Df250003f439F6e8ea1Ea8Aa51752c6",
+      "txHash": "0xfdbcfe00621c707b1b5c4c901c6430a9b3beb9250d3d3425eea2f64c080e71e1",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:558",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:563"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITNFT.sol:678"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\REITNFT.sol:1238"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1254"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1257"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1260"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1751"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1768"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1833"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:790"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:826"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2047"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2048"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2049"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2050"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2052"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2055"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2057"
+          },
+          {
+            "label": "kycAccounts",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:684"
+          },
+          {
+            "label": "_kycAdmin",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_address",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:686"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:754"
+          },
+          {
+            "label": "loyaltyConditions",
+            "offset": 0,
+            "slot": "309",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2256"
+          },
+          {
+            "label": "_stakeableToken",
+            "offset": 0,
+            "slot": "310",
+            "type": "t_contract(IERC20)77",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2259"
+          },
+          {
+            "label": "_minimumStakingPeriod",
+            "offset": 0,
+            "slot": "311",
+            "type": "t_uint256",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2260"
+          },
+          {
+            "label": "_stakings",
+            "offset": 0,
+            "slot": "312",
+            "type": "t_mapping(t_address,t_struct(Staking)3504_storage)",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2262"
+          },
+          {
+            "label": "_loyaltyAdmin",
+            "offset": 0,
+            "slot": "313",
+            "type": "t_address",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2264"
+          },
+          {
+            "label": "tokenMetadata",
+            "offset": 0,
+            "slot": "314",
+            "type": "t_mapping(t_uint256,t_struct(TokenMetadata)3831_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2420"
+          },
+          {
+            "label": "tokenDividendData",
+            "offset": 0,
+            "slot": "315",
+            "type": "t_mapping(t_uint256,t_struct(TokenDividendData)3843_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2423"
+          },
+          {
+            "label": "tokenYieldVesting",
+            "offset": 0,
+            "slot": "316",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3860_storage))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2426"
+          },
+          {
+            "label": "dividendVaultBalance",
+            "offset": 0,
+            "slot": "317",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2430"
+          },
+          {
+            "label": "liquidationVaultBalance",
+            "offset": 0,
+            "slot": "318",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2433"
+          },
+          {
+            "label": "fundingToken",
+            "offset": 0,
+            "slot": "319",
+            "type": "t_mapping(t_uint256,t_contract(IERC20)77)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2436"
+          },
+          {
+            "label": "ipoContracts",
+            "offset": 0,
+            "slot": "320",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2439"
+          },
+          {
+            "label": "_lockingBalances",
+            "offset": 0,
+            "slot": "321",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2442"
+          },
+          {
+            "label": "_liquidatedBalances",
+            "offset": 0,
+            "slot": "322",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2445"
+          },
+          {
+            "label": "stakingToken",
+            "offset": 0,
+            "slot": "323",
+            "type": "t_contract(IERC20)77",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2448"
+          },
+          {
+            "label": "loyaltyRequirements",
+            "offset": 0,
+            "slot": "324",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2451"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20)77": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(Staking)3504_storage)": {
+            "label": "mapping(address => struct LoyaltyProgram.Staking)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(YieldVesting)3860_storage)": {
+            "label": "mapping(address => struct REITNFT.YieldVesting)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_contract(IERC20)77)": {
+            "label": "mapping(uint256 => contract IERC20)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3860_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct REITNFT.YieldVesting))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenDividendData)3843_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenDividendData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenMetadata)3831_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenMetadata)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Staking)3504_storage": {
+            "label": "struct LoyaltyProgram.Staking",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "level",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenDividendData)3843_storage": {
+            "label": "struct REITNFT.TokenDividendData",
+            "members": [
+              {
+                "label": "unitMarketValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "liquidationPerShare",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "dividendPerShares",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "dividendsLength",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "liquidationTimeExtension",
+                "type": "t_uint64",
+                "offset": 4,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenMetadata)3831_storage": {
+            "label": "struct REITNFT.TokenMetadata",
+            "members": [
+              {
+                "label": "unitValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "initiateTime",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "liquidationTime",
+                "type": "t_uint64",
+                "offset": 8,
+                "slot": "1"
+              },
+              {
+                "label": "transferTax",
+                "type": "t_uint64",
+                "offset": 16,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(YieldVesting)3860_storage": {
+            "label": "struct REITNFT.YieldVesting",
+            "members": [
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lockingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "pendingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "claimedDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "claimedLiquidations",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "isLiquidationUnlocked",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "5"
+              },
+              {
+                "label": "lastClaimIndex",
+                "type": "t_uint32",
+                "offset": 2,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "02185d9ac869c09195e447bf3b04c7c574121bc796fa65c4a3faf2a313de6ecf": {
+      "address": "0xf7223808057EF3E03BAfa288F980319212d0da74",
+      "txHash": "0xeadad0da3b77a509a23d260aba791a8e3bad2e4dce3c750f8c4a97ec2deb5e80",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:558",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:563"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITNFT.sol:678"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\REITNFT.sol:1231"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1247"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1250"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1253"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1744"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1761"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1826"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:783"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:819"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2040"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2041"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2042"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2043"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2045"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2048"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2050"
+          },
+          {
+            "label": "kycAccounts",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:684"
+          },
+          {
+            "label": "_kycAdmin",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_address",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:686"
+          },
+          {
+            "label": "loyaltyConditions",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2249"
+          },
+          {
+            "label": "_stakeableToken",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_contract(IERC20)77",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2252"
+          },
+          {
+            "label": "_minimumStakingPeriod",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2253"
+          },
+          {
+            "label": "_stakings",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_mapping(t_address,t_struct(Staking)3499_storage)",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2255"
+          },
+          {
+            "label": "_loyaltyAdmin",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_address",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2257"
+          },
+          {
+            "label": "tokenMetadata",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_mapping(t_uint256,t_struct(TokenMetadata)3826_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2413"
+          },
+          {
+            "label": "tokenDividendData",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_mapping(t_uint256,t_struct(TokenDividendData)3838_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2416"
+          },
+          {
+            "label": "tokenYieldVesting",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3855_storage))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2419"
+          },
+          {
+            "label": "dividendVaultBalance",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2423"
+          },
+          {
+            "label": "liquidationVaultBalance",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2426"
+          },
+          {
+            "label": "fundingToken",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_uint256,t_contract(IERC20)77)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2429"
+          },
+          {
+            "label": "ipoContracts",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2432"
+          },
+          {
+            "label": "_lockingBalances",
+            "offset": 0,
+            "slot": "272",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2435"
+          },
+          {
+            "label": "_liquidatedBalances",
+            "offset": 0,
+            "slot": "273",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2438"
+          },
+          {
+            "label": "stakingToken",
+            "offset": 0,
+            "slot": "274",
+            "type": "t_contract(IERC20)77",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2441"
+          },
+          {
+            "label": "loyaltyRequirements",
+            "offset": 0,
+            "slot": "275",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2444"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20)77": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(Staking)3499_storage)": {
+            "label": "mapping(address => struct LoyaltyProgram.Staking)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(YieldVesting)3855_storage)": {
+            "label": "mapping(address => struct REITNFT.YieldVesting)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_contract(IERC20)77)": {
+            "label": "mapping(uint256 => contract IERC20)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3855_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct REITNFT.YieldVesting))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenDividendData)3838_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenDividendData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenMetadata)3826_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenMetadata)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Staking)3499_storage": {
+            "label": "struct LoyaltyProgram.Staking",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "level",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenDividendData)3838_storage": {
+            "label": "struct REITNFT.TokenDividendData",
+            "members": [
+              {
+                "label": "unitMarketValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "liquidationPerShare",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "dividendPerShares",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "dividendsLength",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "liquidationTimeExtension",
+                "type": "t_uint64",
+                "offset": 4,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenMetadata)3826_storage": {
+            "label": "struct REITNFT.TokenMetadata",
+            "members": [
+              {
+                "label": "unitValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "initiateTime",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "liquidationTime",
+                "type": "t_uint64",
+                "offset": 8,
+                "slot": "1"
+              },
+              {
+                "label": "transferTax",
+                "type": "t_uint64",
+                "offset": 16,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(YieldVesting)3855_storage": {
+            "label": "struct REITNFT.YieldVesting",
+            "members": [
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lockingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "pendingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "claimedDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "claimedLiquidations",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "isLiquidationUnlocked",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "5"
+              },
+              {
+                "label": "lastClaimIndex",
+                "type": "t_uint32",
+                "offset": 2,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "1c96d66c1c0eceaa721934cb95ff87f03e60375aedac7b5e9bc607b6365dd6a0": {
+      "address": "0xdd8D9D14d2FC73d9657458d937b844581E58c571",
+      "txHash": "0xdeb60b9deecf362a30db89f38406d6424ff7906b12642e12994db93e0d3baf93",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:558",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:563"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITNFT.sol:678"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\REITNFT.sol:1231"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1247"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1250"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1253"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1744"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1761"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1826"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:783"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:819"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2040"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2041"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2042"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2043"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2045"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2048"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2050"
+          },
+          {
+            "label": "kycAccounts",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:684"
+          },
+          {
+            "label": "_kycAdmin",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_address",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:686"
+          },
+          {
+            "label": "loyaltyConditions",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2249"
+          },
+          {
+            "label": "_stakeableToken",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_contract(IERC20)77",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2252"
+          },
+          {
+            "label": "_minimumStakingPeriod",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2253"
+          },
+          {
+            "label": "_stakings",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_mapping(t_address,t_struct(Staking)3499_storage)",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2255"
+          },
+          {
+            "label": "_loyaltyAdmin",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_address",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2257"
+          },
+          {
+            "label": "tokenMetadata",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_mapping(t_uint256,t_struct(TokenMetadata)3838_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2417"
+          },
+          {
+            "label": "tokenDividendData",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_mapping(t_uint256,t_struct(TokenDividendData)3850_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2420"
+          },
+          {
+            "label": "tokenYieldVesting",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3867_storage))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2423"
+          },
+          {
+            "label": "dividendVaultBalance",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2427"
+          },
+          {
+            "label": "liquidationVaultBalance",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2430"
+          },
+          {
+            "label": "fundingToken",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_uint256,t_contract(IERC20)77)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2433"
+          },
+          {
+            "label": "ipoContracts",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2436"
+          },
+          {
+            "label": "_lockingBalances",
+            "offset": 0,
+            "slot": "272",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2439"
+          },
+          {
+            "label": "_liquidatedBalances",
+            "offset": 0,
+            "slot": "273",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2442"
+          },
+          {
+            "label": "stakingToken",
+            "offset": 0,
+            "slot": "274",
+            "type": "t_contract(IERC20)77",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2445"
+          },
+          {
+            "label": "loyaltyRequirements",
+            "offset": 0,
+            "slot": "275",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2448"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20)77": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(Staking)3499_storage)": {
+            "label": "mapping(address => struct LoyaltyProgram.Staking)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(YieldVesting)3867_storage)": {
+            "label": "mapping(address => struct REITNFT.YieldVesting)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_contract(IERC20)77)": {
+            "label": "mapping(uint256 => contract IERC20)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3867_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct REITNFT.YieldVesting))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenDividendData)3850_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenDividendData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenMetadata)3838_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenMetadata)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Staking)3499_storage": {
+            "label": "struct LoyaltyProgram.Staking",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "level",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenDividendData)3850_storage": {
+            "label": "struct REITNFT.TokenDividendData",
+            "members": [
+              {
+                "label": "unitMarketValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "liquidationPerShare",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "dividendPerShares",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "dividendsLength",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "liquidationTimeExtension",
+                "type": "t_uint64",
+                "offset": 4,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenMetadata)3838_storage": {
+            "label": "struct REITNFT.TokenMetadata",
+            "members": [
+              {
+                "label": "unitValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "initiateTime",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "liquidationTime",
+                "type": "t_uint64",
+                "offset": 8,
+                "slot": "1"
+              },
+              {
+                "label": "transferTax",
+                "type": "t_uint64",
+                "offset": 16,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(YieldVesting)3867_storage": {
+            "label": "struct REITNFT.YieldVesting",
+            "members": [
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lockingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "pendingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "claimedDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "claimedLiquidations",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "isLiquidationUnlocked",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "5"
+              },
+              {
+                "label": "lastClaimIndex",
+                "type": "t_uint32",
+                "offset": 2,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "0c8ef0e75356e2f22a199ee3dfb5112cc66b78904aa8945f59d2efd686b8baf7": {
+      "address": "0x2B9b7E41652d7cd3038a6531AB081805c58870E7",
+      "txHash": "0xa92b60b522f294d8b70a5e38cb40a7323f2f11c075c06f57e9b2e9ba5d114154",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:558",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\REITNFT.sol:563"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\REITNFT.sol:678"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\REITNFT.sol:1231"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1247"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1250"
+          },
+          {
+            "label": "_uri",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1253"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "ERC1155Upgradeable",
+            "src": "contracts\\REITNFT.sol:1744"
+          },
+          {
+            "label": "_governor",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1761"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "GovernableUpgradeable",
+            "src": "contracts\\REITNFT.sol:1826"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:783"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "contracts\\REITNFT.sol:819"
+          },
+          {
+            "label": "currentTokenID",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2040"
+          },
+          {
+            "label": "creators",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2041"
+          },
+          {
+            "label": "tokenSupply",
+            "offset": 0,
+            "slot": "253",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2042"
+          },
+          {
+            "label": "tokenUri",
+            "offset": 0,
+            "slot": "254",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2043"
+          },
+          {
+            "label": "_contractURI",
+            "offset": 0,
+            "slot": "255",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2045"
+          },
+          {
+            "label": "name",
+            "offset": 0,
+            "slot": "256",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2048"
+          },
+          {
+            "label": "symbol",
+            "offset": 0,
+            "slot": "257",
+            "type": "t_string_storage",
+            "contract": "ERC1155Tradable",
+            "src": "contracts\\REITNFT.sol:2050"
+          },
+          {
+            "label": "kycAccounts",
+            "offset": 0,
+            "slot": "258",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:684"
+          },
+          {
+            "label": "_kycAdmin",
+            "offset": 0,
+            "slot": "259",
+            "type": "t_address",
+            "contract": "KYCAccessUpgradeable",
+            "src": "contracts\\REITNFT.sol:686"
+          },
+          {
+            "label": "loyaltyConditions",
+            "offset": 0,
+            "slot": "260",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2249"
+          },
+          {
+            "label": "_stakeableToken",
+            "offset": 0,
+            "slot": "261",
+            "type": "t_contract(IERC20)77",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2252"
+          },
+          {
+            "label": "_minimumStakingPeriod",
+            "offset": 0,
+            "slot": "262",
+            "type": "t_uint256",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2253"
+          },
+          {
+            "label": "_stakings",
+            "offset": 0,
+            "slot": "263",
+            "type": "t_mapping(t_address,t_struct(Staking)3499_storage)",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2255"
+          },
+          {
+            "label": "_loyaltyAdmin",
+            "offset": 0,
+            "slot": "264",
+            "type": "t_address",
+            "contract": "LoyaltyProgram",
+            "src": "contracts\\REITNFT.sol:2257"
+          },
+          {
+            "label": "tokenMetadata",
+            "offset": 0,
+            "slot": "265",
+            "type": "t_mapping(t_uint256,t_struct(TokenMetadata)3826_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2413"
+          },
+          {
+            "label": "tokenDividendData",
+            "offset": 0,
+            "slot": "266",
+            "type": "t_mapping(t_uint256,t_struct(TokenDividendData)3838_storage)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2416"
+          },
+          {
+            "label": "tokenYieldVesting",
+            "offset": 0,
+            "slot": "267",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3855_storage))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2419"
+          },
+          {
+            "label": "dividendVaultBalance",
+            "offset": 0,
+            "slot": "268",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2423"
+          },
+          {
+            "label": "liquidationVaultBalance",
+            "offset": 0,
+            "slot": "269",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2426"
+          },
+          {
+            "label": "fundingToken",
+            "offset": 0,
+            "slot": "270",
+            "type": "t_mapping(t_uint256,t_contract(IERC20)77)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2429"
+          },
+          {
+            "label": "ipoContracts",
+            "offset": 0,
+            "slot": "271",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2432"
+          },
+          {
+            "label": "_lockingBalances",
+            "offset": 0,
+            "slot": "272",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2435"
+          },
+          {
+            "label": "_liquidatedBalances",
+            "offset": 0,
+            "slot": "273",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2438"
+          },
+          {
+            "label": "stakingToken",
+            "offset": 0,
+            "slot": "274",
+            "type": "t_contract(IERC20)77",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2441"
+          },
+          {
+            "label": "loyaltyRequirements",
+            "offset": 0,
+            "slot": "275",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "REITNFT",
+            "src": "contracts\\REITNFT.sol:2444"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IERC20)77": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(Staking)3499_storage)": {
+            "label": "mapping(address => struct LoyaltyProgram.Staking)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(YieldVesting)3855_storage)": {
+            "label": "mapping(address => struct REITNFT.YieldVesting)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_contract(IERC20)77)": {
+            "label": "mapping(uint256 => contract IERC20)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(YieldVesting)3855_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct REITNFT.YieldVesting))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenDividendData)3838_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenDividendData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(TokenMetadata)3826_storage)": {
+            "label": "mapping(uint256 => struct REITNFT.TokenMetadata)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Staking)3499_storage": {
+            "label": "struct LoyaltyProgram.Staking",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "level",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenDividendData)3838_storage": {
+            "label": "struct REITNFT.TokenDividendData",
+            "members": [
+              {
+                "label": "unitMarketValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "liquidationPerShare",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "dividendPerShares",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "dividendsLength",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "liquidationTimeExtension",
+                "type": "t_uint64",
+                "offset": 4,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(TokenMetadata)3826_storage": {
+            "label": "struct REITNFT.TokenMetadata",
+            "members": [
+              {
+                "label": "unitValue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "initiateTime",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "liquidationTime",
+                "type": "t_uint64",
+                "offset": 8,
+                "slot": "1"
+              },
+              {
+                "label": "transferTax",
+                "type": "t_uint64",
+                "offset": 16,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(YieldVesting)3855_storage": {
+            "label": "struct REITNFT.YieldVesting",
+            "members": [
+              {
+                "label": "beneficiary",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lockingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "pendingDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "claimedDividends",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "claimedLiquidations",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "isLiquidationUnlocked",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "initialized",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "5"
+              },
+              {
+                "label": "lastClaimIndex",
+                "type": "t_uint32",
+                "offset": 2,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
           }
         }
       }

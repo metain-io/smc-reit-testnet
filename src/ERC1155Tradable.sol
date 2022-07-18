@@ -39,7 +39,7 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
     modifier creatorOnly(uint256 _id) {
         require(
             creators[_id] == _msgSender(),
-            "ERC1155Tradable#creatorOnly: ONLY_CREATOR_ALLOWED"
+            "ONLY_CREATOR_ALLOWED"
         );
         _;
     }
@@ -146,14 +146,14 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
     ) public {
         require(
             _ids.length == _quantities.length,
-            "ERC1155MintBurn#batchMint: INVALID_ARRAYS_LENGTH"
+            "INVALID_ARRAYS_LENGTH"
         );
 
         for (uint256 i = 0; i < _ids.length; i++) {
             uint256 _id = _ids[i];
             require(
                 creators[_id] == msg.sender,
-                "ERC1155Tradable#batchMint: ONLY_CREATOR_ALLOWED"
+                "ONLY_CREATOR_ALLOWED"
             );
             uint256 quantity = _quantities[i];
             tokenSupply[_id] = tokenSupply[_id].add(quantity);
@@ -170,11 +170,11 @@ contract ERC1155Tradable is ERC1155Upgradeable, GovernableUpgradeable, Reentranc
     function setCreator(address _to, uint256[] memory _ids) public {
         require(
             _to != address(0),
-            "ERC1155Tradable#setCreator: INVALID_ADDRESS"
+            "INVALID_ADDRESS"
         );
         for (uint256 i = 0; i < _ids.length; i++) {
             uint256 id = _ids[i];
-            require(creators[id] == _msgSender(), "ERC1155Tradable#setCreator: ONLY_CREATOR_ALLOWED");
+            require(creators[id] == _msgSender(), "ONLY_CREATOR_ALLOWED");
             _setCreator(_to, id);
         }
     }
