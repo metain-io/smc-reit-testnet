@@ -26,6 +26,9 @@ let creator;
 let shareholder = [];
 const SHAREHOLDER_COUNT = 8;
 
+let MEIContract;
+let MEIContractForShareholder = [];
+
 let USDContract;
 let USDContractForShareholder = [];
 
@@ -37,6 +40,30 @@ const NFT_TRANSFER_AMOUNT = 10;
 
 let IPOContract;
 let IPOContractForShareholder = [];
+
+const LOYALTY = {
+  Condition: [
+    0,
+    ethers.utils.parseEther('8000'),
+    ethers.utils.parseEther('40000'),
+    ethers.utils.parseEther('80000'),
+    ethers.utils.parseEther('200000')
+  ],
+  PurchaseLimit: [
+    200,
+    1000,
+    5000,
+    1200,
+    3000,
+  ],
+  TransferTaxes: [
+    0.2 * Math.pow(10, 6),
+    0.18 * Math.pow(10, 6),
+    0.16 * Math.pow(10, 6),
+    0.14 * Math.pow(10, 6),
+    0.12 * Math.pow(10, 6),
+  ]
+}
 
 async function attachContractForSigner(name, signer, address) {
   const factory = await ethers.getContractFactory(name, signer);
@@ -57,6 +84,18 @@ describe("Deploy contracts", function () {
     expect(governor, creator, shareholder);
   });
 
+  it("MEI", async function () {
+    const MEIFactory = await ethers.getContractFactory("USDMToken", governor);
+    MEIContract = await MEIFactory.deploy("MEI", "Mock MEI");
+    await MEIContract.deployed();
+
+    for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
+      const contract = await attachContractForSigner("USDMToken", shareholder[i], MEIContract.address);
+      MEIContractForShareholder.push(contract);
+    }
+    expect(MEIContract.address);
+  });
+
   it("USDM", async function () {
     const USDFactory = await ethers.getContractFactory("USDMToken", governor);
     USDContract = await USDFactory.deploy("USDT", "Mock USDT");
@@ -73,6 +112,9 @@ describe("Deploy contracts", function () {
     const NFTFactory = await ethers.getContractFactory("REITNFT", governor);
     NFTContract = await upgrades.deployProxy(NFTFactory, ["Metain REIT", "MREIT", "ipfs://Qme41Gw4qAttT7ZB2o6KVjYxu5LFMihG9aiZvMQLkhPjB3"]);
     await NFTContract.deployed();
+
+    await NFTContract.setupLoyaltyProgram(MEIContract.address, moment.duration(1, "y").asSeconds());
+    await NFTContract.setLoyaltyConditions(LOYALTY.Condition);
 
     NFTContractForCreator = await attachContractForSigner("REITNFT", creator, NFTContract.address);
 
@@ -106,10 +148,10 @@ describe("Initiate REIT Opportunity Trust", function () {
 
   it("Setup NFT Trust", async function () {
     await IPOContract.allowPayableToken("USDT", USDContract.address);
-    await IPOContract.setPurchaseLimits([200, 1000, 5000, 1200, 3000]);
+    await IPOContract.setPurchaseLimits(NFT_ID, LOYALTY.PurchaseLimit);
 
     const now = Math.floor(Date.now() / 1000);
-    await NFTContractForCreator.initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, 2);
+    await NFTContractForCreator.initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, LOYALTY.TransferTaxes);
     await NFTContractForCreator.safeTransferFrom(creator.address, IPOContract.address, NFT_ID, TEST_REIT_AMOUNT, []);
     const ipoBalance = await NFTContract.balanceOf(IPOContract.address, NFT_ID);
     expect(ipoBalance).equal(TEST_REIT_AMOUNT);
@@ -133,13 +175,7 @@ describe("Initiate REIT Opportunity Trust", function () {
     let error;
     try {
       const now = Math.floor(Date.now() / 1000);
-      await NFTContractForShareholder[0].initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, [
-        0.2 * Math.pow(10, 6),
-        0.18 * Math.pow(10, 6),
-        0.16 * Math.pow(10, 6),
-        0.14 * Math.pow(10, 6),
-        0.12 * Math.pow(10, 6)
-      ]);
+      await NFTContractForShareholder[0].initiateREIT(NFT_ID, now, TEST_REIT_UNIT_PRICE.toString(), now + 30 * 3600, [0.2 * Math.pow(10, 6), 0.18 * Math.pow(10, 6), 0.16 * Math.pow(10, 6), 0.14 * Math.pow(10, 6), 0.12 * Math.pow(10, 6)]);
     } catch (ex) {
       console.log(`ex: ${ex}`);
       error = ex;
