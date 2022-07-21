@@ -171,7 +171,7 @@ describe("NFT/IPO RAMDOM TEST", function () {
 
       // check NFT balance after buy
       let balance = await NFTContract.balanceOf(shareholder[i].address, NFT_ID);
-      TEST_NFT_SUM += balance;
+      TEST_NFT_SUM += parseInt(balance);
       console.log(`User ${i}: NFT balance: ${balance}`);
     }
     console.log(`NFT_SUM: ${TEST_NFT_SUM}`);
@@ -210,17 +210,17 @@ describe("NFT/IPO RAMDOM TEST", function () {
 
       // Admin unlock Dividends fund for monthS and set Dividends for per user
       await NFTContractForCreator.unlockDividendPerShare(NFT_ID, ethers.utils.parseEther(DIVIDEND_AMOUNT.toString()), i);
-      TEST_DIVIDEND_SUM += DIVIDEND_AMOUNT * TEST_NFT_SUM;
+      TEST_DIVIDEND_SUM += parseInt(DIVIDEND_AMOUNT * TEST_NFT_SUM);
 
       // get Dividends info of month
       const getDividendPerShare = await NFTContractForCreator.getDividendPerShare(NFT_ID, i);
       console.log(`Unlocked getDividendPerShare: ${getDividendPerShare} USD`);
 
       // check Dividends info before redeemLockedBalances
-      let getLockedDividends = ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getLockedDividends(NFT_ID));
+      let getLockedDividends = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getLockedDividends(NFT_ID)));
       console.log(`User ${TRANSFER_TO}: getLockedDividends after Unlock Dividend: ${getLockedDividends} USD`);
 
-      dividendClaim = ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getTotalClaimableDividends(NFT_ID));
+      dividendClaim = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[TRANSFER_TO].getTotalClaimableDividends(NFT_ID)));
       if (dividendClaim > 0) {
         console.log(`User ${TRANSFER_TO}: Try to claim ${dividendClaim} USD after Unlock Dividend`);
         // try to claim before redeemLockedBalances
@@ -259,10 +259,10 @@ describe("NFT/IPO RAMDOM TEST", function () {
 
       // check NFT balance after transfer
       let NFTbalance = await NFTContract.balanceOf(shareholder[i].address, NFT_ID);
-      TEST_USER_NFT_BALANCE_SUM += NFTbalance;
+      TEST_USER_NFT_BALANCE_SUM += parseInt(NFTbalance);
 
       // dividend info
-      let getClaimedDividends = ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedDividends(NFT_ID));
+      let getClaimedDividends = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedDividends(NFT_ID)));
       console.log(`User ${i}: NFTbalance: ${NFTbalance} NFT, getClaimedDividends: ${getClaimedDividends} USD`);
 
       TEST_USER_CLAIM_DIVIDEND_SUM += getClaimedDividends;
@@ -279,13 +279,13 @@ describe("NFT/IPO RAMDOM TEST", function () {
   it("WITHDRAW DIVIDEND VAULT", async function () {
     console.log("\x1b[33m%s\x1b[0m", `\n=========== WITHDRAW DIVIDEND VAULT =========`);
 
-    const usdBalance_before = ethers.utils.formatEther(await USDContract.balanceOf(NFTContract.address));
+    const usdBalance_before = parseInt(ethers.utils.formatEther((await USDContract.balanceOf(NFTContract.address))));
     console.log(`NFTContract: USD balance before withdraw: ${usdBalance_before} USD`);
 
     const WITHDRAW_DIVIDEND_AMOUNT = "1000";
     await NFTContractForGovernor.withdrawDividendVault(NFT_ID, ethers.utils.parseEther(WITHDRAW_DIVIDEND_AMOUNT), governor.address);
 
-    const usdBalance_after = ethers.utils.formatEther(await USDContract.balanceOf(NFTContract.address));
+    const usdBalance_after = parseInt(ethers.utils.formatEther((await USDContract.balanceOf(NFTContract.address))));
     console.log(`NFTContract: USD balance after withdraw: ${usdBalance_after} USD`);
 
     const withdraw_value = usdBalance_before - usdBalance_after;
@@ -312,13 +312,13 @@ describe("NFT/IPO RAMDOM TEST", function () {
     let TEST_LIQUIDATIONS_SUM = TEST_NFT_SUM * LIQUIDATIONS_AMOUNT;
     let TEST_USER_CLAIM_LIQUIDATIONS_SUM = 0;
     for (let i = 0; i < SHAREHOLDER_COUNT; ++i) {
-      let getClaimableLiquidations = ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimableLiquidations(NFT_ID));
+      let getClaimableLiquidations = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimableLiquidations(NFT_ID)));
       console.log(`User ${i}: getClaimableLiquidations after Unlock: ${getClaimableLiquidations} USD`);
 
       // user claim Liquidations money
       await NFTContractForShareholder[i].claimLiquidations(NFT_ID);
 
-      let getClaimedLiquidations = ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedLiquidations(NFT_ID));
+      let getClaimedLiquidations = parseInt(ethers.utils.formatEther(await NFTContractForShareholder[i].getClaimedLiquidations(NFT_ID)));
       console.log(`User ${i}: getClaimedLiquidations: ${getClaimedLiquidations} USD`);
 
       if (getClaimableLiquidations == getClaimedLiquidations) {
@@ -334,13 +334,13 @@ describe("NFT/IPO RAMDOM TEST", function () {
   it("WITHDRAW LIQUIDATION VAULT", async function () {
     console.log("\x1b[33m%s\x1b[0m", `\n=========== WITHDRAW LIQUIDATION VAULT =========`);
 
-    const usdBalance_before = ethers.utils.formatEther(await USDContract.balanceOf(NFTContract.address));
+    const usdBalance_before = parseInt(ethers.utils.formatEther(await USDContract.balanceOf(NFTContract.address)));
     console.log(`NFTContract: USD balance before withdraw: ${usdBalance_before} USD`);
 
     const WITHDRAW_DIVIDEND_AMOUNT = "1000";
     await NFTContractForGovernor.withdrawLiquidationVault(NFT_ID, ethers.utils.parseEther(WITHDRAW_DIVIDEND_AMOUNT), governor.address);
 
-    const usdBalance_after = ethers.utils.formatEther(await USDContract.balanceOf(NFTContract.address));
+    const usdBalance_after = parseInt(ethers.utils.formatEther((await USDContract.balanceOf(NFTContract.address))));
     console.log(`NFTContract: USD balance after withdraw: ${usdBalance_after} USD`);
 
     const withdraw_value = usdBalance_before - usdBalance_after;
