@@ -225,4 +225,9 @@ contract REITIPO is
         }
         return limit;
     }
+
+    function getTotalPurchased(uint256 id) public view returns(uint) {
+        address account = _msgSender();
+        return _totalPurchased[id][account];
+    }
 }

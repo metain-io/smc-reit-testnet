@@ -668,19 +668,16 @@ describe("Buying IPO", function () {
 
     await IPOContractForShareholder[7].purchaseWithToken("USDT", NFT_ID, TEST_SHARES_TO_BUY_7);
 
-    let NFTbalance = await NFTContract.balanceOf(shareholder[0].address, NFT_ID);
-
-    let NFTbalance111 = await NFTContract.balanceOf(shareholder[7].address, NFT_ID);
-    console.log(`User 0: NFTbalance111: ${NFTbalance111}`);
+    let NFTPurchasased = await IPOContractForShareholder[0].getTotalPurchased(NFT_ID);
  
     for (let i = 0; i < LOYALTY.Condition.length; ++i) {
       console.log(`User 0: LOYALTY.Condition[${i}]: ${LOYALTY.Condition[i]}: PurchaseLimit[${i}]: ${LOYALTY.PurchaseLimit[i]}: TransferTaxes[${i}]: ${LOYALTY.TransferTaxes[i]}`);
 
-      let PurchaseLimit = LOYALTY.PurchaseLimit[i] - NFTbalance;
+      let PurchaseLimit = LOYALTY.PurchaseLimit[i] - NFTPurchasased;
       // buy NFT with LOYALTY level 0
       await IPOContractForShareholder[0].purchaseWithToken("USDT", NFT_ID, PurchaseLimit);
-      NFTbalance = await NFTContract.balanceOf(shareholder[0].address, NFT_ID);
-      console.log(`User 0: NFT balance after buy: ${NFTbalance}`);
+      NFTPurchasased = await IPOContractForShareholder[0].getTotalPurchased(NFT_ID);
+      console.log(`User 0: NFTPurchasased after buy: ${NFTPurchasased}`);
 
       try {
         // try to buy NFT over limit
@@ -708,7 +705,7 @@ describe("Buying IPO", function () {
       }
     }
 
-    expect(parseInt(NFTbalance)).not.equal(0);
+    expect(parseInt(NFTPurchasased)).not.equal(0);
   });
 
 
