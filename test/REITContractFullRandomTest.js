@@ -46,10 +46,29 @@ let IPOContractForShareholder = [];
 const TEST_MONTHS = 12;
 
 const LOYALTY = {
-  Condition: [0, ethers.utils.parseEther("8000"), ethers.utils.parseEther("40000"), ethers.utils.parseEther("80000"), ethers.utils.parseEther("200000")],
-  PurchaseLimit: [200, 1000, 5000, 1200, 3000],
-  TransferTaxes: [0.2 * Math.pow(10, 6), 0.18 * Math.pow(10, 6), 0.16 * Math.pow(10, 6), 0.14 * Math.pow(10, 6), 0.12 * Math.pow(10, 6)],
-};
+  Condition: [
+    0,
+    ethers.utils.parseEther('8000'),
+    ethers.utils.parseEther('40000'),
+    ethers.utils.parseEther('80000'),
+    ethers.utils.parseEther('200000')
+  ],
+  PurchaseLimit: [
+    200,
+    1000,
+    5000,
+    12000,
+    30000,
+  ],
+  TransferTaxes: [
+    0.2 * Math.pow(10, 6),
+    0.18 * Math.pow(10, 6),
+    0.16 * Math.pow(10, 6),
+    0.14 * Math.pow(10, 6),
+    0.12 * Math.pow(10, 6),
+  ]
+}
+
 async function attachContractForSigner(name, signer, address) {
   const factory = await ethers.getContractFactory(name, signer);
   return factory.attach(address);

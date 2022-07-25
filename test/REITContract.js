@@ -8,7 +8,7 @@ use(solidity);
 
 const TEST_REIT_AMOUNT = 200000;
 const TEST_REIT_UNIT_PRICE = ethers.utils.parseEther("10");
-const TEST_SHARE_HOLDER_FUND = ethers.utils.parseEther("100000");
+const TEST_SHARE_HOLDER_FUND = ethers.utils.parseEther("1000000");
 const TEST_SHARES_TO_BUY_0 = 100;
 const TEST_SHARES_TO_BUY_1 = 101;
 const TEST_SHARES_TO_BUY_2 = 102;
@@ -53,8 +53,8 @@ const LOYALTY = {
     200,
     1000,
     5000,
-    1200,
-    3000,
+    12000,
+    30000,
   ],
   TransferTaxes: [
     0.2 * Math.pow(10, 6),
@@ -648,4 +648,68 @@ describe("Buying IPO", function () {
 
     expect(parseInt(usdBalance_claimed)).equal(parseInt(getClaimedLiquidations));
   });
+
+  it("User 0: test all Loyalty levels: staking => buy NFT => receive/unlock NFT => check TransferTaxes", async function () {
+    console.log("\x1b[33m%s\x1b[0m", `\nUser 0: test all Loyalty levels: staking => buy NFT => receive/unlock NFT => check TransferTaxes`);
+    
+    // transfer USDT/MEI for User
+    await USDContract.transfer(shareholder[7].address, TEST_SHARE_HOLDER_FUND);
+    await USDContract.transfer(shareholder[0].address, TEST_SHARE_HOLDER_FUND);
+    await MEIContract.transfer(shareholder[0].address, TEST_SHARE_HOLDER_FUND);
+    // allow IPOContract get USDT/MEI from user
+    await USDContractForShareholder[7].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);
+    await USDContractForShareholder[0].increaseAllowance(IPOContract.address, TEST_SHARE_HOLDER_FUND);
+    await USDContractForShareholder[0].increaseAllowance(NFTContract.address, TEST_SHARE_HOLDER_FUND);
+    await MEIContractForShareholder[0].increaseAllowance(NFTContract.address, TEST_SHARE_HOLDER_FUND);
+
+    // KYC user
+    await NFTContract.addToKYC(shareholder[0].address);
+    await NFTContract.addToKYC(shareholder[7].address);
+
+    await IPOContractForShareholder[7].purchaseWithToken("USDT", NFT_ID, TEST_SHARES_TO_BUY_7);
+
+    let NFTbalance = await NFTContract.balanceOf(shareholder[0].address, NFT_ID);
+
+    let NFTbalance111 = await NFTContract.balanceOf(shareholder[7].address, NFT_ID);
+    console.log(`User 0: NFTbalance111: ${NFTbalance111}`);
+ 
+    for (let i = 0; i < LOYALTY.Condition.length; ++i) {
+      console.log(`User 0: LOYALTY.Condition[${i}]: ${LOYALTY.Condition[i]}: PurchaseLimit[${i}]: ${LOYALTY.PurchaseLimit[i]}: TransferTaxes[${i}]: ${LOYALTY.TransferTaxes[i]}`);
+
+      let PurchaseLimit = LOYALTY.PurchaseLimit[i] - NFTbalance;
+      // buy NFT with LOYALTY level 0
+      await IPOContractForShareholder[0].purchaseWithToken("USDT", NFT_ID, PurchaseLimit);
+      NFTbalance = await NFTContract.balanceOf(shareholder[0].address, NFT_ID);
+      console.log(`User 0: NFT balance after buy: ${NFTbalance}`);
+
+      try {
+        // try to buy NFT over limit
+        await IPOContractForShareholder[0].purchaseWithToken("USDT", NFT_ID, 1);
+      } catch (ex) {
+        console.log(`User 0: try to buy NFT over limit level ${i}: ex: ${ex}`);
+        error = ex;
+      }
+
+      // transfer NFT from user 7 to user 0
+      await NFTContractForShareholder[7].safeTransferFrom(shareholder[7].address, shareholder[0].address, NFT_ID, NFT_TRANSFER_AMOUNT, []);
+
+      let usdBalance_before = parseFloat(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[0].address)));
+      console.log(`User 0: USD balance before unlock: ${usdBalance_before} USD`);
+      // register NFT after transfer
+      await NFTContractForShareholder[0].redeemLockedBalances(NFT_ID);    
+      let usdBalance_after = parseFloat(ethers.utils.formatEther(await USDContract.balanceOf(shareholder[0].address)));
+      console.log(`User 0: USD balance after unlock: ${usdBalance_after} USD`);
+      let transferTax = parseFloat(usdBalance_before - usdBalance_after);
+      console.log(`User 0: transferTax: ${transferTax} USD`);
+
+      if(i<LOYALTY.Condition.length-1) {
+        // stake will level i+1
+        await NFTContractForShareholder[0].stake(LOYALTY.Condition[i+1]);
+      }
+    }
+
+    expect(parseInt(NFTbalance)).not.equal(0);
+  });
+
+
 });

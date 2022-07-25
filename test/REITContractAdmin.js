@@ -53,8 +53,8 @@ const LOYALTY = {
     200,
     1000,
     5000,
-    1200,
-    3000,
+    12000,
+    30000,
   ],
   TransferTaxes: [
     0.2 * Math.pow(10, 6),
